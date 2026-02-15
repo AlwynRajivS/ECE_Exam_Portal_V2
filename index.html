@@ -42,6 +42,11 @@ content="https://alwynrajivs.github.io/ECE_Exam_Portal_V1/image1.png">
   padding: 0;
 }
 
+html {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   min-height: 100vh;
@@ -50,17 +55,21 @@ body {
   align-items: center;
   justify-content: center;
   position: relative;
-  overflow: hidden;
-  padding: 20px;
+  padding: 40px 20px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* ================= ANIMATED BACKGROUND ================= */
 .bg-shapes {
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
+  top: 0;
+  left: 0;
   overflow: hidden;
   z-index: 0;
+  pointer-events: none;
 }
 
 .shape {
@@ -128,6 +137,7 @@ body {
   position: relative;
   z-index: 1;
   animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  margin: auto;
 }
 
 @keyframes slideUp {
@@ -311,8 +321,6 @@ body {
 .toggle-eye:hover {
   color: var(--primary);
 }
-
-
 
 /* ================= LOGIN BUTTON ================= */
 .login-btn {
@@ -559,7 +567,7 @@ body {
 /* ================= MOBILE RESPONSIVE ================= */
 @media (max-width: 480px) {
   body {
-    padding: 16px;
+    padding: 20px 16px;
   }
 
   .login-card {
@@ -595,6 +603,124 @@ body {
   }
 }
 
+/* ================= LAPTOP SCREEN FIX ================= */
+@media (min-width: 768px) and (max-height: 800px) {
+  body {
+    padding: 30px 20px;
+  }
+  
+  .login-card {
+    padding: 36px 40px;
+  }
+  
+  .login-header {
+    margin-bottom: 32px;
+  }
+  
+  .logo-wrapper {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 20px;
+  }
+  
+  .logo-icon {
+    font-size: 36px;
+  }
+  
+  .login-header h1 {
+    font-size: 24px;
+    margin-bottom: 6px;
+  }
+  
+  .login-header h2 {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+  
+  .login-header p {
+    font-size: 14px;
+  }
+  
+  .input-group {
+    margin-bottom: 20px;
+  }
+  
+  .info-section {
+    margin-top: 20px;
+    padding: 14px;
+  }
+  
+  .footer {
+    margin-top: 24px;
+  }
+}
+
+/* ================= SMALL LAPTOP SCREENS ================= */
+@media (max-height: 700px) {
+  body {
+    padding: 20px;
+    align-items: flex-start;
+  }
+  
+  .login-card {
+    padding: 28px 36px;
+  }
+  
+  .login-header {
+    margin-bottom: 24px;
+  }
+  
+  .logo-wrapper {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 16px;
+  }
+  
+  .logo-icon {
+    font-size: 32px;
+  }
+  
+  .login-header h1 {
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+  
+  .login-header h2 {
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+  
+  .login-header p {
+    font-size: 13px;
+  }
+  
+  .input-group {
+    margin-bottom: 16px;
+  }
+  
+  .input-group input {
+    padding: 12px 16px 12px 48px;
+  }
+  
+  .login-btn {
+    padding: 14px;
+  }
+  
+  .info-section {
+    margin-top: 16px;
+    padding: 12px;
+  }
+  
+  .info-section p {
+    font-size: 12px;
+  }
+  
+  .footer {
+    margin-top: 20px;
+    font-size: 12px;
+  }
+}
+
 /* ================= SMOOTH TRANSITIONS ================= */
 * {
   -webkit-tap-highlight-color: transparent;
@@ -608,6 +734,24 @@ input::-webkit-inner-spin-button {
 
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+/* ================= SCROLLBAR STYLING ================= */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.7);
 }
 </style>
 </head>
