@@ -1,0 +1,2723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard - KCET ECE</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #1a237e;
+  --primary-light: #3949ab;
+  --primary-dark: #0d1642;
+  --accent: #00bfa5;
+  --accent-dark: #00897b;
+  --success: #00c853;
+  --warning: #ffa000;
+  --danger: #d32f2f;
+  --info: #0288d1;
+  --text-dark: #1a1a2e;
+  --text-medium: #4a5568;
+  --text-light: #718096;
+  --bg-main: #f7fafc;
+  --bg-card: #ffffff;
+  --border: #e2e8f0;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.16);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-dark);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ========== ANIMATED BACKGROUND ========== */
+.bg-decoration {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bg-decoration::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(26, 35, 126, 0.05) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: float 20s ease-in-out infinite;
+}
+
+.bg-decoration::after {
+  content: '';
+  position: absolute;
+  bottom: -15%;
+  left: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(0, 191, 165, 0.04) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: float 25s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(30px, -30px) rotate(120deg); }
+  66% { transform: translate(-20px, 20px) rotate(240deg); }
+}
+
+/* ========== HEADER ========== */
+header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  color: #fff;
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-xl);
+  animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-icon {
+  width: 56px;
+  height: 56px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  animation: iconBounce 2s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.header-title h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.header-title p {
+  font-size: 13px;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.logout-btn {
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logout-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+/* ========== CONTAINER ========== */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 32px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ========== STATISTICS GRID ========== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafb 100%);
+  border-radius: 20px;
+  padding: 28px 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: statSlideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+.stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes statSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.stat-card.stat-primary::before {
+  background: linear-gradient(180deg, var(--primary), var(--primary-light));
+}
+
+.stat-card.stat-success::before {
+  background: linear-gradient(180deg, var(--success), #00897b);
+}
+
+.stat-card.stat-warning::before {
+  background: linear-gradient(180deg, var(--warning), #ffb300);
+}
+
+.stat-card.stat-info::before {
+  background: linear-gradient(180deg, var(--info), #03a9f4);
+}
+
+.stat-card.stat-danger::before {
+  background: linear-gradient(180deg, var(--danger), #c62828);
+}
+
+.stat-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+}
+
+.stat-card:hover::before {
+  width: 100%;
+  opacity: 0.05;
+}
+
+.stat-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover .stat-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.stat-card.stat-primary .stat-icon {
+  background: linear-gradient(135deg, rgba(26, 35, 126, 0.1), rgba(26, 35, 126, 0.2));
+  color: var(--primary);
+}
+
+.stat-card.stat-success .stat-icon {
+  background: linear-gradient(135deg, rgba(0, 200, 83, 0.1), rgba(0, 200, 83, 0.2));
+  color: var(--success);
+}
+
+.stat-card.stat-warning .stat-icon {
+  background: linear-gradient(135deg, rgba(255, 160, 0, 0.1), rgba(255, 160, 0, 0.2));
+  color: var(--warning);
+}
+
+.stat-card.stat-info .stat-icon {
+  background: linear-gradient(135deg, rgba(2, 136, 209, 0.1), rgba(2, 136, 209, 0.2));
+  color: var(--info);
+}
+
+.stat-card.stat-danger .stat-icon {
+  background: linear-gradient(135deg, rgba(211, 47, 47, 0.1), rgba(211, 47, 47, 0.2));
+  color: var(--danger);
+}
+
+.stat-info {
+  flex: 1;
+}
+
+.stat-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  font-weight: 800;
+  margin: 0;
+  line-height: 1;
+}
+
+.stat-card.stat-primary .stat-value {
+  color: var(--primary);
+}
+
+.stat-card.stat-success .stat-value {
+  color: var(--success);
+}
+
+.stat-card.stat-warning .stat-value {
+  color: var(--warning);
+}
+
+.stat-card.stat-info .stat-value {
+  color: var(--info);
+}
+
+.stat-card.stat-danger .stat-value {
+  color: var(--danger);
+}
+
+/* ========== CARD ========== */
+.card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafb 100%);
+  border-radius: 24px;
+  padding: 32px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  position: relative;
+  overflow: hidden;
+  animation: cardSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+.card:nth-child(4) { animation-delay: 0.4s; }
+.card:nth-child(5) { animation-delay: 0.5s; }
+.card:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes cardSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+}
+
+.card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0 0 24px 0;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  letter-spacing: -0.5px;
+}
+
+.card h3 i {
+  font-size: 20px;
+  color: var(--accent);
+}
+
+/* ========== GRID ========== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+/* ========== FORM ELEMENTS ========== */
+input, select {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  font-size: 15px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  background: #fff;
+  color: var(--text-dark);
+  transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(26, 35, 126, 0.1);
+  transform: translateY(-2px);
+}
+
+input::placeholder {
+  color: var(--text-light);
+}
+
+/* ========== BUTTONS ========== */
+.btn {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  margin-top: 12px;
+  margin-right: 12px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: var(--shadow-md);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.5s, height 0.5s;
+}
+
+.btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+}
+
+.btn:active {
+  transform: translateY(-1px);
+}
+
+.btn i {
+  font-size: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.btn span {
+  position: relative;
+  z-index: 1;
+}
+
+.primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+}
+
+.success {
+  background: linear-gradient(135deg, var(--success), #00897b);
+}
+
+.danger {
+  background: linear-gradient(135deg, var(--danger), #c62828);
+}
+
+.secondary {
+  background: linear-gradient(135deg, #546e7a, #78909c);
+}
+
+/* ========== TABLE ========== */
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-top: 20px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+table {
+  width: 100%;
+  min-width: 700px;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+thead {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: #fff;
+}
+
+th {
+  padding: 16px 12px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+td {
+  padding: 14px 12px;
+  text-align: center;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 500;
+}
+
+tbody tr {
+  transition: all 0.3s ease;
+}
+
+tbody tr:hover {
+  background: linear-gradient(135deg, rgba(26, 35, 126, 0.05), rgba(0, 191, 165, 0.05));
+  transform: scale(1.01);
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ========== FILE INPUT ========== */
+input[type="file"] {
+  padding: 12px;
+  border: 2px dashed var(--border);
+  background: var(--bg-main);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+input[type="file"]:hover {
+  border-color: var(--primary);
+  background: rgba(26, 35, 126, 0.05);
+}
+
+/* ========== SEARCH & FILTER BAR ========== */
+.search-filter-bar {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.search-box {
+  flex: 1;
+  min-width: 250px;
+  position: relative;
+}
+
+.search-box i {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-light);
+  font-size: 16px;
+}
+
+.search-box input {
+  width: 100%;
+  padding-left: 45px;
+  margin: 0;
+}
+
+#statusFilter {
+  min-width: 180px;
+  margin: 0;
+}
+
+/* ========== PROGRESS INDICATORS ========== */
+.upload-progress {
+  display: none;
+  margin-top: 16px;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(26, 35, 126, 0.05), rgba(0, 191, 165, 0.05));
+  border-radius: 12px;
+  border: 2px solid var(--border);
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 8px;
+  background: var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--success), var(--accent));
+  width: 0%;
+  transition: width 0.3s ease;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -100% 0; }
+  100% { background-position: 100% 0; }
+}
+
+.progress-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-medium);
+  text-align: center;
+}
+
+/* ========== NOTIFICATION TOAST ========== */
+.toast {
+  position: fixed;
+  top: 100px;
+  right: 32px;
+  background: linear-gradient(135deg, #ffffff, #f8fafb);
+  padding: 16px 24px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-xl);
+  border-left: 4px solid var(--success);
+  display: none;
+  align-items: center;
+  gap: 12px;
+  z-index: 1000;
+  animation: slideInRight 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.toast.success {
+  border-left-color: var(--success);
+}
+
+.toast.error {
+  border-left-color: var(--danger);
+}
+
+.toast.warning {
+  border-left-color: var(--warning);
+}
+
+.toast i {
+  font-size: 20px;
+}
+
+.toast.success i {
+  color: var(--success);
+}
+
+.toast.error i {
+  color: var(--danger);
+}
+
+.toast.warning i {
+  color: var(--warning);
+}
+
+.toast-message {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* ========== LOADING SPINNER ========== */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.loading-spinner {
+  width: 60px;
+  height: 60px;
+  border: 5px solid rgba(255, 255, 255, 0.2);
+  border-top: 5px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ========== CONFIRMATION MODAL ========== */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1500;
+}
+
+.modal-content {
+  background: linear-gradient(135deg, #ffffff, #f8fafb);
+  border-radius: 24px;
+  padding: 36px;
+  max-width: 450px;
+  width: 90%;
+  box-shadow: var(--shadow-2xl);
+  border: 2px solid var(--border);
+  animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modalPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, rgba(211, 47, 47, 0.1), rgba(211, 47, 47, 0.2));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  color: var(--danger);
+  margin: 0 auto 20px;
+}
+
+.modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.modal-text {
+  font-size: 15px;
+  color: var(--text-medium);
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.modal-actions .btn {
+  flex: 1;
+  margin: 0;
+}
+
+/* ========== EMPTY STATE ========== */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-icon {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, rgba(26, 35, 126, 0.1), rgba(0, 191, 165, 0.1));
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  color: var(--text-light);
+  margin-bottom: 20px;
+}
+
+.empty-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.empty-text {
+  font-size: 15px;
+  color: var(--text-medium);
+}
+
+/* ========== BADGE ========== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge.success {
+  background: linear-gradient(135deg, rgba(0, 200, 83, 0.1), rgba(0, 200, 83, 0.2));
+  color: var(--success);
+}
+
+.badge.danger {
+  background: linear-gradient(135deg, rgba(211, 47, 47, 0.1), rgba(211, 47, 47, 0.2));
+  color: var(--danger);
+}
+
+.badge.warning {
+  background: linear-gradient(135deg, rgba(255, 160, 0, 0.1), rgba(255, 160, 0, 0.2));
+  color: var(--warning);
+}
+
+/* ========== ANALYTICS SECTION ========== */
+.analytics-header {
+  margin-bottom: 32px;
+}
+
+.analytics-search {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.analytics-search select {
+  flex: 1;
+  margin: 0;
+}
+
+.analytics-section {
+  margin-bottom: 40px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0 0 24px 0;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-title i {
+  font-size: 18px;
+  color: var(--accent);
+}
+
+/* ========== STUDENT LISTS ========== */
+.student-lists {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.student-list-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px;
+  border: 2px solid var(--border);
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+}
+
+.student-list-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.student-list-card.attended-list {
+  border-top: 4px solid var(--success);
+}
+
+.student-list-card.not-attended-list {
+  border-top: 4px solid var(--danger);
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--border);
+}
+
+.list-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.list-title i {
+  font-size: 20px;
+}
+
+.attended-list .list-title i {
+  color: var(--success);
+}
+
+.not-attended-list .list-title i {
+  color: var(--danger);
+}
+
+.btn-sm {
+  padding: 8px 16px;
+  font-size: 13px;
+  margin: 0;
+}
+
+.student-list {
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.student-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.student-list::-webkit-scrollbar-track {
+  background: var(--bg-main);
+  border-radius: 10px;
+}
+
+.student-list::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 10px;
+}
+
+.student-list::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+.student-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #f8fafb, #fff);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+  animation: itemSlideIn 0.4s ease backwards;
+}
+
+.student-item:hover {
+  transform: translateX(4px);
+  box-shadow: var(--shadow-sm);
+  border-color: var(--primary);
+}
+
+.student-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.student-avatar {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.attended-list .student-avatar {
+  background: linear-gradient(135deg, var(--success), #00897b);
+}
+
+.not-attended-list .student-avatar {
+  background: linear-gradient(135deg, var(--danger), #c62828);
+}
+
+.student-details {
+  flex: 1;
+}
+
+.student-name {
+  font-weight: 600;
+  color: var(--text-dark);
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.student-roll {
+  font-size: 13px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.student-dept {
+  font-size: 12px;
+  color: var(--text-light);
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.student-dept span {
+  background: rgba(26, 35, 126, 0.1);
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.student-status {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.attended-list .student-status {
+  background: linear-gradient(135deg, rgba(0, 200, 83, 0.1), rgba(0, 200, 83, 0.2));
+  color: var(--success);
+}
+
+.not-attended-list .student-status {
+  background: linear-gradient(135deg, rgba(211, 47, 47, 0.1), rgba(211, 47, 47, 0.2));
+  color: var(--danger);
+}
+
+@keyframes itemSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.student-item:nth-child(1) { animation-delay: 0.05s; }
+.student-item:nth-child(2) { animation-delay: 0.1s; }
+.student-item:nth-child(3) { animation-delay: 0.15s; }
+.student-item:nth-child(4) { animation-delay: 0.2s; }
+.student-item:nth-child(5) { animation-delay: 0.25s; }
+
+.empty-list {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-light);
+}
+
+.empty-list i {
+  font-size: 48px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.empty-list p {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ========== FOOTER ========== */
+.footer {
+  text-align: center;
+  padding: 24px 0;
+  font-size: 14px;
+  color: var(--text-light);
+  margin-top: 40px;
+  border-top: 1px solid var(--border);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .container {
+    padding: 24px 20px;
+  }
+
+  .card {
+    padding: 24px 20px;
+    border-radius: 20px;
+  }
+
+  .header-content {
+    flex-direction: column;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .header-left {
+    flex-direction: column;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  th, td {
+    white-space: nowrap;
+    font-size: 13px;
+    padding: 10px 8px;
+  }
+  
+  .student-lists {
+    grid-template-columns: 1fr;
+  }
+  
+  .analytics-search {
+    flex-direction: column;
+  }
+  
+  .analytics-search select,
+  .analytics-search button {
+    width: 100%;
+  }
+  
+  .list-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .btn-sm {
+    width: 100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Background Decoration -->
+<div class="bg-decoration"></div>
+
+<!-- Header -->
+<header>
+  <div class="header-content">
+    <div class="header-left">
+      <div class="header-icon">
+        <i class="fa-solid fa-user-shield"></i>
+      </div>
+      <div class="header-title">
+        <h1>Admin Dashboard</h1>
+        <p>KCET - Online Assessment Platform</p>
+      </div>
+    </div>
+    <button class="logout-btn" onclick="logout()">
+      <i class="fa-solid fa-right-from-bracket"></i>
+      <span>Logout</span>
+    </button>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- ================= DASHBOARD STATISTICS ================= -->
+<div class="stats-grid">
+  <div class="stat-card stat-primary">
+    <div class="stat-icon">
+      <i class="fa-solid fa-file-lines"></i>
+    </div>
+    <div class="stat-info">
+      <p class="stat-label">Total Exams</p>
+      <h2 class="stat-value" id="totalExams">0</h2>
+    </div>
+  </div>
+  
+  <div class="stat-card stat-success">
+    <div class="stat-icon">
+      <i class="fa-solid fa-circle-check"></i>
+    </div>
+    <div class="stat-info">
+      <p class="stat-label">Active Exams</p>
+      <h2 class="stat-value" id="activeExams">0</h2>
+    </div>
+  </div>
+  
+  <div class="stat-card stat-warning">
+    <div class="stat-icon">
+      <i class="fa-solid fa-circle-question"></i>
+    </div>
+    <div class="stat-info">
+      <p class="stat-label">Total Questions</p>
+      <h2 class="stat-value" id="totalQuestions">0</h2>
+    </div>
+  </div>
+  
+  <div class="stat-card stat-info">
+    <div class="stat-icon">
+      <i class="fa-solid fa-user-group"></i>
+    </div>
+    <div class="stat-info">
+      <p class="stat-label">Total Students</p>
+      <h2 class="stat-value" id="totalStudents">0</h2>
+    </div>
+  </div>
+</div>
+
+<!-- ================= CREATE / EDIT EXAM ================= -->
+<div class="card">
+  <h3><i class="fa-solid fa-file-circle-plus"></i> Create / Edit Examination</h3>
+  <div class="grid">
+    <input id="exam_id" placeholder="Exam ID *">
+    <input id="exam_name" placeholder="Exam Name">
+    <input id="partA_count" type="number" placeholder="Part A Questions (1 Mark)">
+    <input id="partB_count" type="number" placeholder="Part B Questions (2 Marks)">
+    <input id="duration_min" type="number" placeholder="Duration (minutes)">
+    <input id="violation_limit" type="number" placeholder="Violation Limit">
+    
+    <select id="calculator">
+      <option value="YES">Calculator Enabled</option>
+      <option value="NO">Calculator Disabled</option>
+    </select>
+    
+    <select id="review">
+      <option value="YES">Review Enabled</option>
+      <option value="NO">Review Disabled</option>
+    </select>
+    
+    <input id="start_datetime" type="datetime-local" placeholder="Start Date & Time">
+    <input id="end_datetime" type="datetime-local" placeholder="End Date & Time">
+    
+    <select id="exam_status">
+      <option value="ENABLED">Enabled</option>
+      <option value="DISABLED">Disabled</option>
+    </select>
+  </div>
+  
+  <button class="btn primary" onclick="createExam()">
+    <i class="fa-solid fa-plus"></i>
+    <span>Create Exam</span>
+  </button>
+  <button class="btn secondary" onclick="updateExam()">
+    <i class="fa-solid fa-pen-to-square"></i>
+    <span>Update Exam</span>
+  </button>
+</div>
+
+<!-- ================= EXAM LIST ================= -->
+<div class="card">
+  <h3><i class="fa-solid fa-list-check"></i> Created Examinations</h3>
+  
+  <!-- Search and Filter -->
+  <div class="search-filter-bar">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="examSearch" placeholder="Search exams..." onkeyup="filterExams()">
+    </div>
+    <select id="statusFilter" onchange="filterExams()">
+      <option value="">All Status</option>
+      <option value="ENABLED">Enabled Only</option>
+      <option value="DISABLED">Disabled Only</option>
+    </select>
+  </div>
+  
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Exam ID</th>
+          <th>Exam Name</th>
+          <th>Status</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="examTable"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ================= ADD QUESTION ================= -->
+<div class="card">
+  <h3><i class="fa-solid fa-circle-question"></i> Add Question (Single)</h3>
+  <div class="grid">
+    <input id="q_exam_id" placeholder="Exam ID">
+    <select id="q_part">
+      <option value="PART A">PART A</option>
+      <option value="PART B">PART B</option>
+    </select>
+    <input id="q_qid" placeholder="Question ID">
+    <input id="q_question" placeholder="Question Text" style="grid-column: 1 / -1;">
+    <input id="q_A" placeholder="Option A">
+    <input id="q_B" placeholder="Option B">
+    <input id="q_C" placeholder="Option C">
+    <input id="q_D" placeholder="Option D">
+    <input id="q_correct" placeholder="Correct Answer (A/B/C/D)">
+    <input id="q_image" placeholder="Image URL (optional)" style="grid-column: 1 / -1;">
+  </div>
+  <button class="btn success" onclick="addSingleQuestion()">
+    <i class="fa-solid fa-check"></i>
+    <span>Add Question</span>
+  </button>
+</div>
+
+<!-- ================= BULK UPLOAD ================= -->
+<div class="card">
+  <h3><i class="fa-solid fa-cloud-arrow-up"></i> Bulk Upload</h3>
+  
+  <h4 style="color: var(--primary); margin-bottom: 16px; font-size: 16px;">
+    <i class="fa-solid fa-circle-question"></i> Questions Upload
+  </h4>
+  <input type="file" id="questionFile" accept=".csv">
+  <button class="btn primary" onclick="uploadQuestions()">
+    <i class="fa-solid fa-upload"></i>
+    <span>Upload Questions</span>
+  </button>
+  <button class="btn secondary" onclick="downloadQuestionTemplate()">
+    <i class="fa-solid fa-download"></i>
+    <span>Download Template</span>
+  </button>
+  
+  <hr style="margin: 24px 0; border: none; border-top: 2px solid var(--border);">
+  
+  <h4 style="color: var(--primary); margin-bottom: 16px; font-size: 16px;">
+    <i class="fa-solid fa-user-group"></i> Students Upload
+  </h4>
+  <input type="file" id="studentFile" accept=".csv">
+  <button class="btn primary" onclick="uploadStudents()">
+    <i class="fa-solid fa-upload"></i>
+    <span>Upload Students</span>
+  </button>
+  <button class="btn secondary" onclick="downloadStudentTemplate()">
+    <i class="fa-solid fa-download"></i>
+    <span>Download Template</span>
+  </button>
+</div>
+
+<!-- ================= EXAM MAPPING ================= -->
+<div class="card">
+  <h3><i class="fa-solid fa-link"></i> Exam - Student Mapping</h3>
+  <input type="file" id="mapFile" accept=".csv">
+  <button class="btn primary" onclick="uploadMapping()">
+    <i class="fa-solid fa-upload"></i>
+    <span>Upload Mapping</span>
+  </button>
+  <button class="btn secondary" onclick="downloadMapTemplate()">
+    <i class="fa-solid fa-download"></i>
+    <span>Download Template</span>
+  </button>
+</div>
+
+<!-- ================= RESULTS MANAGEMENT ================= -->
+<div class="card">
+  <h3><i class="fa-solid fa-chart-simple"></i> Student Results Management</h3>
+  
+  <div class="grid">
+    <input id="result_exam_id" placeholder="Enter Exam ID">
+    <button class="btn primary" onclick="loadResults()">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <span>Load Results</span>
+    </button>
+  </div>
+  
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Exam ID</th>
+          <th>Roll Number</th>
+          <th>Marks</th>
+          <th>Violations</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="resultTable"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ================= EXAM ANALYTICS ================= -->
+<div class="card">
+  <h3><i class="fa-solid fa-chart-pie"></i> Exam Analytics & Insights</h3>
+  
+  <div class="analytics-header">
+    <div class="analytics-search">
+      <select id="analytics_exam_id">
+        <option value="">Select Exam for Analytics</option>
+      </select>
+      <button class="btn primary" onclick="loadExamAnalytics()" style="margin: 0;">
+        <i class="fa-solid fa-chart-line"></i>
+        <span>Generate Analytics</span>
+      </button>
+    </div>
+  </div>
+  
+  <div id="analyticsContent" style="display: none;">
+    
+    <!-- Question Statistics -->
+    <div class="analytics-section">
+      <h4 class="section-title">
+        <i class="fa-solid fa-circle-question"></i>
+        Question Distribution
+      </h4>
+      <div class="stats-grid">
+        <div class="stat-card stat-primary">
+          <div class="stat-icon">
+            <i class="fa-solid fa-a"></i>
+          </div>
+          <div class="stat-info">
+            <p class="stat-label">Part A Questions</p>
+            <h2 class="stat-value" id="ana_partA_count">0</h2>
+          </div>
+        </div>
+        
+        <div class="stat-card stat-info">
+          <div class="stat-icon">
+            <i class="fa-solid fa-b"></i>
+          </div>
+          <div class="stat-info">
+            <p class="stat-label">Part B Questions</p>
+            <h2 class="stat-value" id="ana_partB_count">0</h2>
+          </div>
+        </div>
+        
+        <div class="stat-card stat-warning">
+          <div class="stat-icon">
+            <i class="fa-solid fa-list-ol"></i>
+          </div>
+          <div class="stat-info">
+            <p class="stat-label">Total Questions</p>
+            <h2 class="stat-value" id="ana_total_questions">0</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Student Statistics -->
+    <div class="analytics-section">
+      <h4 class="section-title">
+        <i class="fa-solid fa-users"></i>
+        Student Participation
+      </h4>
+      <div class="stats-grid">
+        <div class="stat-card stat-info">
+          <div class="stat-icon">
+            <i class="fa-solid fa-user-group"></i>
+          </div>
+          <div class="stat-info">
+            <p class="stat-label">Mapped Students</p>
+            <h2 class="stat-value" id="ana_mapped_students">0</h2>
+          </div>
+        </div>
+        
+        <div class="stat-card stat-success">
+          <div class="stat-icon">
+            <i class="fa-solid fa-user-check"></i>
+          </div>
+          <div class="stat-info">
+            <p class="stat-label">Attended</p>
+            <h2 class="stat-value" id="ana_attended_students">0</h2>
+          </div>
+        </div>
+        
+        <div class="stat-card stat-danger">
+          <div class="stat-icon">
+            <i class="fa-solid fa-user-xmark"></i>
+          </div>
+          <div class="stat-info">
+            <p class="stat-label">Not Attended</p>
+            <h2 class="stat-value" id="ana_not_attended_students">0</h2>
+          </div>
+        </div>
+        
+        <div class="stat-card stat-warning">
+          <div class="stat-icon">
+            <i class="fa-solid fa-percent"></i>
+          </div>
+          <div class="stat-info">
+            <p class="stat-label">Attendance Rate</p>
+            <h2 class="stat-value" id="ana_attendance_rate">0%</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Student Lists -->
+    <div class="student-lists">
+      <div class="student-list-card attended-list">
+        <div class="list-header">
+          <div class="list-title">
+            <i class="fa-solid fa-user-check"></i>
+            <span>Attended Students (<span id="attended_count">0</span>)</span>
+          </div>
+          <button class="btn success btn-sm" onclick="exportStudentList('attended')">
+            <i class="fa-solid fa-download"></i>
+            <span>Export</span>
+          </button>
+        </div>
+        <div class="search-box" style="margin-bottom: 16px;">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="attendedSearch" placeholder="Search attended students..." onkeyup="filterStudentList('attended')">
+        </div>
+        <div class="student-list" id="attendedList"></div>
+      </div>
+      
+      <div class="student-list-card not-attended-list">
+        <div class="list-header">
+          <div class="list-title">
+            <i class="fa-solid fa-user-xmark"></i>
+            <span>Not Attended Students (<span id="not_attended_count">0</span>)</span>
+          </div>
+          <button class="btn danger btn-sm" onclick="exportStudentList('not-attended')">
+            <i class="fa-solid fa-download"></i>
+            <span>Export</span>
+          </button>
+        </div>
+        <div class="search-box" style="margin-bottom: 16px;">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="notAttendedSearch" placeholder="Search not attended students..." onkeyup="filterStudentList('not-attended')">
+        </div>
+        <div class="student-list" id="notAttendedList"></div>
+      </div>
+    </div>
+    
+  </div>
+  
+  <div id="analyticsEmpty" class="empty-state">
+    <div class="empty-icon">
+      <i class="fa-solid fa-chart-pie"></i>
+    </div>
+    <h4 class="empty-title">No Analytics Available</h4>
+    <p class="empty-text">Select an exam to view detailed analytics and insights</p>
+  </div>
+  
+</div>
+
+<!-- ================= REPORT GENERATION ================= -->
+<div class="card report-area">
+  <h3><i class="fa-solid fa-file-export"></i> Generate Exam Report</h3>
+  
+  <div class="grid">
+    <select id="rep_exam_id"></select>
+    <input id="rep_exam_name" placeholder="Exam Name" readonly>
+    <select id="rep_dept"></select>
+    <select id="rep_year"></select>
+    <select id="rep_section"></select>
+  </div>
+  
+  <button class="btn primary" onclick="generateReport()">
+    <i class="fa-solid fa-rotate"></i>
+    <span>Generate Report</span>
+  </button>
+  <button class="btn success" onclick="downloadExcel()">
+    <i class="fa-solid fa-file-excel"></i>
+    <span>Download Excel</span>
+  </button>
+  <button class="btn secondary" onclick="downloadPDF()">
+    <i class="fa-solid fa-file-pdf"></i>
+    <span>Download PDF</span>
+  </button>
+  
+  <div class="table-scroll">
+    <table id="reportTable">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Roll Number</th>
+          <th>Student Name</th>
+          <th>Total Marks</th>
+          <th>Violations</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  © 2024 KCET - Department of Electronics and Communication Engineering
+</div>
+
+</div>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast">
+  <i class="fa-solid fa-circle-check"></i>
+  <span class="toast-message" id="toastMessage"></span>
+</div>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal" id="confirmModal">
+  <div class="modal-content">
+    <div class="modal-icon">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+    </div>
+    <h3 class="modal-title" id="modalTitle">Confirm Action</h3>
+    <p class="modal-text" id="modalText">Are you sure you want to proceed?</p>
+    <div class="modal-actions">
+      <button class="btn secondary" onclick="closeModal()">
+        <i class="fa-solid fa-xmark"></i>
+        <span>Cancel</span>
+      </button>
+      <button class="btn danger" id="modalConfirmBtn">
+        <i class="fa-solid fa-check"></i>
+        <span>Confirm</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+
+<script>
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbychjIsWyFfKpMR8D4dprb2ud_Ea7ZyEfv613EuoN4lQh-U2NzQ94T8H3upoZMXIkan/exec";
+
+let USERS=[], EXAMS=[], REPORT_DATA=[];
+let ALL_EXAMS_DATA = [];
+let attendedStudentsList = [];
+let notAttendedStudentsList = [];
+
+/* ================= UTILITY FUNCTIONS ================= */
+
+// Show Toast Notification
+function showToast(message, type = 'success') {
+  const toast = document.getElementById('toast');
+  const toastMessage = document.getElementById('toastMessage');
+  const icon = toast.querySelector('i');
+  
+  toastMessage.textContent = message;
+  toast.className = `toast ${type}`;
+  
+  if (type === 'success') {
+    icon.className = 'fa-solid fa-circle-check';
+  } else if (type === 'error') {
+    icon.className = 'fa-solid fa-circle-xmark';
+  } else if (type === 'warning') {
+    icon.className = 'fa-solid fa-triangle-exclamation';
+  }
+  
+  toast.style.display = 'flex';
+  
+  setTimeout(() => {
+    toast.style.display = 'none';
+  }, 3000);
+}
+
+// Show Loading Overlay
+function showLoading() {
+  document.getElementById('loadingOverlay').style.display = 'flex';
+}
+
+// Hide Loading Overlay
+function hideLoading() {
+  document.getElementById('loadingOverlay').style.display = 'none';
+}
+
+// Confirmation Modal
+let confirmCallback = null;
+
+function showConfirmModal(title, message, onConfirm) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalText').textContent = message;
+  document.getElementById('confirmModal').style.display = 'flex';
+  confirmCallback = onConfirm;
+}
+
+function closeModal() {
+  document.getElementById('confirmModal').style.display = 'none';
+  confirmCallback = null;
+}
+
+document.getElementById('modalConfirmBtn').onclick = () => {
+  if (confirmCallback) {
+    confirmCallback();
+  }
+  closeModal();
+};
+
+// Counter Animation
+function animateCounter(id, start, end, duration) {
+  const element = document.getElementById(id);
+  const range = end - start;
+  const increment = range / (duration / 16);
+  let current = start;
+  
+  const timer = setInterval(() => {
+    current += increment;
+    if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+      current = end;
+      clearInterval(timer);
+    }
+    element.textContent = Math.round(current);
+  }, 16);
+}
+
+// Update Dashboard Statistics
+function updateDashboardStats() {
+  const totalExams = EXAMS.length;
+  const activeExams = EXAMS.filter(e => e[10] === 'ENABLED').length;
+  const totalStudents = USERS.length;
+  
+  animateCounter('totalExams', 0, totalExams, 1000);
+  animateCounter('activeExams', 0, activeExams, 1200);
+  animateCounter('totalStudents', 0, totalStudents, 1400);
+}
+
+// Filter Exams
+function filterExams() {
+  const searchTerm = document.getElementById('examSearch').value.toLowerCase();
+  const statusFilter = document.getElementById('statusFilter').value;
+  
+  const filtered = ALL_EXAMS_DATA.filter(ex => {
+    const matchesSearch = ex[0].toLowerCase().includes(searchTerm) || 
+                         ex[1].toLowerCase().includes(searchTerm);
+    const matchesStatus = !statusFilter || ex[10] === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
+  
+  displayExams(filtered);
+}
+
+function displayExams(exams) {
+  const examTable = document.getElementById('examTable');
+  examTable.innerHTML = "";
+  
+  if (exams.length === 0) {
+    examTable.innerHTML = `
+      <tr>
+        <td colspan="6">
+          <div class="empty-state">
+            <div class="empty-icon">
+              <i class="fa-solid fa-inbox"></i>
+            </div>
+            <h4 class="empty-title">No Exams Found</h4>
+            <p class="empty-text">Try adjusting your search or filter criteria</p>
+          </div>
+        </td>
+      </tr>`;
+    return;
+  }
+  
+  exams.forEach(ex => {
+    const statusBadge = ex[10] === 'ENABLED' 
+      ? `<span class="badge success"><i class="fa-solid fa-circle-check"></i> ${ex[10]}</span>`
+      : `<span class="badge danger"><i class="fa-solid fa-circle-xmark"></i> ${ex[10]}</span>`;
+    
+    examTable.innerHTML += `
+      <tr>
+        <td><strong>${ex[0]}</strong></td>
+        <td>${ex[1]}</td>
+        <td>${statusBadge}</td>
+        <td>${formatDateTime(ex[8])}</td>
+        <td>${formatDateTime(ex[9])}</td>
+        <td>
+          <button class="btn primary" style="margin: 0; padding: 10px 16px;" 
+                  onclick='editExam(${JSON.stringify(ex)})'>
+            <i class="fa-solid fa-pen"></i> Edit
+          </button>
+        </td>
+      </tr>`;
+  });
+}
+
+// Format DateTime
+function formatDateTime(dt) {
+  if (!dt) return '-';
+  const date = new Date(dt);
+  return date.toLocaleString('en-IN', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+}
+
+// Form Validation
+function validateExamForm() {
+  const required = [
+    {id: 'exam_id', name: 'Exam ID'},
+    {id: 'exam_name', name: 'Exam Name'},
+    {id: 'partA_count', name: 'Part A Count'},
+    {id: 'partB_count', name: 'Part B Count'},
+    {id: 'duration_min', name: 'Duration'},
+    {id: 'violation_limit', name: 'Violation Limit'}
+  ];
+  
+  for (let field of required) {
+    const value = document.getElementById(field.id).value;
+    if (!value || value.trim() === '') {
+      showToast(`${field.name} is required`, 'error');
+      document.getElementById(field.id).focus();
+      return false;
+    }
+  }
+  
+  return true;
+}
+
+// Clear Form
+function clearExamForm() {
+  ['exam_id', 'exam_name', 'partA_count', 'partB_count', 
+   'duration_min', 'violation_limit', 'start_datetime', 'end_datetime'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('calculator').value = 'YES';
+  document.getElementById('review').value = 'YES';
+  document.getElementById('exam_status').value = 'ENABLED';
+}
+
+/* ================= CREATE EXAM ================= */
+function createExam(){
+ if (!validateExamForm()) return;
+ 
+ showLoading();
+
+ fetch(WEBAPP_URL,{
+  method:"POST",
+  body:new URLSearchParams({action:"getAllExams"})
+ })
+ .then(r=>r.json())
+ .then(exams=>{
+  const exists = exams.some(e => e[0] === exam_id.value);
+
+  if(exists){
+    hideLoading();
+    showToast("Exam ID already exists. Use UPDATE instead.", 'error');
+    return;
+  }
+
+  fetch(WEBAPP_URL,{
+    method:"POST",
+    body:new URLSearchParams({
+      action:"createExam",
+      exam_id:exam_id.value,
+      exam_name:exam_name.value,
+      partA_count:partA_count.value,
+      partB_count:partB_count.value,
+      duration_min:duration_min.value,
+      violation_limit:violation_limit.value,
+      calculator:calculator.value,
+      review:review.value,
+      start_datetime:start_datetime.value,
+      end_datetime:end_datetime.value
+    })
+  })
+  .then(() => {
+    hideLoading();
+    showToast("Exam created successfully!", 'success');
+    clearExamForm();
+    loadExams();
+  })
+  .catch(err => {
+    hideLoading();
+    showToast("Failed to create exam. Please try again.", 'error');
+    console.error(err);
+  });
+ })
+ .catch(err => {
+   hideLoading();
+   showToast("Connection error. Please try again.", 'error');
+   console.error(err);
+ });
+}
+
+/* ================= UPDATE EXAM ================= */
+function updateExam(){
+ if (!exam_id.value) {
+   showToast("Please enter Exam ID to update", 'error');
+   return;
+ }
+ 
+ showLoading();
+ 
+ fetch(WEBAPP_URL,{
+  method:"POST",
+  body:new URLSearchParams({
+   action:"updateExamDetails",
+   exam_id:exam_id.value,
+   exam_name:exam_name.value,
+   partA_count:partA_count.value,
+   partB_count:partB_count.value,
+   duration_min:duration_min.value,
+   violation_limit:violation_limit.value,
+   calculator:calculator.value,
+   review:review.value,
+   start_datetime:start_datetime.value,
+   end_datetime:end_datetime.value,
+   status:exam_status.value
+  })
+ })
+ .then(() => {
+   hideLoading();
+   showToast("Exam updated successfully!", 'success');
+   clearExamForm();
+   loadExams();
+ })
+ .catch(err => {
+   hideLoading();
+   showToast("Failed to update exam. Please try again.", 'error');
+   console.error(err);
+ });
+}
+
+/* ================= LOAD EXAMS ================= */
+function loadExams(){
+ showLoading();
+ 
+ fetch(WEBAPP_URL,{method:"POST",body:new URLSearchParams({action:"getAllExams"})})
+ .then(r=>r.json())
+ .then(d=>{
+   hideLoading();
+   EXAMS = d;
+   ALL_EXAMS_DATA = d;
+   
+   rep_exam_id.innerHTML='<option value="">Select Exam</option>';
+   analytics_exam_id.innerHTML='<option value="">Select Exam for Analytics</option>';
+   
+   d.forEach(ex => {
+     rep_exam_id.innerHTML+=`<option>${ex[0]}</option>`;
+     analytics_exam_id.innerHTML+=`<option value="${ex[0]}">${ex[0]} - ${ex[1]}</option>`;
+   });
+   
+   displayExams(d);
+   updateDashboardStats();
+ })
+ .catch(err => {
+   hideLoading();
+   showToast("Failed to load exams", 'error');
+   console.error(err);
+ });
+}
+
+/* ================= EXAM ANALYTICS ================= */
+async function loadExamAnalytics() {
+  const exam_id = document.getElementById('analytics_exam_id').value;
+  
+  if (!exam_id) {
+    showToast("Please select an exam", 'warning');
+    return;
+  }
+  
+  showLoading();
+  
+  try {
+    // Get exam details
+    const exam = EXAMS.find(e => e[0] === exam_id);
+    if (!exam) {
+      hideLoading();
+      showToast("Exam not found", 'error');
+      return;
+    }
+    
+    // Fetch questions for this exam
+    const questionsResponse = await fetch(WEBAPP_URL, {
+      method: "POST",
+      body: new URLSearchParams({
+        action: "getQuestions",
+        exam_id: exam_id
+      })
+    });
+    const questions = await questionsResponse.json();
+    
+    // Fetch exam mappings
+    const mappingsResponse = await fetch(WEBAPP_URL, {
+      method: "POST",
+      body: new URLSearchParams({
+        action: "getExamMappings",
+        exam_id: exam_id
+      })
+    });
+    const mappings = await mappingsResponse.json();
+    
+    // Fetch results
+    const resultsResponse = await fetch(
+      WEBAPP_URL + "?action=getResults&exam_id=" + encodeURIComponent(exam_id),
+      { method: "POST" }
+    );
+    const results = await resultsResponse.json();
+    
+    // Calculate statistics
+    const partAQuestions = questions.filter(q => q[1] === "PART A").length;
+    const partBQuestions = questions.filter(q => q[1] === "PART B").length;
+    const totalQuestions = questions.length;
+    
+    // Get mapped students
+    const mappedRollNumbers = new Set(mappings.map(m => m[1]));
+    const mappedStudents = USERS.filter(u => mappedRollNumbers.has(u[3]));
+    
+    // Get attended students
+    const attendedRollNumbers = new Set(results.map(r => r[1]));
+    const attendedStudents = mappedStudents.filter(u => attendedRollNumbers.has(u[3]));
+    const notAttendedStudents = mappedStudents.filter(u => !attendedRollNumbers.has(u[3]));
+    
+    // Store for filtering
+    attendedStudentsList = attendedStudents;
+    notAttendedStudentsList = notAttendedStudents;
+    
+    const attendanceRate = mappedStudents.length > 0 
+      ? ((attendedStudents.length / mappedStudents.length) * 100).toFixed(1)
+      : 0;
+    
+    // Update UI
+    animateCounter('ana_partA_count', 0, partAQuestions, 800);
+    animateCounter('ana_partB_count', 0, partBQuestions, 1000);
+    animateCounter('ana_total_questions', 0, totalQuestions, 1200);
+    animateCounter('ana_mapped_students', 0, mappedStudents.length, 1000);
+    animateCounter('ana_attended_students', 0, attendedStudents.length, 1200);
+    animateCounter('ana_not_attended_students', 0, notAttendedStudents.length, 1400);
+    
+    // Update attendance rate
+    setTimeout(() => {
+      document.getElementById('ana_attendance_rate').textContent = attendanceRate + '%';
+    }, 1600);
+    
+    // Display student lists
+    displayStudentList('attended', attendedStudents);
+    displayStudentList('not-attended', notAttendedStudents);
+    
+    // Show analytics content
+    document.getElementById('analyticsContent').style.display = 'block';
+    document.getElementById('analyticsEmpty').style.display = 'none';
+    
+    hideLoading();
+    showToast(`Analytics generated for ${exam_id}`, 'success');
+    
+  } catch (err) {
+    hideLoading();
+    showToast("Failed to load analytics. Please try again.", 'error');
+    console.error(err);
+  }
+}
+
+function displayStudentList(type, students) {
+  const listId = type === 'attended' ? 'attendedList' : 'notAttendedList';
+  const countId = type === 'attended' ? 'attended_count' : 'not_attended_count';
+  const list = document.getElementById(listId);
+  
+  document.getElementById(countId).textContent = students.length;
+  
+  if (students.length === 0) {
+    list.innerHTML = `
+      <div class="empty-list">
+        <i class="fa-solid fa-inbox"></i>
+        <p>No students in this category</p>
+      </div>
+    `;
+    return;
+  }
+  
+  list.innerHTML = students.map((student, index) => {
+    const initials = student[4] ? student[4].split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : '??';
+    const statusText = type === 'attended' ? 'Submitted' : 'Absent';
+    
+    return `
+      <div class="student-item" style="animation-delay: ${index * 0.05}s">
+        <div class="student-info">
+          <div class="student-avatar">${initials}</div>
+          <div class="student-details">
+            <div class="student-name">${student[4] || 'Unknown'}</div>
+            <div class="student-roll">${student[3] || 'N/A'}</div>
+            ${student[5] || student[6] || student[7] ? `
+              <div class="student-dept">
+                ${student[5] ? `<span>${student[5]}</span>` : ''}
+                ${student[6] ? `<span>${student[6]}</span>` : ''}
+                ${student[7] ? `<span>${student[7]}</span>` : ''}
+              </div>
+            ` : ''}
+          </div>
+        </div>
+        <div class="student-status">${statusText}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function filterStudentList(type) {
+  const searchId = type === 'attended' ? 'attendedSearch' : 'notAttendedSearch';
+  const searchTerm = document.getElementById(searchId).value.toLowerCase();
+  const students = type === 'attended' ? attendedStudentsList : notAttendedStudentsList;
+  
+  const filtered = students.filter(student => {
+    const name = (student[4] || '').toLowerCase();
+    const roll = (student[3] || '').toLowerCase();
+    const dept = (student[5] || '').toLowerCase();
+    const year = (student[6] || '').toLowerCase();
+    const section = (student[7] || '').toLowerCase();
+    
+    return name.includes(searchTerm) || 
+           roll.includes(searchTerm) || 
+           dept.includes(searchTerm) ||
+           year.includes(searchTerm) ||
+           section.includes(searchTerm);
+  });
+  
+  displayStudentList(type, filtered);
+}
+
+function exportStudentList(type) {
+  const students = type === 'attended' ? attendedStudentsList : notAttendedStudentsList;
+  const exam_id = document.getElementById('analytics_exam_id').value;
+  
+  if (students.length === 0) {
+    showToast("No students to export", 'warning');
+    return;
+  }
+  
+  // Create CSV content
+  let csv = "Roll No,Name,Department,Year,Section\n";
+  
+  students.forEach(student => {
+    csv += `${student[3] || ''},${student[4] || ''},${student[5] || ''},${student[6] || ''},${student[7] || ''}\n`;
+  });
+  
+  // Download CSV
+  const filename = `${exam_id}_${type}_students_${new Date().toISOString().split('T')[0]}.csv`;
+  downloadCSV(csv, filename);
+  
+  showToast(`${type === 'attended' ? 'Attended' : 'Not Attended'} students list exported`, 'success');
+}
+
+function editExam(ex){
+ exam_id.value=ex[0];
+ exam_name.value=ex[1];
+ partA_count.value=ex[2];
+ partB_count.value=ex[3];
+ duration_min.value=ex[4];
+ violation_limit.value=ex[5];
+ calculator.value=ex[6];
+ review.value=ex[7];
+ start_datetime.value=ex[8];
+ end_datetime.value=ex[9];
+ exam_status.value=ex[10];
+ window.scrollTo({top: 0, behavior: 'smooth'});
+ showToast("Exam loaded for editing", 'success');
+}
+
+/* ================= QUESTIONS ================= */
+function addSingleQuestion(){
+ if (!q_exam_id.value || !q_qid.value || !q_question.value) {
+   showToast("Please fill required fields (Exam ID, Question ID, Question)", 'error');
+   return;
+ }
+ 
+ const q=[{
+  exam_id:q_exam_id.value,part:q_part.value,qid:q_qid.value,
+  question:q_question.value,optA:q_A.value,optB:q_B.value,
+  optC:q_C.value,optD:q_D.value,correct:q_correct.value,image_url:q_image.value
+ }];
+ sendBulkQuestions(q);
+}
+
+function uploadQuestions(){
+ if (!questionFile.files[0]) {
+   showToast("Please select a CSV file", 'warning');
+   return;
+ }
+ showLoading();
+ parseCSV(questionFile.files[0], (data) => {
+   sendBulkQuestions(data);
+ });
+}
+
+function sendBulkQuestions(data){
+ showLoading();
+ fetch(WEBAPP_URL,{method:"POST",
+  body:new URLSearchParams({action:"bulkQuestions",json:JSON.stringify(data)})
+ })
+ .then(() => {
+   hideLoading();
+   showToast(`${data.length} question(s) added successfully!`, 'success');
+   ['q_exam_id', 'q_qid', 'q_question', 'q_A', 'q_B', 'q_C', 'q_D', 'q_correct', 'q_image'].forEach(id => {
+     document.getElementById(id).value = '';
+   });
+   questionFile.value = '';
+   
+   animateCounter('totalQuestions', 0, parseInt(document.getElementById('totalQuestions').textContent) + data.length, 800);
+ })
+ .catch(err => {
+   hideLoading();
+   showToast("Failed to add questions. Please try again.", 'error');
+   console.error(err);
+ });
+}
+
+/* ================= STUDENTS ================= */
+function uploadStudents(){
+ if (!studentFile.files[0]) {
+   showToast("Please select a CSV file", 'warning');
+   return;
+ }
+ 
+ showLoading();
+ parseCSV(studentFile.files[0],data=>{
+  fetch(WEBAPP_URL,{method:"POST",
+   body:new URLSearchParams({action:"bulkStudents",json:JSON.stringify(data)})
+  })
+  .then(() => {
+    hideLoading();
+    showToast(`${data.length} student(s) added successfully!`, 'success');
+    studentFile.value = '';
+    loadUsers();
+  })
+  .catch(err => {
+    hideLoading();
+    showToast("Failed to add students. Please try again.", 'error');
+    console.error(err);
+  });
+ });
+}
+
+function downloadStudentTemplate(){
+ downloadCSV(
+  "email,password,roll_no,name,dept,year,section",
+  "student_upload_template.csv"
+ );
+ showToast("Template downloaded", 'success');
+}
+
+/* ================= MAPPING ================= */
+function uploadMapping(){
+ if (!mapFile.files[0]) {
+   showToast("Please select a CSV file", 'warning');
+   return;
+ }
+ 
+ showLoading();
+ parseCSV(mapFile.files[0],data=>{
+    Promise.all(
+      data.map(m =>
+        fetch(WEBAPP_URL,{
+          method:"POST",
+          body:new URLSearchParams({
+            action:"mapExam",
+            exam_id:m.exam_id,
+            roll_no:m.roll_no||"",
+            dept:m.dept||"",
+            year:m.year||"",
+            section:m.section||""
+          })
+        })
+      )
+    )
+    .then(() => {
+      hideLoading();
+      showToast(`${data.length} mapping(s) completed successfully!`, 'success');
+      mapFile.value = '';
+    })
+    .catch(err => {
+      hideLoading();
+      showToast("Some mappings failed. Please check and try again.", 'error');
+      console.error(err);
+    });
+  });
+}
+
+/* ================= CSV PARSING ================= */
+function parseCSV(file,cb){
+ if(!file){
+   showToast("Please select a CSV file", 'warning');
+   return;
+ }
+ const r=new FileReader();
+ r.onload=e=>{
+  const rows=e.target.result.trim().split("\n");
+  const h=rows.shift().split(",");
+  const d=rows.map(r=>{
+   const o={};
+   r.split(",").forEach((v,i)=>o[h[i]]=v.trim());
+   return o;
+  });
+  cb(d);
+ };
+ r.onerror = () => {
+   hideLoading();
+   showToast("Failed to read file. Please try again.", 'error');
+ };
+ r.readAsText(file);
+}
+
+/* ================= TEMPLATES ================= */
+function downloadQuestionTemplate(){
+ downloadCSV("exam_id,part,qid,question,optA,optB,optC,optD,correct,image_url","question_template.csv");
+ showToast("Template downloaded", 'success');
+}
+
+function downloadMapTemplate(){
+ downloadCSV("exam_id,roll_no,dept,year,section","exam_student_mapping_template.csv");
+ showToast("Template downloaded", 'success');
+}
+
+function downloadCSV(csv,name){
+ const a=document.createElement("a");
+ a.href="data:text/csv;charset=utf-8,"+csv;
+ a.download=name;
+ a.click();
+}
+
+/* ================= LOAD RESULTS ================= */
+function loadResults(){
+ const exam_id = result_exam_id.value.trim();
+
+ if(!exam_id){
+   showToast("Please enter Exam ID", 'warning');
+   return;
+ }
+ 
+ showLoading();
+
+ fetch(
+  WEBAPP_URL + "?action=getResults&exam_id=" + encodeURIComponent(exam_id),
+  { method:"POST" }
+ )
+ .then(r=>r.json())
+ .then(d=>{
+  hideLoading();
+  const resultTable = document.getElementById('resultTable');
+  resultTable.innerHTML="";
+
+  if(!d || d.length===0){
+    resultTable.innerHTML = `
+      <tr>
+        <td colspan='6'>
+          <div class="empty-state">
+            <div class="empty-icon">
+              <i class="fa-solid fa-inbox"></i>
+            </div>
+            <h4 class="empty-title">No Results Found</h4>
+            <p class="empty-text">No submissions for this exam yet</p>
+          </div>
+        </td>
+      </tr>`;
+    return;
+  }
+
+  d.forEach(r=>{
+    const exam   = r[0];
+    const roll   = r[1];
+    const marks  = r[2];
+    const vio    = r[3];
+    const status = r[4];
+    
+    const statusBadge = status === 'SUBMITTED'
+      ? `<span class="badge success"><i class="fa-solid fa-circle-check"></i> ${status}</span>`
+      : `<span class="badge danger"><i class="fa-solid fa-triangle-exclamation"></i> ${status}</span>`;
+
+    resultTable.innerHTML += `
+      <tr>
+        <td><strong>${exam}</strong></td>
+        <td>${roll}</td>
+        <td><strong>${marks}</strong></td>
+        <td><strong style="color: var(--danger);">${vio}</strong></td>
+        <td>${statusBadge}</td>
+        <td>
+          ${
+            status==="SUBMITTED"
+            ? `<button class="btn success" style="margin: 0; padding: 10px 16px;"
+                 onclick="reenable('${exam}','${roll}')">
+                 <i class="fa-solid fa-rotate-right"></i> Re-Enable</button>`
+            : "-"
+          }
+        </td>
+      </tr>`;
+  });
+  
+  showToast(`${d.length} result(s) loaded`, 'success');
+ })
+ .catch(err=>{
+   hideLoading();
+   showToast("Failed to load results. Please try again.", 'error');
+   console.error(err);
+ });
+}
+
+/* ================= RE-ENABLE ================= */
+function reenable(exam_id, roll_no){
+ showConfirmModal(
+   'Re-enable Student?',
+   `Are you sure you want to re-enable ${roll_no} for this exam?`,
+   () => {
+     showLoading();
+     fetch(WEBAPP_URL,{
+      method:"POST",
+      body:new URLSearchParams({
+        action:"unblockStudent",
+        exam_id,
+        roll_no
+      })
+     })
+     .then(() => {
+       hideLoading();
+       showToast("Student re-enabled successfully!", 'success');
+       loadResults();
+     })
+     .catch(err => {
+       hideLoading();
+       showToast("Failed to re-enable student. Please try again.", 'error');
+       console.error(err);
+     });
+   }
+ );
+}
+
+/* ================= LOAD USERS ================= */
+function loadUsers() {
+  fetch(WEBAPP_URL,{
+    method:"POST",
+    body:new URLSearchParams({action:"getAllUsers"})
+  })
+  .then(r=>r.json())
+  .then(d=>{
+    USERS = d;
+
+    const DEPTS = new Set();
+    const YEARS = new Set();
+    const SECTIONS = new Set();
+
+    d.forEach(u=>{
+      if(u[5]) DEPTS.add(u[5]);
+      if(u[6]) YEARS.add(u[6]);
+      if(u[7]) SECTIONS.add(u[7]);
+    });
+
+    rep_dept.innerHTML =
+      '<option value="">All Departments</option>' +
+      [...DEPTS].map(v=>`<option>${v}</option>`).join("");
+
+    rep_year.innerHTML =
+      '<option value="">All Years</option>' +
+      [...YEARS].map(v=>`<option>${v}</option>`).join("");
+
+    rep_section.innerHTML =
+      '<option value="">All Sections</option>' +
+      [...SECTIONS].map(v=>`<option>${v}</option>`).join("");
+    
+    updateDashboardStats();
+  });
+}
+
+loadUsers();
+
+/* ================= REPORT GENERATION ================= */
+rep_exam_id.onchange=()=>{
+ const ex=EXAMS.find(e=>e[0]===rep_exam_id.value);
+ rep_exam_name.value=ex?ex[1]:"";
+};
+
+function generateReport(){
+ if(!rep_exam_id.value){
+   showToast("Please select an exam", 'warning');
+   return;
+ }
+ 
+ showLoading();
+
+ fetch(
+  WEBAPP_URL + "?action=getResults&exam_id=" + rep_exam_id.value,
+  { method:"POST" }
+ )
+ .then(r=>r.json())
+ .then(res=>{
+   hideLoading();
+   REPORT_DATA=[];
+   const tbody = reportTable.querySelector("tbody");
+   tbody.innerHTML="";
+
+   let i = 1;
+
+   res.forEach(r=>{
+     const u = USERS.find(x => x[3] === r[1]);
+     if(!u) return;
+
+     if(rep_dept.value && u[5] !== rep_dept.value) return;
+     if(rep_year.value && u[6] !== rep_year.value) return;
+     if(rep_section.value && u[7] !== rep_section.value) return;
+
+     REPORT_DATA.push([
+       i,
+       r[1],
+       u[4],
+       r[2],
+       r[3]
+     ]);
+
+     tbody.innerHTML += `
+       <tr>
+         <td>${i++}</td>
+         <td><strong>${r[1]}</strong></td>
+         <td>${u[4]}</td>
+         <td><strong>${r[2]}</strong></td>
+         <td><strong style="color: var(--danger);">${r[3]}</strong></td>
+       </tr>`;
+   });
+
+   if(!REPORT_DATA.length){
+     tbody.innerHTML = `
+       <tr>
+         <td colspan='5'>
+           <div class="empty-state">
+             <div class="empty-icon">
+               <i class="fa-solid fa-inbox"></i>
+             </div>
+             <h4 class="empty-title">No Records Found</h4>
+             <p class="empty-text">Try adjusting your filter criteria</p>
+           </div>
+         </td>
+       </tr>`;
+     showToast("No records match the selected filters", 'warning');
+   } else {
+     showToast(`Report generated with ${REPORT_DATA.length} record(s)`, 'success');
+   }
+ })
+ .catch(err => {
+   hideLoading();
+   showToast("Failed to generate report. Please try again.", 'error');
+   console.error(err);
+ });
+}
+
+/* ================= EXCEL EXPORT ================= */
+function downloadExcel(){
+ if(!REPORT_DATA.length){
+   showToast("Please generate report first", 'warning');
+   return;
+ }
+
+ const header = [
+   ["KAMARAJ COLLEGE OF ENGINEERING AND TECHNOLOGY"],
+   [],
+   ["Exam ID", rep_exam_id.value],
+   ["Exam Name", rep_exam_name.value],
+   ["Department", rep_dept.value || "ALL"],
+   ["Year", rep_year.value || "ALL"],
+   ["Section", rep_section.value || "ALL"],
+   [],
+   ["S.No","Roll No","Student Name","Marks","Violations"]
+ ];
+
+ const ws = XLSX.utils.aoa_to_sheet([
+   ...header,
+   ...REPORT_DATA
+ ]);
+
+ const wb = XLSX.utils.book_new();
+ XLSX.utils.book_append_sheet(wb, ws, "Exam Report");
+
+ XLSX.writeFile(wb, "Exam_Report.xlsx");
+ showToast("Excel report downloaded successfully!", 'success');
+}
+
+/* ================= PDF EXPORT ================= */
+function downloadPDF(){
+ if(!REPORT_DATA.length){
+   showToast("Please generate report first", 'warning');
+   return;
+ }
+
+ const { jsPDF } = window.jspdf;
+ const doc = new jsPDF();
+
+ doc.setFont("Times","bold");
+ let y = 15;
+
+ doc.setFontSize(14);
+ doc.text("Kamaraj College of Engineering and Technology",105,y,{align:"center"});
+ y+=8;
+
+ doc.setFont("Times", "bold");
+ doc.setFontSize(12);
+
+ doc.text(
+   `Exam ID: ${rep_exam_id.value} - Exam Name: ${rep_exam_name.value}`,
+   doc.internal.pageSize.getWidth() / 2,
+   y,
+   { align: "center" }
+ );
+
+ y += 8;
+
+ const infoText = 
+   `Department: ${rep_dept.value || "ALL"}   ` +
+   `Section: ${rep_section.value || "ALL"}   ` +
+   `Year: ${rep_year.value || "ALL"}`;
+
+ doc.text(
+   infoText,
+   doc.internal.pageSize.getWidth() / 2,
+   y,
+   { align: "center" }
+ );
+
+ doc.setFont("Times", "normal");
+ y += 8;
+
+ REPORT_DATA.sort((a, b) =>
+   a[1].localeCompare(b[1], undefined, {
+     numeric: true,
+     sensitivity: "base"
+   })
+ );
+
+ REPORT_DATA.forEach((row, index) => {
+   row[0] = index + 1;
+ });
+
+ doc.autoTable({
+   startY: y,
+   head: [["S.No","Roll No","Student Name","Marks","Violations"]],
+   body: REPORT_DATA,
+   styles:{
+     font: "Times",
+     fontSize: 10,
+     halign: "center"
+   },
+   columnStyles: {
+     2: { halign: "left" }
+   },
+   headStyles:{
+     fillColor: [21,101,192]
+   },
+   theme: "grid"
+ });
+
+ doc.save("Exam_Report.pdf");
+ showToast("PDF report downloaded successfully!", 'success');
+}
+
+/* ================= LOGOUT ================= */
+function logout(){
+ showConfirmModal(
+   'Confirm Logout',
+   'Are you sure you want to logout?',
+   () => {
+     sessionStorage.clear();
+     location.href="index.html";
+   }
+ );
+}
+
+// Initialize
+loadExams();
+</script>
+
+</body>
+</html>

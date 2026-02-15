@@ -1,0 +1,946 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam Result - KCET ECE</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #1a237e;
+  --primary-light: #3949ab;
+  --success: #00c853;
+  --success-light: #69f0ae;
+  --warning: #ffa000;
+  --warning-light: #ffca28;
+  --danger: #d32f2f;
+  --danger-light: #ef5350;
+  --info: #0288d1;
+  --text-dark: #1a1a2e;
+  --text-medium: #4a5568;
+  --text-light: #718096;
+  --bg-main: #f7fafc;
+  --bg-card: #ffffff;
+  --border: #e2e8f0;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.16);
+  --shadow-2xl: 0 24px 64px rgba(0, 0, 0, 0.24);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-dark);
+  line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ========== ANIMATED BACKGROUND ========== */
+.bg-decoration {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bg-decoration::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -15%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(26, 35, 126, 0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: float 20s ease-in-out infinite;
+}
+
+.bg-decoration::after {
+  content: '';
+  position: absolute;
+  bottom: -20%;
+  left: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(0, 200, 83, 0.05) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: float 25s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(30px, -30px) rotate(120deg); }
+  66% { transform: translate(-20px, 20px) rotate(240deg); }
+}
+
+/* ========== HEADER ========== */
+header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  color: #fff;
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-lg);
+  animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 28px 32px;
+  text-align: center;
+}
+
+.header-icon {
+  width: 72px;
+  height: 72px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.header-content h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.header-content p {
+  font-size: 15px;
+  opacity: 0.95;
+  margin-top: 8px;
+}
+
+/* ========== CONTAINER ========== */
+.container {
+  max-width: 900px;
+  margin: 48px auto;
+  padding: 0 32px 40px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ========== MAIN CARD ========== */
+.result-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafb 100%);
+  border-radius: 28px;
+  padding: 48px 40px;
+  box-shadow: var(--shadow-2xl);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  position: relative;
+  overflow: hidden;
+  animation: cardSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
+}
+
+@keyframes cardSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.result-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--success), var(--primary));
+  animation: progressBar 1.5s ease-out;
+}
+
+@keyframes progressBar {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* ========== STUDENT INFO ========== */
+.student-section {
+  text-align: center;
+  padding-bottom: 32px;
+  border-bottom: 2px dashed var(--border);
+  margin-bottom: 36px;
+  animation: fadeIn 0.8s ease 0.4s backwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.student-avatar {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border-radius: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  color: #fff;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-lg);
+  animation: avatarPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s backwards;
+}
+
+@keyframes avatarPop {
+  0% {
+    transform: scale(0) rotate(-180deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+
+.student-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 12px 0 8px;
+  letter-spacing: -0.5px;
+}
+
+.student-roll {
+  font-size: 16px;
+  color: var(--text-medium);
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.exam-title {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(26, 35, 126, 0.1), rgba(57, 73, 171, 0.1));
+  padding: 10px 24px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+  border: 1px solid rgba(26, 35, 126, 0.2);
+}
+
+/* ========== STATISTICS GRID ========== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin: 36px 0;
+}
+
+.stat-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px 20px;
+  text-align: center;
+  border: 2px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: statSlideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.stat-card:nth-child(1) { animation-delay: 0.5s; }
+.stat-card:nth-child(2) { animation-delay: 0.6s; }
+.stat-card:nth-child(3) { animation-delay: 0.7s; }
+.stat-card:nth-child(4) { animation-delay: 0.8s; }
+
+@keyframes statSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  transition: transform 0.3s ease;
+}
+
+.stat-card.stat-total::before {
+  background: linear-gradient(90deg, var(--info), var(--primary-light));
+}
+
+.stat-card.stat-answered::before {
+  background: linear-gradient(90deg, var(--success), var(--success-light));
+}
+
+.stat-card.stat-unanswered::before {
+  background: linear-gradient(90deg, var(--warning), var(--warning-light));
+}
+
+.stat-card.stat-violations::before {
+  background: linear-gradient(90deg, var(--danger), var(--danger-light));
+}
+
+.stat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
+}
+
+.stat-card:hover::before {
+  transform: scaleY(2);
+}
+
+.stat-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 12px;
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover .stat-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.stat-card.stat-total .stat-icon {
+  background: linear-gradient(135deg, rgba(2, 136, 209, 0.1), rgba(2, 136, 209, 0.2));
+  color: var(--info);
+}
+
+.stat-card.stat-answered .stat-icon {
+  background: linear-gradient(135deg, rgba(0, 200, 83, 0.1), rgba(0, 200, 83, 0.2));
+  color: var(--success);
+}
+
+.stat-card.stat-unanswered .stat-icon {
+  background: linear-gradient(135deg, rgba(255, 160, 0, 0.1), rgba(255, 160, 0, 0.2));
+  color: var(--warning);
+}
+
+.stat-card.stat-violations .stat-icon {
+  background: linear-gradient(135deg, rgba(211, 47, 47, 0.1), rgba(211, 47, 47, 0.2));
+  color: var(--danger);
+}
+
+.stat-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+}
+
+.stat-card.stat-total .stat-value { color: var(--info); }
+.stat-card.stat-answered .stat-value { color: var(--success); }
+.stat-card.stat-unanswered .stat-value { color: var(--warning); }
+.stat-card.stat-violations .stat-value { color: var(--danger); }
+
+/* ========== MARKS SECTION ========== */
+.marks-section {
+  text-align: center;
+  margin: 40px 0;
+  padding: 36px;
+  background: linear-gradient(135deg, rgba(0, 200, 83, 0.08), rgba(0, 200, 83, 0.12));
+  border-radius: 24px;
+  border: 2px solid rgba(0, 200, 83, 0.3);
+  position: relative;
+  overflow: hidden;
+  animation: fadeIn 0.8s ease 0.9s backwards;
+}
+
+.marks-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.marks-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-medium);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.marks-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 56px;
+  font-weight: 800;
+  color: var(--success);
+  margin: 0;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: countUp 1s ease-out 1s backwards;
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ========== STATUS BADGE ========== */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  margin: 24px 0;
+  box-shadow: var(--shadow-lg);
+  animation: badgePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 1.2s backwards;
+}
+
+@keyframes badgePop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.status-badge.pass {
+  background: linear-gradient(135deg, var(--success), #00897b);
+}
+
+.status-badge.fail {
+  background: linear-gradient(135deg, var(--danger), #c62828);
+}
+
+.status-badge i {
+  font-size: 22px;
+  animation: iconBounce 2s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* ========== CHART SECTION ========== */
+.chart-section {
+  margin: 40px 0;
+  padding: 32px;
+  background: #fff;
+  border-radius: 24px;
+  border: 2px solid var(--border);
+  box-shadow: var(--shadow-md);
+  animation: fadeIn 0.8s ease 1.3s backwards;
+}
+
+.chart-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 24px;
+  text-align: center;
+  letter-spacing: -0.3px;
+}
+
+.chart-container {
+  position: relative;
+  height: 300px;
+}
+
+/* ========== ACTION BUTTONS ========== */
+.action-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 40px;
+  animation: fadeIn 0.8s ease 1.4s backwards;
+}
+
+.btn {
+  padding: 18px 28px;
+  border: none;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.btn i {
+  font-size: 18px;
+  position: relative;
+  z-index: 1;
+}
+
+.btn span {
+  position: relative;
+  z-index: 1;
+}
+
+.btn-review {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+}
+
+.btn-review:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(26, 35, 126, 0.4);
+}
+
+.btn-dashboard {
+  background: linear-gradient(135deg, #546e7a, #78909c);
+}
+
+.btn-dashboard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(84, 110, 122, 0.4);
+}
+
+/* ========== FOOTER ========== */
+.footer {
+  text-align: center;
+  padding: 24px 0;
+  font-size: 14px;
+  color: var(--text-light);
+  margin-top: 40px;
+  border-top: 1px solid var(--border);
+  animation: fadeIn 0.8s ease 1.5s backwards;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 20px 32px;
+    margin: 32px auto;
+  }
+
+  .result-card {
+    padding: 32px 24px;
+    border-radius: 24px;
+  }
+
+  .header-content {
+    padding: 24px 20px;
+  }
+
+  .header-content h1 {
+    font-size: 26px;
+  }
+
+  .student-avatar {
+    width: 80px;
+    height: 80px;
+    font-size: 40px;
+  }
+
+  .student-name {
+    font-size: 24px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .marks-section {
+    padding: 28px 20px;
+  }
+
+  .marks-value {
+    font-size: 48px;
+  }
+
+  .chart-container {
+    height: 250px;
+  }
+
+  .action-buttons {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-value {
+    font-size: 28px;
+  }
+
+  .marks-value {
+    font-size: 40px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Background Decoration -->
+<div class="bg-decoration"></div>
+
+<!-- Header -->
+<header>
+  <div class="header-content">
+    <div class="header-icon">
+      <i class="fa-solid fa-chart-line"></i>
+    </div>
+    <h1>Examination Results</h1>
+    <p>Performance Analysis & Detailed Report</p>
+  </div>
+</header>
+
+<div class="container">
+  <div class="result-card">
+
+    <!-- Student Section -->
+    <div class="student-section">
+      <div class="student-avatar">
+        <i class="fa-solid fa-user-graduate"></i>
+      </div>
+      <h2 class="student-name" id="studentName"></h2>
+      <p class="student-roll" id="studentRoll"></p>
+      <div class="exam-title" id="examInfo"></div>
+    </div>
+
+    <!-- Statistics Grid -->
+    <div class="stats-grid">
+      <div class="stat-card stat-total">
+        <div class="stat-icon">
+          <i class="fa-solid fa-list-check"></i>
+        </div>
+        <p class="stat-label">Total Questions</p>
+        <p class="stat-value" id="totalQ">0</p>
+      </div>
+
+      <div class="stat-card stat-answered">
+        <div class="stat-icon">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <p class="stat-label">Answered</p>
+        <p class="stat-value" id="answered">0</p>
+      </div>
+
+      <div class="stat-card stat-unanswered">
+        <div class="stat-icon">
+          <i class="fa-solid fa-circle-question"></i>
+        </div>
+        <p class="stat-label">Unanswered</p>
+        <p class="stat-value" id="unanswered">0</p>
+      </div>
+
+      <div class="stat-card stat-violations">
+        <div class="stat-icon">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <p class="stat-label">Violations</p>
+        <p class="stat-value" id="violations">0</p>
+      </div>
+    </div>
+
+    <!-- Marks Section -->
+    <div class="marks-section">
+      <p class="marks-label">Marks Scored</p>
+      <h2 class="marks-value" id="marks">0</h2>
+    </div>
+
+    <!-- Status Badge -->
+    <div style="text-align: center;">
+      <div id="statusBadge" class="status-badge"></div>
+    </div>
+
+    <!-- Chart Section -->
+    <div class="chart-section">
+      <h3 class="chart-title">Performance Overview</h3>
+      <div class="chart-container">
+        <canvas id="chart"></canvas>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button class="btn btn-review" onclick="location.href='review.html'">
+        <i class="fa-solid fa-file-lines"></i>
+        <span>Review Answers</span>
+      </button>
+      <button class="btn btn-dashboard" onclick="location.href='student_dashboard.html'">
+        <i class="fa-solid fa-house"></i>
+        <span>Back to Dashboard</span>
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      © 2024 KCET - Department of Electronics and Communication Engineering
+    </div>
+
+  </div>
+</div>
+
+<script>
+const WEBAPP_URL =
+"https://script.google.com/macros/s/AKfycbyjOeC_ggmXAQZhOVQwyEiVhSFLKhSI9SSJfT76-jwpqNf9R_TXEGToplLyyVYGiuEJ/exec";
+
+const user = JSON.parse(sessionStorage.getItem("user"));
+const exam_id = sessionStorage.getItem("exam_id");
+
+document.getElementById("studentName").innerHTML = user.name;
+document.getElementById("studentRoll").innerHTML = `<i class="fa-solid fa-id-card"></i> ${user.roll}`;
+document.getElementById("examInfo").innerHTML = `<i class="fa-solid fa-clipboard"></i> Exam ID: ${exam_id}`;
+
+Promise.all([
+ fetch(WEBAPP_URL,{
+  method:"POST",
+  body:new URLSearchParams({action:"getResults", exam_id})
+ }).then(r=>r.json()),
+
+ fetch(WEBAPP_URL,{
+  method:"POST",
+  body:new URLSearchParams({
+    action:"getResponses",
+    exam_id,
+    roll_no:user.roll
+  })
+ }).then(r=>r.json())
+])
+.then(([results, responses])=>{
+
+ const r = results.find(x=>x[1]===user.roll);
+ if(!r){ 
+   alert("Result not found"); 
+   return; 
+ }
+
+ const marks = r[2];
+ const vio = r[3];
+ const status = r[4];
+
+ const responseRow = responses[0];
+ const answers = responseRow ? JSON.parse(responseRow[2]) : {};
+
+ const totalQ = Object.keys(answers).length;
+ let answered = 0, unanswered = 0;
+
+ Object.values(answers).forEach(a=>{
+   if(a === "") unanswered++;
+   else answered++;
+ });
+
+ // Animate counters
+ animateValue("totalQ", 0, totalQ, 1000);
+ animateValue("answered", 0, answered, 1200);
+ animateValue("unanswered", 0, unanswered, 1400);
+ animateValue("violations", 0, vio, 1600);
+ animateValue("marks", 0, marks, 1800);
+
+ // Status Badge
+ const statusBadge = document.getElementById("statusBadge");
+ if(status === "SUBMITTED") {
+   statusBadge.innerHTML = '<i class="fa-solid fa-circle-check"></i> Submitted Successfully';
+   statusBadge.className = "status-badge pass";
+ } else {
+   statusBadge.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> ' + status;
+   statusBadge.className = "status-badge fail";
+ }
+
+ // Create Chart
+ const ctx = document.getElementById("chart").getContext("2d");
+ 
+ new Chart(ctx, {
+  type: "doughnut",
+  data: {
+   labels: ["Answered", "Unanswered", "Violations"],
+   datasets: [{
+    data: [answered, unanswered, vio],
+    backgroundColor: [
+      "rgba(0, 200, 83, 0.8)",
+      "rgba(255, 160, 0, 0.8)",
+      "rgba(211, 47, 47, 0.8)"
+    ],
+    borderColor: [
+      "#00c853",
+      "#ffa000",
+      "#d32f2f"
+    ],
+    borderWidth: 3,
+    hoverOffset: 10
+   }]
+  },
+  options: {
+   responsive: true,
+   maintainAspectRatio: false,
+   plugins: {
+    legend: {
+     position: 'bottom',
+     labels: {
+      padding: 20,
+      font: {
+       size: 14,
+       weight: '600',
+       family: "'DM Sans', sans-serif"
+      },
+      color: '#4a5568',
+      usePointStyle: true,
+      pointStyle: 'circle'
+     }
+    },
+    tooltip: {
+     backgroundColor: 'rgba(26, 35, 126, 0.95)',
+     padding: 12,
+     titleFont: {
+      size: 14,
+      weight: '600'
+     },
+     bodyFont: {
+      size: 13
+     },
+     cornerRadius: 8,
+     displayColors: true
+    }
+   },
+   animation: {
+    animateRotate: true,
+    animateScale: true,
+    duration: 1500,
+    easing: 'easeInOutQuart'
+   }
+  }
+ });
+});
+
+// Counter Animation Function
+function animateValue(id, start, end, duration) {
+  const element = document.getElementById(id);
+  const range = end - start;
+  const increment = range / (duration / 16);
+  let current = start;
+  
+  const timer = setInterval(() => {
+    current += increment;
+    if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+      current = end;
+      clearInterval(timer);
+    }
+    element.textContent = Math.round(current);
+  }, 16);
+}
+</script>
+
+</body>
+</html>

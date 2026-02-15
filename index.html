@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- ===== Open Graph for WhatsApp / Social Preview ===== -->
+<meta property="og:title" content="KCET - ECE Online Assessment">
+<meta property="og:description"
+content="A secure window-proctored online assessment platform for KCET ECE students, ensuring exam integrity by preventing window switching and unauthorized actions.">
+<meta property="og:image"
+content="https://alwynrajivs.github.io/ECE_Exam_Portal_V1/image1.png">
+<meta property="og:url" content="https://tinyurl.com/EC-ASS">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KCET ECE - Student Login</title>
+
+<style>
+/* ================= MODERN RESET & VARIABLES ================= */
+:root {
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --primary-light: #818cf8;
+  --secondary: #8b5cf6;
+  --accent: #06b6d4;
+  --success: #10b981;
+  --danger: #ef4444;
+  --dark: #1e293b;
+  --light: #f8fafc;
+  --gray: #64748b;
+  --border: #e2e8f0;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+}
+
+/* ================= ANIMATED BACKGROUND ================= */
+.bg-shapes {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.shape {
+  position: absolute;
+  opacity: 0.15;
+  animation: float 20s infinite ease-in-out;
+}
+
+.shape-1 {
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(45deg, #fff, transparent);
+  border-radius: 50%;
+  top: -150px;
+  left: -150px;
+  animation: float 15s infinite ease-in-out, rotate 30s linear infinite;
+}
+
+.shape-2 {
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(135deg, #fff, transparent);
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  bottom: -100px;
+  right: -100px;
+  animation: float 18s infinite ease-in-out reverse, morph 8s infinite ease-in-out;
+}
+
+.shape-3 {
+  width: 150px;
+  height: 150px;
+  background: linear-gradient(225deg, #fff, transparent);
+  border-radius: 50%;
+  top: 50%;
+  right: 10%;
+  animation: float 12s infinite ease-in-out, pulse 4s infinite ease-in-out;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  25% { transform: translateY(-30px) translateX(20px); }
+  50% { transform: translateY(-60px) translateX(-10px); }
+  75% { transform: translateY(-30px) translateX(-20px); }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes morph {
+  0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+  50% { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.15; }
+  50% { transform: scale(1.2); opacity: 0.25; }
+}
+
+/* ================= MAIN CONTAINER ================= */
+.login-container {
+  width: 100%;
+  max-width: 450px;
+  position: relative;
+  z-index: 1;
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================= CARD DESIGN ================= */
+.login-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 24px;
+  padding: 48px 40px;
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ================= HEADER SECTION ================= */
+.login-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.logo-wrapper {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border-radius: 20px;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-xl);
+  animation: logoFloat 3s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.logo-icon {
+  font-size: 40px;
+}
+
+.login-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.login-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+
+.login-header p {
+  font-size: 15px;
+  color: var(--gray);
+  font-weight: 400;
+}
+
+/* ================= FORM ELEMENTS ================= */
+.input-group {
+  margin-bottom: 24px;
+  position: relative;
+  animation: slideInLeft 0.5s ease backwards;
+}
+
+.input-group:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.input-group:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.input-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 8px;
+  transition: color 0.3s ease;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: var(--gray);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  border-radius: 12px;
+  border: 2px solid var(--border);
+  font-size: 15px;
+  background: #fff;
+  color: var(--dark);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 500;
+  position: relative;
+}
+
+.input-group input::placeholder {
+  color: #cbd5e1;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1), 0 0 20px rgba(99, 102, 241, 0.2);
+  background: #fff;
+  transform: translateY(-2px);
+}
+
+.input-group input:focus ~ .input-icon {
+  color: var(--primary);
+  transform: translateY(-50%) scale(1.1);
+  animation: iconBounce 0.6s ease;
+}
+
+@keyframes iconBounce {
+  0%, 100% { transform: translateY(-50%) scale(1.1); }
+  50% { transform: translateY(-50%) scale(1.2); }
+}
+
+/* ================= PASSWORD TOGGLE ================= */
+.password-wrapper {
+  position: relative;
+}
+
+.toggle-eye {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 20px;
+  color: var(--gray);
+  transition: color 0.3s ease;
+  user-select: none;
+  padding: 8px;
+  z-index: 2;
+}
+
+.toggle-eye:hover {
+  color: var(--primary);
+}
+
+
+
+/* ================= LOGIN BUTTON ================= */
+.login-btn {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+  position: relative;
+  overflow: hidden;
+  animation: slideInUp 0.5s ease 0.4s backwards;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+}
+
+.login-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.5);
+}
+
+.login-btn:hover::before {
+  left: 100%;
+}
+
+.login-btn:active::after {
+  width: 300px;
+  height: 300px;
+  transition: width 0.3s, height 0.3s;
+}
+
+.login-btn:active {
+  transform: translateY(0);
+}
+
+.login-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  animation: buttonPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes buttonPulse {
+  0%, 100% { box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4); }
+  50% { box-shadow: 0 4px 20px rgba(99, 102, 241, 0.6); }
+}
+
+/* Success state animation */
+.login-btn.success {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  animation: successPulse 0.6s ease;
+}
+
+@keyframes successPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* ================= LOADER ================= */
+.loader {
+  display: none;
+  margin-top: 24px;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(99, 102, 241, 0.15);
+  border-top: 4px solid var(--primary);
+  border-right: 4px solid var(--secondary);
+  border-radius: 50%;
+  animation: spin 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+  margin: 0 auto 12px;
+  position: relative;
+}
+
+.spinner::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  border: 3px solid transparent;
+  border-top: 3px solid var(--accent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: spin 0.6s linear infinite reverse;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loader span {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+  animation: textPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes textPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ================= DIVIDER ================= */
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 32px 0;
+  color: var(--gray);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.divider::before {
+  margin-right: 16px;
+}
+
+.divider::after {
+  margin-left: 16px;
+}
+
+/* ================= INFO SECTION ================= */
+.info-section {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 24px;
+  border-left: 4px solid var(--primary);
+  animation: slideInRight 0.5s ease 0.5s backwards;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.info-section p {
+  font-size: 13px;
+  color: var(--dark);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.info-section strong {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* ================= FOOTER ================= */
+.footer {
+  margin-top: 32px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--gray);
+  animation: fadeInUp 0.5s ease 0.6s backwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.footer a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: var(--primary-dark);
+}
+
+/* ================= MOBILE RESPONSIVE ================= */
+@media (max-width: 480px) {
+  body {
+    padding: 16px;
+  }
+
+  .login-card {
+    padding: 32px 24px;
+    border-radius: 20px;
+  }
+
+  .login-header h1 {
+    font-size: 24px;
+  }
+
+  .login-header h2 {
+    font-size: 16px;
+  }
+
+  .logo-wrapper {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 20px;
+  }
+
+  .logo-icon {
+    font-size: 36px;
+  }
+
+  .input-group {
+    margin-bottom: 20px;
+  }
+
+  .login-btn {
+    padding: 14px;
+    font-size: 15px;
+  }
+}
+
+/* ================= SMOOTH TRANSITIONS ================= */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Animated Background Shapes -->
+<div class="bg-shapes">
+  <div class="shape shape-1"></div>
+  <div class="shape shape-2"></div>
+  <div class="shape shape-3"></div>
+</div>
+
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="logo-wrapper">
+        <span class="logo-icon">🎓</span>
+      </div>
+      <h1>KCET</h1>
+      <h2>Department of ECE</h2>
+      <p>Online Assessment Portal</p>
+    </div>
+
+    <form onsubmit="login(event)">
+      <div class="input-group">
+        <label for="email">Email Address</label>
+        <div class="input-wrapper">
+          <input 
+            type="text" 
+            id="email" 
+            placeholder="student@kcet.edu"
+            autocomplete="email"
+            required
+          >
+          <span class="input-icon">📧</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <div class="password-wrapper">
+          <div class="input-wrapper">
+            <input 
+              type="password" 
+              id="password" 
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            >
+            <span class="input-icon">🔒</span>
+          </div>
+          <span class="toggle-eye" onclick="togglePassword()" title="Show/Hide Password">
+            <span id="eye-icon">👁️</span>
+          </span>
+        </div>
+      </div>
+
+      <button type="submit" class="login-btn" id="loginBtn">
+        Login to Portal
+      </button>
+    </form>
+
+    <div class="loader" id="loader">
+      <div class="spinner"></div>
+      <span>Authenticating your credentials...</span>
+    </div>
+
+    <div class="info-section">
+      <p>
+        <strong>🔒 Secure Access:</strong> This is a proctored examination portal. 
+        Ensure stable internet connection before logging in.
+      </p>
+    </div>
+
+    <div class="footer">
+      © 2024 KCET - Department of ECE<br>
+      <a href="#" onclick="alert('Contact: ece@kcet.edu'); return false;">Need Help?</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const WEBAPP_URL =
+"https://script.google.com/macros/s/AKfycbyjOeC_ggmXAQZhOVQwyEiVhSFLKhSI9SSJfT76-jwpqNf9R_TXEGToplLyyVYGiuEJ/exec";
+
+function togglePassword() {
+  const pwd = document.getElementById("password");
+  const eyeIcon = document.getElementById("eye-icon");
+  
+  if (pwd.type === "password") {
+    pwd.type = "text";
+    eyeIcon.textContent = "🙈";
+  } else {
+    pwd.type = "password";
+    eyeIcon.textContent = "👁️";
+  }
+}
+
+function login(event) {
+  event.preventDefault();
+  
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const loginBtn = document.getElementById("loginBtn");
+  const loader = document.getElementById("loader");
+
+  if (!email || !password) {
+    showNotification("Please enter both email and password", "error");
+    return;
+  }
+
+  loginBtn.disabled = true;
+  loginBtn.textContent = "Authenticating...";
+  loader.style.display = "block";
+
+  fetch(WEBAPP_URL, {
+    method: "POST",
+    body: new URLSearchParams({
+      action: "login",
+      email: email,
+      password: password
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    loader.style.display = "none";
+    
+    if (data.ok) {
+      sessionStorage.setItem("user", JSON.stringify(data));
+      
+      // Show success state on button with animation
+      loginBtn.classList.add('success');
+      loginBtn.style.background = "linear-gradient(135deg, #10b981, #059669)";
+      loginBtn.innerHTML = "✓ Login Successful!";
+      
+      // Auto redirect after brief delay
+      setTimeout(() => {
+        window.location.href = data.role === "admin" ? "admin.html" : "student_dashboard.html";
+      }, 800);
+    } else {
+      loginBtn.disabled = false;
+      loginBtn.textContent = "Login to Portal";
+      showNotification("Invalid email or password. Please try again.", "error");
+    }
+  })
+  .catch(() => {
+    loader.style.display = "none";
+    loginBtn.disabled = false;
+    loginBtn.textContent = "Login to Portal";
+    showNotification("Connection error. Please check your internet and try again.", "error");
+  });
+}
+
+function showNotification(message, type) {
+  // Simple alert for now - you can implement a custom notification system
+  alert(message);
+}
+
+// Enable Enter key to submit
+document.addEventListener('DOMContentLoaded', function() {
+  const inputs = document.querySelectorAll('input');
+  inputs.forEach(input => {
+    input.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        login(e);
+      }
+    });
+  });
+});
+</script>
+
+</body>
+</html>

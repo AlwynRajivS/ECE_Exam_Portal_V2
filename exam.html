@@ -1,0 +1,1965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Examination - KCET ECE</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
+
+<style>
+:root {
+  --primary: #1a237e;
+  --primary-light: #3949ab;
+  --success: #00c853;
+  --warning: #ffa000;
+  --danger: #d32f2f;
+  --info: #0288d1;
+  --text-dark: #1a1a2e;
+  --text-medium: #4a5568;
+  --text-light: #718096;
+  --bg-main: #f7fafc;
+  --bg-card: #ffffff;
+  --border: #e2e8f0;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.16);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+body {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-dark);
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* ========== HEADER ========== */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: #fff;
+  box-shadow: var(--shadow-lg);
+  animation: slideDown 0.6s ease;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  gap: 16px;
+}
+
+.topbar .left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.topbar .left i {
+  font-size: 20px;
+  animation: iconBounce 2s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.topbar .right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ========== STATUS CHIPS ========== */
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: var(--shadow-md);
+  animation: chipFadeIn 0.6s ease backwards;
+}
+
+.chip:nth-child(1) { animation-delay: 0.2s; }
+.chip:nth-child(2) { animation-delay: 0.3s; }
+
+@keyframes chipFadeIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.chip.time {
+  background: linear-gradient(135deg, #0288d1, #03a9f4);
+  color: #fff;
+}
+
+.chip.time.warning {
+  background: linear-gradient(135deg, var(--warning), #ffb300);
+  animation: timePulse 1s ease-in-out infinite;
+}
+
+@keyframes timePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.chip.vio {
+  background: linear-gradient(135deg, var(--danger), #e53935);
+  color: #fff;
+}
+
+.chip span {
+  font-size: 18px;
+  font-weight: 800;
+  font-family: 'Playfair Display', serif;
+}
+
+.calc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 18px;
+}
+
+.calc-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+/* ========== PROGRESS BAR ========== */
+.progress {
+  height: 6px;
+  background: rgba(26, 35, 126, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.progress span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--success), #00897b);
+  width: 0%;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.progress span::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ========== MAIN LAYOUT ========== */
+.main {
+  display: flex;
+  min-height: calc(100vh - 80px);
+  animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ========== QUESTION BOX ========== */
+.qbox {
+  flex: 1;
+  background: var(--bg-card);
+  padding: 40px;
+  overflow-y: auto;
+}
+
+#loading {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.loading-spinner {
+  width: 60px;
+  height: 60px;
+  border: 5px solid rgba(26, 35, 126, 0.1);
+  border-top: 5px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 24px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* ========== QUESTION CONTENT ========== */
+#question {
+  animation: questionSlide 0.4s ease;
+}
+
+@keyframes questionSlide {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.section {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(26, 35, 126, 0.1), rgba(26, 35, 126, 0.15));
+  color: var(--primary);
+  padding: 8px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 20px;
+  border: 2px solid rgba(26, 35, 126, 0.2);
+}
+
+#question h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 20px 0 24px;
+  line-height: 1.6;
+}
+
+.qimg {
+  max-width: 100%;
+  height: auto;
+  margin: 24px 0;
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+  border: 3px solid var(--border);
+  transition: transform 0.3s ease;
+}
+
+.qimg:hover {
+  transform: scale(1.02);
+}
+
+/* ========== OPTIONS ========== */
+.option {
+  background: linear-gradient(135deg, #f8f9fa, #fff);
+  padding: 18px 20px;
+  border-radius: 14px;
+  margin: 16px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 2px solid var(--border);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-size: 15px;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+}
+
+.option::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background: var(--primary);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.option:hover {
+  transform: translateX(6px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary);
+}
+
+.option:hover::before {
+  transform: scaleY(1);
+}
+
+.option.selected {
+  background: linear-gradient(135deg, var(--success), #00897b);
+  color: #fff;
+  border-color: var(--success);
+  transform: scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 200, 83, 0.3);
+}
+
+.option.selected::before {
+  background: #fff;
+  transform: scaleY(1);
+}
+
+/* ========== CONTROLS ========== */
+.controls {
+  margin-top: 40px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.5s, height 0.5s;
+}
+
+.btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+}
+
+.btn:active {
+  transform: translateY(-1px);
+}
+
+.btn i {
+  font-size: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.btn span {
+  position: relative;
+  z-index: 1;
+}
+
+.next {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+}
+
+.mark {
+  background: linear-gradient(135deg, var(--warning), #ffb300);
+}
+
+.submit {
+  background: linear-gradient(135deg, var(--danger), #e53935);
+}
+
+.submit:disabled {
+  background: #b0bec5;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ========== LEGEND ========== */
+.legend {
+  margin-top: 32px;
+  padding: 20px;
+  background: var(--bg-main);
+  border-radius: 14px;
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  border: 2px solid var(--border);
+}
+
+.legend span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-medium);
+}
+
+.legend i {
+  font-size: 12px;
+}
+
+/* ========== PALETTE ========== */
+.palette {
+  width: 300px;
+  background: linear-gradient(135deg, #ffffff, #f8fafb);
+  padding: 24px 20px;
+  border-left: 2px solid var(--border);
+  overflow-y: auto;
+  box-shadow: inset 2px 0 8px rgba(0, 0, 0, 0.03);
+}
+
+.palette-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--border);
+}
+
+.palette-title i {
+  font-size: 18px;
+}
+
+.part-section {
+  margin-bottom: 28px;
+  animation: partSlideIn 0.6s ease backwards;
+}
+
+.part-section:nth-child(2) { animation-delay: 0.1s; }
+.part-section:nth-child(3) { animation-delay: 0.2s; }
+
+@keyframes partSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.part-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: #fff;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.part-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 3s infinite;
+}
+
+.part-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.part-header-left i {
+  width: 24px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.part-header-right {
+  font-size: 11px;
+  opacity: 0.9;
+  position: relative;
+  z-index: 1;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.palette span {
+  width: 100%;
+  aspect-ratio: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  color: #fff;
+  background: linear-gradient(135deg, #b0bec5, #90a4ae);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: var(--shadow-sm);
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.palette span::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.4s, height 0.4s;
+}
+
+.palette span:hover::before {
+  width: 100%;
+  height: 100%;
+}
+
+.palette span:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: var(--shadow-md);
+}
+
+.palette span:active {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.palette span.answered {
+  background: linear-gradient(135deg, var(--success), #00897b);
+  border-color: var(--success);
+  animation: answerPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes answerPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.palette span.review {
+  background: linear-gradient(135deg, var(--warning), #ffb300);
+  border-color: var(--warning);
+  animation: reviewPulse 0.4s ease;
+}
+
+@keyframes reviewPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.palette span.current {
+  border: 3px solid var(--primary);
+  box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.2);
+}
+
+/* ========== MODAL ========== */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  animation: overlayFadeIn 0.3s ease;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-box {
+  background: linear-gradient(135deg, #fff, #f8f9fa);
+  border-radius: 24px;
+  padding: 40px 36px;
+  max-width: 450px;
+  width: 90%;
+  text-align: center;
+  box-shadow: var(--shadow-xl);
+  border: 2px solid var(--border);
+  animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modalPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, var(--danger), #e53935);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  color: #fff;
+  margin-bottom: 24px;
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.7); }
+  50% { box-shadow: 0 0 0 20px rgba(211, 47, 47, 0); }
+}
+
+.modal-box h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0 0 16px 0;
+}
+
+.modal-box p {
+  font-size: 15px;
+  color: var(--text-medium);
+  margin-bottom: 32px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* ========== PROCTOR OVERLAY ========== */
+#proctorOverlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(198, 40, 40, 0.97), rgba(211, 47, 47, 0.97));
+  color: #fff;
+  display: none;
+  z-index: 300;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+
+#proctorOverlay.active {
+  display: flex;
+  animation: proctorPulse 0.3s ease;
+}
+
+@keyframes proctorPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.95; }
+}
+
+#proctorOverlay .content {
+  max-width: 600px;
+  padding: 40px;
+}
+
+#proctorOverlay .warning-icon {
+  font-size: 100px;
+  margin-bottom: 24px;
+  animation: warningShake 0.5s ease-in-out;
+}
+
+@keyframes warningShake {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-10deg); }
+  75% { transform: rotate(10deg); }
+}
+
+#proctorOverlay h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  font-weight: 800;
+  margin: 0 0 16px 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#proctorOverlay p {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ========== CALCULATOR ========== */
+.calculator {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 320px;
+  background: linear-gradient(135deg, #0f1113, #1c1f22);
+  color: #fff;
+  border-radius: 24px;
+  padding: 20px;
+  display: none;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+  z-index: 250;
+  border: 2px solid #2b2f33;
+  animation: calcSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes calcSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.casio-head {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 13px;
+  color: #e0e0e0;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #2b2f33;
+}
+
+.casio-screen {
+  background: #e6f3c6;
+  border: 3px solid #9eb37a;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 16px;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.casio-screen input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: #000;
+  font-family: 'Courier New', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  text-align: right;
+  outline: none;
+}
+
+.casio-screen .mode {
+  font-size: 11px;
+  font-weight: 700;
+  color: #2e7d32;
+  margin-top: 4px;
+}
+
+.casio-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.casio-grid button {
+  background: #2b2f33;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 3px 0 #111;
+  transition: all 0.2s ease;
+}
+
+.casio-grid button:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #000;
+}
+
+.casio-grid button.shift {
+  background: #616161;
+  color: #ffeb3b;
+}
+
+.casio-grid button.eq {
+  background: linear-gradient(135deg, var(--success), #00897b);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* ========== FOOTER ========== */
+.footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 13px;
+  color: var(--text-light);
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 900px) {
+  .main {
+    flex-direction: column;
+  }
+
+  .palette {
+    width: 100%;
+    border-left: none;
+    border-top: 2px solid var(--border);
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+  
+  .part-section {
+    margin-bottom: 24px;
+  }
+  
+  .part-header {
+    font-size: 12px;
+    padding: 10px 14px;
+  }
+  
+  .palette span {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 600px) {
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 16px;
+  }
+
+  .topbar .right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .qbox {
+    padding: 24px 20px;
+  }
+
+  .controls {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .calculator {
+    width: 280px;
+    right: 10px;
+    bottom: 10px;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  
+  .part-header {
+    font-size: 13px;
+    padding: 10px 14px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Header -->
+<header>
+  <div class="topbar">
+    <div class="left">
+      <i class="fa-solid fa-user-graduate"></i>
+      <span id="studentInfo">Student Name</span>
+    </div>
+    <div class="right">
+      <div class="chip time" id="timerChip">
+        <i class="fa-solid fa-clock"></i>
+        <span id="timer">00:00</span>
+      </div>
+      <div class="chip vio">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span id="vio">0 / 0</span>
+      </div>
+      <button id="calcBtn" class="calc-btn" onclick="toggleCalc()" style="display:none">
+        <i class="fa-solid fa-calculator"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Progress Bar -->
+<div class="progress">
+  <span id="bar"></span>
+</div>
+
+<!-- Main Content -->
+<div class="main">
+  <!-- Question Box -->
+  <div class="qbox">
+    <!-- Loading State -->
+    <div id="loading">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">⏳ Loading questions... Please wait</div>
+    </div>
+
+    <!-- Question Content -->
+    <div id="question"></div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button class="btn mark" onclick="markReview()">
+        <i class="fa-solid fa-bookmark"></i>
+        <span>Mark for Review</span>
+      </button>
+      <button class="btn next" onclick="nextQ()">
+        <i class="fa-solid fa-arrow-right"></i>
+        <span>Next Question</span>
+      </button>
+      <button id="submitBtn" class="btn submit" onclick="confirmSubmit()" disabled>
+        <i class="fa-solid fa-paper-plane"></i>
+        <span>Submit Exam</span>
+      </button>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend">
+      <span><i class="fa-solid fa-circle" style="color:#b0bec5"></i> Unanswered</span>
+      <span><i class="fa-solid fa-circle" style="color:var(--success)"></i> Answered</span>
+      <span><i class="fa-solid fa-circle" style="color:var(--warning)"></i> Review</span>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      © 2024 KCET - Department of Electronics and Communication Engineering
+    </div>
+  </div>
+
+  <!-- Question Palette -->
+  <div class="palette">
+    <div class="palette-title">
+      <i class="fa-solid fa-grip"></i>
+      <!--<span>Question Navigator</span>-->
+    </div>
+    
+    <!-- Part A Section -->
+    <div class="part-section">
+      <div class="part-header">
+        <div class="part-header-left">
+          <i class="fa-solid fa-a"></i>
+          <span>Part A</span>
+        </div>
+        <div class="part-header-right">1 Mark</div>
+      </div>
+      <div class="palette-grid" id="paletteA"></div>
+    </div>
+    
+    <!-- Part B Section -->
+    <div class="part-section">
+      <div class="part-header">
+        <div class="part-header-left">
+          <i class="fa-solid fa-b"></i>
+          <span>Part B</span>
+        </div>
+        <div class="part-header-right">2 Marks</div>
+      </div>
+      <div class="palette-grid" id="paletteB"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Submit Confirmation Modal -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <div class="modal-icon">
+      <i class="fa-solid fa-paper-plane"></i>
+    </div>
+    <h3>Submit Examination?</h3>
+    <p>Are you sure you want to submit your exam? This action cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="btn next" onclick="closeModal()" style="flex:1">
+        <i class="fa-solid fa-xmark"></i>
+        <span>Cancel</span>
+      </button>
+      <button class="btn submit" onclick="submitExam()" style="flex:1">
+        <i class="fa-solid fa-check"></i>
+        <span>Submit</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Proctor Overlay -->
+<div id="proctorOverlay">
+  <div class="content">
+    <div class="warning-icon">⚠️</div>
+    <h2>Exam Security Alert</h2>
+    <p id="proctorMsg"></p>
+  </div>
+</div>
+
+<!-- Calculator -->
+<div class="calculator" id="calculator">
+  <div class="casio-head">
+    <span>KCET ECE</span>
+    <span>CALCULATOR</span>
+  </div>
+
+  <div class="casio-screen">
+    <input id="calcScreen" readonly>
+    <div class="mode" id="mode">DEG</div>
+  </div>
+
+  <div class="casio-grid">
+    <button class="shift" onclick="toggleShift()">SHIFT</button>
+    <button onclick="toggleAngle()">DRG</button>
+    <button onclick="clearCalc()">AC</button>
+    <button onclick="del()">DEL</button>
+
+    <button onclick="fn('sin')">sin</button>
+    <button onclick="fn('cos')">cos</button>
+    <button onclick="fn('tan')">tan</button>
+    <button onclick="fn('log')">log</button>
+
+    <button onclick="fn('ln')">ln</button>
+    <button onclick="calc('(')">(</button>
+    <button onclick="calc(')')">)</button>
+    <button onclick="calc('^')">xʸ</button>
+
+    <button onclick="calc('7')">7</button>
+    <button onclick="calc('8')">8</button>
+    <button onclick="calc('9')">9</button>
+    <button onclick="calc('/')">÷</button>
+
+    <button onclick="calc('4')">4</button>
+    <button onclick="calc('5')">5</button>
+    <button onclick="calc('6')">6</button>
+    <button onclick="calc('*')">×</button>
+
+    <button onclick="calc('1')">1</button>
+    <button onclick="calc('2')">2</button>
+    <button onclick="calc('3')">3</button>
+    <button onclick="calc('-')">−</button>
+
+    <button onclick="calc('0')">0</button>
+    <button onclick="calc('.')">.</button>
+    <button onclick="ans()">Ans</button>
+    <button onclick="calc('+')">+</button>
+
+    <button onclick="calc('pi')">π</button>
+    <button onclick="calc('e')">e</button>
+    <button onclick="sqrt()">√</button>
+    <button class="eq" onclick="calculate()">=</button>
+
+    <button onclick="memAdd()">M+</button>
+    <button onclick="memSub()">M-</button>
+    <button onclick="memRecall()">MR</button>
+    <button onclick="memClear()">MC</button>
+  </div>
+</div>
+
+<script>
+/* ========== INITIALIZATION ========== */
+let timerStarted = false;
+let examLoaded = false;
+let isSubmitting = false;
+
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxmFdZlBq4m_7SvJtVF9NbyGC-c_of2aqokQtyg81aH97WPo6AT56VvwKYGG_tz4XEq/exec";
+
+const user = JSON.parse(sessionStorage.getItem("user"));
+const exam_id = sessionStorage.getItem("exam_id");
+studentInfo.innerText = `${user.name} (${user.roll})`;
+
+let questions = [], index = 0, answers = {}, violations = 0;
+let violationLog = [], duration = 0, limit = 0, partA = 0, partB = 0;
+
+const overlay = document.getElementById("proctorOverlay");
+const proctorMsg = document.getElementById("proctorMsg");
+
+/* ========== AUDIO & AI ASSISTANT DETECTION ========== */
+
+// Detect and block audio playback
+let audioViolationCount = 0;
+const originalAudioPlay = HTMLAudioElement.prototype.play;
+HTMLAudioElement.prototype.play = function() {
+  audioViolationCount++;
+  violate("Audio Playback Attempt");
+  return Promise.reject(new DOMException("Audio blocked during exam", "NotAllowedError"));
+};
+
+// Detect Web Speech API (Voice assistants)
+if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const originalStart = SpeechRecognition.prototype.start;
+  SpeechRecognition.prototype.start = function() {
+    violate("Voice Assistant Attempt");
+    throw new DOMException("Speech recognition blocked during exam", "NotAllowedError");
+  };
+}
+
+// Detect Media Devices (Camera/Microphone for AI assistants)
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  const originalGetUserMedia = navigator.mediaDevices.getUserMedia;
+  navigator.mediaDevices.getUserMedia = function() {
+    violate("Camera/Microphone Access Attempt");
+    return Promise.reject(new DOMException("Media devices blocked during exam", "NotAllowedError"));
+  };
+}
+
+// Block Web Audio API
+try {
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  if (AudioContext) {
+    window.AudioContext = function() {
+      violate("Audio Context Creation Attempt");
+      throw new Error("AudioContext blocked during exam");
+    };
+    window.webkitAudioContext = window.AudioContext;
+  }
+} catch (e) {
+  console.log("Audio context already restricted");
+}
+
+// Detect Picture-in-Picture (used by some AI overlays)
+document.addEventListener('enterpictureinpicture', (e) => {
+  e.preventDefault();
+  violate("Picture-in-Picture Attempt");
+  if (document.pictureInPictureElement) {
+    document.exitPictureInPicture();
+  }
+});
+
+// Block Screen Sharing API (used by AI screen readers)
+if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
+  const originalGetDisplayMedia = navigator.mediaDevices.getDisplayMedia;
+  navigator.mediaDevices.getDisplayMedia = function() {
+    violate("Screen Sharing Attempt");
+    return Promise.reject(new DOMException("Screen sharing blocked during exam", "NotAllowedError"));
+  };
+}
+
+// Detect Chrome Extensions (many AI assistants run as extensions)
+let extensionCheckInterval = setInterval(() => {
+  // Check for common AI assistant extension patterns
+  const suspiciousElements = document.querySelectorAll('[class*="extension"], [id*="extension"], [class*="assistant"], [id*="assistant"]');
+  if (suspiciousElements.length > 0) {
+    violate("Suspicious Extension Detected");
+  }
+}, 5000);
+
+// Detect overlay elements that might be AI assistants
+const overlayObserver = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    mutation.addedNodes.forEach((node) => {
+      if (node.nodeType === 1) { // Element node
+        const style = window.getComputedStyle(node);
+        const zIndex = parseInt(style.zIndex);
+        const position = style.position;
+        
+        // Detect high z-index overlays (common for AI assistants)
+        if ((position === 'fixed' || position === 'absolute') && zIndex > 500 && zIndex !== 1000 && node.id !== 'proctorOverlay' && node.id !== 'calculator' && node.id !== 'modal') {
+          violate("Unauthorized Overlay Detected");
+          node.remove();
+        }
+      }
+    });
+  });
+});
+
+overlayObserver.observe(document.body, {
+  childList: true,
+  subtree: true
+});
+
+// Detect iframe injections (used by some AI tools)
+const iframeObserver = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    mutation.addedNodes.forEach((node) => {
+      if (node.nodeName === 'IFRAME' && !node.hasAttribute('data-allowed')) {
+        violate("Unauthorized iFrame Detected");
+        node.remove();
+      }
+    });
+  });
+});
+
+iframeObserver.observe(document.body, {
+  childList: true,
+  subtree: true
+});
+
+// Monitor for suspicious console commands (AI tools might inject scripts)
+const originalConsoleLog = console.log;
+console.log = function(...args) {
+  // Still allow logging but monitor for injection patterns
+  originalConsoleLog.apply(console, args);
+};
+
+// Detect Clipboard API abuse (AI tools reading questions)
+let clipboardReadAttempts = 0;
+if (navigator.clipboard && navigator.clipboard.readText) {
+  const originalReadText = navigator.clipboard.readText;
+  navigator.clipboard.readText = function() {
+    clipboardReadAttempts++;
+    if (clipboardReadAttempts > 2) {
+      violate("Excessive Clipboard Read Attempts");
+    }
+    return Promise.reject(new DOMException("Clipboard read blocked during exam", "NotAllowedError"));
+  };
+}
+
+// Detect Web Workers (some AI tools use background workers)
+const originalWorker = window.Worker;
+window.Worker = function() {
+  violate("Web Worker Creation Attempt");
+  throw new Error("Web Workers blocked during exam");
+};
+
+// Monitor for suspicious network requests (AI API calls)
+const originalFetch = window.fetch;
+window.fetch = function(url, options) {
+  const urlStr = url.toString().toLowerCase();
+  
+  // Allow only the exam backend URL
+  if (!urlStr.includes('script.google.com') && !urlStr.includes('googleapis.com')) {
+    violate("Unauthorized Network Request");
+    return Promise.reject(new Error("External requests blocked during exam"));
+  }
+  
+  return originalFetch.apply(this, arguments);
+};
+
+// Similarly monitor XMLHttpRequest
+const originalXHROpen = XMLHttpRequest.prototype.open;
+XMLHttpRequest.prototype.open = function(method, url) {
+  const urlStr = url.toString().toLowerCase();
+  
+  if (!urlStr.includes('script.google.com') && !urlStr.includes('googleapis.com')) {
+    violate("Unauthorized AJAX Request");
+    throw new Error("External AJAX blocked during exam");
+  }
+  
+  return originalXHROpen.apply(this, arguments);
+};
+
+/* ========== FULLSCREEN ENFORCEMENT ========== */
+function forceFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(() => {});
+  }
+}
+
+document.addEventListener("DOMContentLoaded", forceFullscreen);
+
+// Force fullscreen on any click if not already in fullscreen
+document.addEventListener("click", () => {
+  if (!document.fullscreenElement && examLoaded) {
+    forceFullscreen();
+  }
+});
+
+/* ========== ENHANCED VIOLATIONS ========== */
+async function violate(type, auto = false) {
+  violations++;
+  vio.innerText = `${violations} / ${limit}`;
+
+  violationLog.push({
+    type,
+    time: new Date().toLocaleString()
+  });
+
+  proctorMsg.innerText = `Violation: ${type} | Remaining: ${limit - violations}`;
+  overlay.classList.add("active");
+  setTimeout(() => overlay.classList.remove("active"), 2000);
+
+  // Save current state immediately
+  saveState();
+
+  try {
+    await fetch(WEBAPP_URL, {
+      method: "POST",
+      body: new URLSearchParams({
+        action: "violation",
+        exam_id: exam_id,
+        roll_no: user.roll,
+        type: type
+      })
+    });
+  } catch (e) {
+    console.error("Violation log failed", e);
+  }
+
+  // Check if max violations reached
+  if (violations >= limit) {
+    // Save all current answers before auto-submit
+    saveState();
+    
+    // Show warning
+    proctorMsg.innerText = "Maximum violations reached. Auto-submitting exam...";
+    overlay.classList.add("active");
+    
+    // Wait 2 seconds then submit
+    setTimeout(() => {
+      autoSubmitFromViolation();
+    }, 2000);
+  }
+}
+
+/* ========== PROCTOR EVENTS ========== */
+
+// Exit fullscreen
+document.addEventListener("fullscreenchange", () => {
+  if (!document.fullscreenElement) {
+    violate("Exit Fullscreen");
+  }
+});
+
+// Visibility change (tab switch, minimize, notifications)
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    // User left the page/tab - log violation and save state
+    saveState();
+    violate("Tab Switch / Window Hidden");
+  } else {
+    // User returned to the page/tab - force fullscreen again immediately
+    setTimeout(() => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {
+          console.log("Fullscreen request denied on return");
+        });
+      }
+    }, 100);
+    
+    // Try again after 500ms if first attempt failed
+    setTimeout(() => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      }
+    }, 500);
+  }
+});
+
+// Window blur (Alt+Tab, CMD+Tab)
+window.addEventListener("blur", () => {
+  saveState();
+  violate("Window Switched / Lost Focus");
+});
+
+// Window focus - force fullscreen when returning
+window.addEventListener("focus", () => {
+  if (!document.fullscreenElement) {
+    // Aggressive fullscreen re-entry
+    setTimeout(() => {
+      document.documentElement.requestFullscreen().catch(() => {
+        console.log("Fullscreen request denied on focus");
+      });
+    }, 100);
+  }
+});
+
+// Copy, cut, paste prevention
+["copy", "cut", "paste", "contextmenu"].forEach(e => {
+  document.addEventListener(e, ev => {
+    ev.preventDefault();
+    violate(e.toUpperCase() + " Attempt");
+  });
+});
+
+// Keyboard shortcuts prevention
+document.addEventListener("keydown", (e) => {
+  // Prevent F12, Ctrl+Shift+I, Ctrl+Shift+C (DevTools)
+  if (e.key === "F12" || 
+      (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "C" || e.key === "J")) ||
+      (e.metaKey && e.altKey && (e.key === "I" || e.key === "C" || e.key === "J"))) {
+    e.preventDefault();
+    violate("Developer Tools Attempt");
+  }
+  
+  // Prevent Ctrl+U, Ctrl+S (View Source, Save)
+  if ((e.ctrlKey || e.metaKey) && (e.key === "u" || e.key === "s")) {
+    e.preventDefault();
+    violate("View Source / Save Attempt");
+  }
+  
+  // Prevent Print Screen
+  if (e.key === "PrintScreen") {
+    e.preventDefault();
+    violate("Screenshot Attempt");
+  }
+});
+
+// Prevent page reload/refresh
+window.addEventListener("beforeunload", (e) => {
+  if (isSubmitting) return;
+  
+  if (questions.length > 0) {
+    // Save state before potential reload
+    saveState();
+    violate("Page Reload Attempt");
+    e.preventDefault();
+    e.returnValue = "";
+  }
+  
+  // Cleanup observers
+  if (overlayObserver) overlayObserver.disconnect();
+  if (iframeObserver) iframeObserver.disconnect();
+  if (extensionCheckInterval) clearInterval(extensionCheckInterval);
+});
+
+/* ========== EXAM LOADING ========== */
+fetch(WEBAPP_URL, {
+  method: "POST",
+  body: new URLSearchParams({
+    action: "getExamMeta",
+    exam_id
+  })
+})
+.then(r => r.json())
+.then(meta => {
+  if (meta.error) {
+    alert(meta.error);
+    return;
+  }
+
+  duration = Number(meta.duration) * 60;
+  limit = Number(meta.violation_limit);
+  partA = Number(meta.partA);
+  partB = Number(meta.partB);
+  
+  vio.innerText = `0 / ${limit}`;
+
+  // Calculator control
+  const calcPermission = String(meta.calc || meta.calculator || "NO").trim().toUpperCase();
+  if (calcPermission === "YES") {
+    calcBtn.style.display = "inline-flex";
+  } else {
+    calcBtn.style.display = "none";
+    calculator.style.display = "none";
+  }
+
+  return fetch(WEBAPP_URL, {
+    method: "POST",
+    body: new URLSearchParams({
+      action: "getQuestions",
+      exam_id
+    })
+  });
+})
+.then(r => r.json())
+.then(allQ => {
+  if (!Array.isArray(allQ) || allQ.length === 0) {
+    alert("No questions found");
+    return;
+  }
+
+  const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
+  const partAQuestions = allQ.filter(q => q[1] === "PART A");
+  const partBQuestions = allQ.filter(q => q[1] === "PART B");
+
+  const A = shuffle(partAQuestions).slice(0, partA);
+  const B = shuffle(partBQuestions).slice(0, partB);
+  questions = A.concat(B);
+
+  if (!questions.length) {
+    alert("Question set empty");
+    return;
+  }
+
+  document.getElementById("loading").style.display = "none";
+  examLoaded = true;
+  drawPalette();
+  restoreState();
+  loadQ();
+  startTimer();
+})
+.catch(err => {
+  console.error(err);
+  if (!examLoaded) {
+    alert("Failed to load exam. Please try again.");
+  }
+});
+
+/* ========== QUESTION LOADING ========== */
+function loadQ() {
+  if (index < 0 || index >= questions.length) {
+    index = 0;
+  }
+
+  const q = questions[index];
+
+  question.innerHTML = `
+    <span class="section">${q[1]}</span>
+    <h3>Q${index + 1}. ${escapeHTML(q[3])}</h3>
+    ${q[9] ? `<img class="qimg" src="${q[9]}" alt="Question Image">` : ""}
+    ${["A", "B", "C", "D"].map((o, i) => `
+      <div class="option ${answers[index]?.ans === o ? 'selected' : ''}" onclick="selectAns('${o}')">
+        <strong>${o}.</strong> ${escapeHTML(q[4 + i])}
+      </div>
+    `).join("")}
+  `;
+
+  submitBtn.disabled = index !== questions.length - 1;
+  bar.style.width = ((index + 1) / questions.length * 100) + "%";
+  
+  // Update palette current highlight
+  document.querySelectorAll('.palette span').forEach(s => s.classList.remove('current'));
+  const currentPalette = document.getElementById("p" + index);
+  if (currentPalette) {
+    currentPalette.classList.add("current");
+  }
+}
+
+function selectAns(a) {
+  answers[index] = {
+    qid: questions[index][2],
+    ans: a
+  };
+
+  const p = document.getElementById("p" + index);
+  if (p) {
+    p.classList.add("answered");
+    p.classList.remove("review");
+  }
+
+  // Save immediately when answer is selected
+  saveState();
+  
+  // Reload question to show selected state
+  loadQ();
+}
+
+function escapeHTML(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+/* ========== PALETTE ========== */
+function drawPalette() {
+  const paletteA = document.getElementById("paletteA");
+  const paletteB = document.getElementById("paletteB");
+  
+  paletteA.innerHTML = "";
+  paletteB.innerHTML = "";
+  
+  questions.forEach((q, i) => {
+    const span = document.createElement("span");
+    span.id = "p" + i;
+    span.textContent = i + 1;
+    
+    // Highlight current question
+    if (i === index) {
+      span.classList.add("current");
+    }
+    
+    span.onclick = () => {
+      // Remove current highlight from all
+      document.querySelectorAll('.palette span').forEach(s => s.classList.remove('current'));
+      
+      index = i;
+      // Save state when navigating via palette
+      saveState();
+      loadQ();
+      
+      // Add current highlight
+      span.classList.add("current");
+    };
+    
+    // Add to Part A or Part B based on question type
+    if (q[1] === "PART A") {
+      paletteA.appendChild(span);
+    } else {
+      paletteB.appendChild(span);
+    }
+  });
+}
+
+function markReview() {
+  document.getElementById("p" + index).classList.add("review");
+  // Save when marking for review
+  saveState();
+}
+
+function nextQ() {
+  if (index < questions.length - 1) {
+    index++;
+    // Save state when moving to next question
+    saveState();
+    loadQ();
+  }
+}
+
+/* ========== TIMER ========== */
+let timerRef = null;
+
+function startTimer() {
+  if (timerStarted) return;
+  timerStarted = true;
+
+  timerRef = setInterval(() => {
+    const m = Math.floor(duration / 60);
+    const s = duration % 60;
+    timer.innerText = `${m}:${String(s).padStart(2, "0")}`;
+    
+    // Warning effect when time is low
+    if (duration <= 300) { // 5 minutes
+      document.getElementById("timerChip").classList.add("warning");
+    }
+    
+    duration--;
+    saveState();
+    if (duration < 0) submitExam();
+  }, 1000);
+}
+
+/* ========== SUBMIT ========== */
+function confirmSubmit() {
+  modal.style.display = "flex";
+}
+
+function closeModal() {
+  modal.style.display = "none";
+}
+
+function submitExam() {
+  if (isSubmitting) return;
+  isSubmitting = true;
+
+  // Clear timer
+  clearInterval(timerRef);
+  
+  // Final save
+  saveState();
+
+  const finalAnswers = {};
+  questions.forEach((q, i) => {
+    finalAnswers[String(q[2]).trim()] = answers[i]?.ans || "";
+  });
+
+  const formData = new URLSearchParams();
+  formData.append("action", "submitExam");
+  formData.append("exam_id", exam_id);
+  formData.append("roll_no", user.roll);
+  formData.append("answers_json", JSON.stringify(finalAnswers));
+  formData.append("violation_log", JSON.stringify(violationLog));
+  formData.append("total_violations", violations);
+  formData.append("status", "SUBMITTED");
+
+  // Disable beforeunload
+  window.onbeforeunload = null;
+
+  fetch(WEBAPP_URL, {
+    method: "POST",
+    body: formData
+  })
+  .then(() => {
+    location.href = "summary.html";
+  })
+  .catch(err => {
+    console.error("Submit failed", err);
+    alert("Submission failed. Please contact exam admin.");
+    isSubmitting = false;
+  });
+}
+
+/* ========== AUTO SUBMIT FROM VIOLATION ========== */
+function autoSubmitFromViolation() {
+  if (isSubmitting) return;
+  isSubmitting = true;
+
+  // Stop timer
+  clearInterval(timerRef);
+  
+  // Save final state
+  saveState();
+
+  // Gather all answers (including partial/unanswered)
+  const finalAnswers = {};
+  questions.forEach((q, i) => {
+    finalAnswers[String(q[2]).trim()] = answers[i]?.ans || "";
+  });
+
+  // Prepare submission data with AUTO_SUBMITTED status
+  const formData = new URLSearchParams();
+  formData.append("action", "submitExam");
+  formData.append("exam_id", exam_id);
+  formData.append("roll_no", user.roll);
+  formData.append("answers_json", JSON.stringify(finalAnswers));
+  formData.append("violation_log", JSON.stringify(violationLog));
+  formData.append("total_violations", violations);
+  formData.append("status", "AUTO_SUBMITTED"); // Mark as auto-submitted due to violations
+
+  // Disable beforeunload handler
+  window.onbeforeunload = null;
+
+  // Submit to backend
+  fetch(WEBAPP_URL, {
+    method: "POST",
+    body: formData
+  })
+  .then(() => {
+    // Small delay to ensure backend processes
+    setTimeout(() => {
+      location.href = "summary.html";
+    }, 300);
+  })
+  .catch(err => {
+    console.error("Auto-submit failed", err);
+    // Force redirect even on error to prevent cheating
+    setTimeout(() => {
+      location.href = "summary.html";
+    }, 500);
+  });
+}
+
+/* ========== STATE MANAGEMENT ========== */
+function saveState() {
+  try {
+    const qSignature = questions.map(q => String(q[2]).trim()).join(",");
+    
+    // Save comprehensive state
+    sessionStorage.setItem("qSignature", qSignature);
+    sessionStorage.setItem("answers", JSON.stringify(answers || {}));
+    sessionStorage.setItem("index", String(index));
+    sessionStorage.setItem("timeLeft", String(duration));
+    sessionStorage.setItem("violations", String(violations));
+    sessionStorage.setItem("violationLog", JSON.stringify(violationLog || []));
+    sessionStorage.setItem("lastSaved", new Date().toISOString());
+    
+    // Store answered count for recovery
+    const answeredCount = Object.keys(answers).filter(k => answers[k]?.ans).length;
+    sessionStorage.setItem("answeredCount", String(answeredCount));
+    
+    // Store exam metadata for recovery
+    sessionStorage.setItem("exam_partA", String(partA));
+    sessionStorage.setItem("exam_partB", String(partB));
+    sessionStorage.setItem("exam_limit", String(limit));
+    
+  } catch (e) {
+    console.error("saveState failed", e);
+  }
+}
+
+function restoreState() {
+  const savedSig = sessionStorage.getItem("qSignature");
+  const currentSig = questions.map(q => q[2]).join(",");
+
+  // If signatures don't match, it's a different exam - clear state
+  if (savedSig !== currentSig) {
+    sessionStorage.removeItem("answers");
+    sessionStorage.removeItem("index");
+    sessionStorage.removeItem("timeLeft");
+    sessionStorage.removeItem("violations");
+    sessionStorage.removeItem("violationLog");
+    sessionStorage.removeItem("answeredCount");
+    answers = {};
+    index = 0;
+    violations = 0;
+    violationLog = [];
+    return;
+  }
+
+  // Restore all state
+  if (sessionStorage.getItem("answers")) {
+    answers = JSON.parse(sessionStorage.getItem("answers"));
+    index = Number(sessionStorage.getItem("index") || 0);
+    duration = Number(sessionStorage.getItem("timeLeft") || duration);
+    violations = Number(sessionStorage.getItem("violations") || 0);
+    
+    // Restore violation log
+    try {
+      const savedLog = sessionStorage.getItem("violationLog");
+      if (savedLog) {
+        violationLog = JSON.parse(savedLog);
+      }
+    } catch (e) {
+      console.error("Failed to restore violation log", e);
+      violationLog = [];
+    }
+    
+    vio.innerText = `${violations} / ${limit}`;
+    
+    // Update palette to show answered questions
+    setTimeout(() => {
+      Object.keys(answers).forEach(i => {
+        const p = document.getElementById("p" + i);
+        if (p && answers[i]?.ans) {
+          p.classList.add("answered");
+        }
+      });
+    }, 100);
+    
+    console.log(`Restored state: ${Object.keys(answers).length} answers, ${violations} violations`);
+  }
+}
+
+/* ========== CALCULATOR ========== */
+let SHIFT = false;
+let ANGLE = "DEG";
+let MEMORY = 0;
+let ANSWER = 0;
+
+function toggleCalc() {
+  calculator.style.display = calculator.style.display === "block" ? "none" : "block";
+}
+
+function toggleShift() {
+  SHIFT = !SHIFT;
+}
+
+function toggleAngle() {
+  ANGLE = ANGLE === "DEG" ? "RAD" : ANGLE === "RAD" ? "GRAD" : "DEG";
+  document.getElementById("mode").innerText = ANGLE;
+}
+
+function calc(v) {
+  calcScreen.value += v;
+}
+
+function fn(f) {
+  if (SHIFT) {
+    if (f === "sin") calcScreen.value += "asin(";
+    if (f === "cos") calcScreen.value += "acos(";
+    if (f === "tan") calcScreen.value += "atan(";
+    SHIFT = false;
+  } else {
+    calcScreen.value += f + "(";
+  }
+}
+
+function sqrt() {
+  calcScreen.value += "sqrt(";
+}
+
+function del() {
+  calcScreen.value = calcScreen.value.slice(0, -1);
+}
+
+function clearCalc() {
+  calcScreen.value = "";
+}
+
+function ans() {
+  calcScreen.value += ANSWER;
+}
+
+function memAdd() { MEMORY += Number(calcScreen.value || 0); }
+function memSub() { MEMORY -= Number(calcScreen.value || 0); }
+function memRecall() { calcScreen.value += MEMORY; }
+function memClear() { MEMORY = 0; }
+
+function calculate() {
+  try {
+    let scope = {
+      sin: x => math.sin(conv(x)),
+      cos: x => math.cos(conv(x)),
+      tan: x => math.tan(conv(x)),
+      asin: x => math.asin(x),
+      acos: x => math.acos(x),
+      atan: x => math.atan(x),
+      log: x => math.log10(x),
+      ln: x => math.log(x),
+      pi: math.pi,
+      e: math.e,
+      sqrt: x => math.sqrt(x)
+    };
+    let res = math.evaluate(calcScreen.value, scope);
+    ANSWER = res;
+    calcScreen.value = res;
+  } catch {
+    calcScreen.value = "Error";
+  }
+}
+
+function conv(x) {
+  if (ANGLE === "DEG") return math.unit(x, "deg");
+  if (ANGLE === "GRAD") return math.unit(x * 0.9, "deg");
+  return x;
+}
+</script>
+
+</body>
+</html>
