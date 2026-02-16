@@ -6,7 +6,7 @@
 <title>Admin Dashboard - KCET ECE</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root {
@@ -22,13 +22,13 @@
   --text-dark: #1a1a2e;
   --text-medium: #4a5568;
   --text-light: #718096;
-  --bg-main: #f7fafc;
+  --bg-main: #e3f2fd;
   --bg-card: #ffffff;
-  --border: #e2e8f0;
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
-  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.16);
+  --border: #bbdefb;
+  --shadow-sm: 0 2px 8px rgba(26, 35, 126, 0.08);
+  --shadow-md: 0 4px 16px rgba(26, 35, 126, 0.12);
+  --shadow-lg: 0 8px 32px rgba(26, 35, 126, 0.16);
+  --shadow-xl: 0 16px 48px rgba(26, 35, 126, 0.20);
 }
 
 * {
@@ -38,82 +38,26 @@
 }
 
 body {
-  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Poppins', sans-serif;
   background: var(--bg-main);
   color: var(--text-dark);
   line-height: 1.6;
-  overflow-x: hidden;
-}
-
-/* ========== ANIMATED BACKGROUND ========== */
-.bg-decoration {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.bg-decoration::before {
-  content: '';
-  position: absolute;
-  top: -20%;
-  right: -10%;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(26, 35, 126, 0.05) 0%, transparent 70%);
-  border-radius: 50%;
-  animation: float 20s ease-in-out infinite;
-}
-
-.bg-decoration::after {
-  content: '';
-  position: absolute;
-  bottom: -15%;
-  left: -10%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(0, 191, 165, 0.04) 0%, transparent 70%);
-  border-radius: 50%;
-  animation: float 25s ease-in-out infinite reverse;
-}
-
-@keyframes float {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  33% { transform: translate(30px, -30px) rotate(120deg); }
-  66% { transform: translate(-20px, 20px) rotate(240deg); }
 }
 
 /* ========== HEADER ========== */
 header {
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
   color: #fff;
-  padding: 0;
   position: sticky;
   top: 0;
   z-index: 100;
   box-shadow: var(--shadow-xl);
-  animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .header-content {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 24px 32px;
+  padding: 20px 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -127,44 +71,33 @@ header {
 }
 
 .header-icon {
-  width: 56px;
-  height: 56px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  border-radius: 16px;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  animation: iconBounce 2s ease-in-out infinite;
-}
-
-@keyframes iconBounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  font-size: 24px;
 }
 
 .header-title h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 700;
   margin: 0;
-  letter-spacing: -0.5px;
 }
 
 .header-title p {
   font-size: 13px;
   opacity: 0.9;
-  margin: 0;
 }
 
 .logout-btn {
-  padding: 12px 24px;
-  background: rgba(255, 255, 255, 0.15);
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.2);
   border: 2px solid rgba(255, 255, 255, 0.3);
   color: #fff;
-  border-radius: 12px;
+  border-radius: 10px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -174,7 +107,7 @@ header {
 }
 
 .logout-btn:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
 }
 
@@ -183,47 +116,29 @@ header {
   max-width: 1400px;
   margin: 0 auto;
   padding: 40px 32px;
-  position: relative;
-  z-index: 1;
 }
 
-/* ========== STATISTICS GRID ========== */
+/* ========== ENHANCED STATISTICS GRID ========== */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
   margin-bottom: 40px;
 }
 
 .stat-card {
   background: linear-gradient(135deg, #ffffff 0%, #f8fafb 100%);
-  border-radius: 20px;
-  padding: 28px 24px;
+  border-radius: 16px;
+  padding: 32px 24px;
   display: flex;
   align-items: center;
   gap: 20px;
   box-shadow: var(--shadow-lg);
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  border: 2px solid transparent;
   position: relative;
   overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  animation: statSlideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-}
-
-.stat-card:nth-child(1) { animation-delay: 0.1s; }
-.stat-card:nth-child(2) { animation-delay: 0.2s; }
-.stat-card:nth-child(3) { animation-delay: 0.3s; }
-.stat-card:nth-child(4) { animation-delay: 0.4s; }
-
-@keyframes statSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-30px) scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  transition: all 0.4s ease;
+  min-height: 140px;
 }
 
 .stat-card::before {
@@ -236,29 +151,15 @@ header {
   transition: width 0.3s ease;
 }
 
-.stat-card.stat-primary::before {
-  background: linear-gradient(180deg, var(--primary), var(--primary-light));
-}
-
-.stat-card.stat-success::before {
-  background: linear-gradient(180deg, var(--success), #00897b);
-}
-
-.stat-card.stat-warning::before {
-  background: linear-gradient(180deg, var(--warning), #ffb300);
-}
-
-.stat-card.stat-info::before {
-  background: linear-gradient(180deg, var(--info), #03a9f4);
-}
-
-.stat-card.stat-danger::before {
-  background: linear-gradient(180deg, var(--danger), #c62828);
-}
+.stat-card.stat-primary::before { background: var(--primary); }
+.stat-card.stat-success::before { background: var(--success); }
+.stat-card.stat-warning::before { background: var(--warning); }
+.stat-card.stat-info::before { background: var(--info); }
 
 .stat-card:hover {
   transform: translateY(-8px);
   box-shadow: var(--shadow-xl);
+  border-color: var(--accent);
 }
 
 .stat-card:hover::before {
@@ -269,12 +170,13 @@ header {
 .stat-icon {
   width: 70px;
   height: 70px;
-  border-radius: 16px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 32px;
   transition: transform 0.3s ease;
+  flex-shrink: 0;
 }
 
 .stat-card:hover .stat-icon {
@@ -282,95 +184,125 @@ header {
 }
 
 .stat-card.stat-primary .stat-icon {
-  background: linear-gradient(135deg, rgba(26, 35, 126, 0.1), rgba(26, 35, 126, 0.2));
+  background: rgba(26, 35, 126, 0.15);
   color: var(--primary);
 }
 
 .stat-card.stat-success .stat-icon {
-  background: linear-gradient(135deg, rgba(0, 200, 83, 0.1), rgba(0, 200, 83, 0.2));
+  background: rgba(0, 200, 83, 0.15);
   color: var(--success);
 }
 
 .stat-card.stat-warning .stat-icon {
-  background: linear-gradient(135deg, rgba(255, 160, 0, 0.1), rgba(255, 160, 0, 0.2));
+  background: rgba(255, 160, 0, 0.15);
   color: var(--warning);
 }
 
 .stat-card.stat-info .stat-icon {
-  background: linear-gradient(135deg, rgba(2, 136, 209, 0.1), rgba(2, 136, 209, 0.2));
+  background: rgba(2, 136, 209, 0.15);
   color: var(--info);
-}
-
-.stat-card.stat-danger .stat-icon {
-  background: linear-gradient(135deg, rgba(211, 47, 47, 0.1), rgba(211, 47, 47, 0.2));
-  color: var(--danger);
 }
 
 .stat-info {
   flex: 1;
+  min-width: 0;
 }
 
 .stat-label {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 700;
   color: var(--text-light);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
   margin-bottom: 8px;
 }
 
 .stat-value {
-  font-family: 'Playfair Display', serif;
-  font-size: 36px;
+  font-size: 42px;
   font-weight: 800;
   margin: 0;
   line-height: 1;
+  color: var(--text-dark);
 }
 
-.stat-card.stat-primary .stat-value {
-  color: var(--primary);
-}
-
-.stat-card.stat-success .stat-value {
-  color: var(--success);
-}
-
-.stat-card.stat-warning .stat-value {
-  color: var(--warning);
-}
-
-.stat-card.stat-info .stat-value {
-  color: var(--info);
-}
-
-.stat-card.stat-danger .stat-value {
-  color: var(--danger);
-}
-
-/* ========== CARD ========== */
-.card {
-  background: linear-gradient(135deg, #ffffff 0%, #f8fafb 100%);
-  border-radius: 24px;
-  padding: 32px;
-  margin-bottom: 32px;
+/* ========== TAB NAVIGATION ========== */
+.tab-container {
+  background: var(--bg-card);
+  border-radius: 20px;
   box-shadow: var(--shadow-lg);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  position: relative;
   overflow: hidden;
-  animation: cardSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  margin-bottom: 32px;
 }
 
-.card:nth-child(1) { animation-delay: 0.1s; }
-.card:nth-child(2) { animation-delay: 0.2s; }
-.card:nth-child(3) { animation-delay: 0.3s; }
-.card:nth-child(4) { animation-delay: 0.4s; }
-.card:nth-child(5) { animation-delay: 0.5s; }
-.card:nth-child(6) { animation-delay: 0.6s; }
+.tab-nav {
+  display: flex;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  padding: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
 
-@keyframes cardSlideUp {
+.tab-nav::-webkit-scrollbar {
+  height: 4px;
+}
+
+.tab-nav::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.tab-nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+}
+
+.tab-btn {
+  flex: 1;
+  min-width: 150px;
+  padding: 18px 24px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.tab-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.tab-btn.active {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border-bottom-color: var(--accent);
+}
+
+.tab-btn i {
+  font-size: 16px;
+}
+
+.tab-content {
+  display: none;
+  padding: 32px;
+  animation: fadeIn 0.4s ease;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -378,31 +310,20 @@ header {
   }
 }
 
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--primary), var(--accent));
-}
-
-.card h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 24px;
+/* ========== SECTION TITLE ========== */
+.section-title {
+  font-size: 22px;
   font-weight: 700;
   color: var(--primary);
   margin: 0 0 24px 0;
-  padding-bottom: 16px;
+  padding-bottom: 12px;
   border-bottom: 2px solid var(--border);
   display: flex;
   align-items: center;
   gap: 12px;
-  letter-spacing: -0.5px;
 }
 
-.card h3 i {
+.section-title i {
   font-size: 20px;
   color: var(--accent);
 }
@@ -420,9 +341,9 @@ input, select {
   width: 100%;
   padding: 14px 16px;
   border: 2px solid var(--border);
-  border-radius: 12px;
+  border-radius: 10px;
   font-size: 15px;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 500;
   background: #fff;
   color: var(--text-dark);
@@ -433,7 +354,6 @@ input:focus, select:focus {
   outline: none;
   border-color: var(--primary);
   box-shadow: 0 0 0 4px rgba(26, 35, 126, 0.1);
-  transform: translateY(-2px);
 }
 
 input::placeholder {
@@ -442,82 +362,50 @@ input::placeholder {
 
 /* ========== BUTTONS ========== */
 .btn {
-  padding: 14px 24px;
+  padding: 12px 24px;
   border: none;
-  border-radius: 12px;
+  border-radius: 10px;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   color: #fff;
   margin-top: 12px;
   margin-right: 12px;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.3s ease;
   box-shadow: var(--shadow-md);
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  transform: translate(-50%, -50%);
-  transition: width 0.5s, height 0.5s;
-}
-
-.btn:hover::before {
-  width: 300px;
-  height: 300px;
 }
 
 .btn:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
 .btn:active {
-  transform: translateY(-1px);
+  transform: translateY(0);
 }
 
 .btn i {
   font-size: 16px;
-  position: relative;
-  z-index: 1;
 }
 
-.btn span {
-  position: relative;
-  z-index: 1;
-}
+.primary { background: linear-gradient(135deg, var(--primary), var(--primary-light)); }
+.success { background: linear-gradient(135deg, var(--success), #00897b); }
+.danger { background: linear-gradient(135deg, var(--danger), #c62828); }
+.secondary { background: linear-gradient(135deg, #546e7a, #78909c); }
 
-.primary {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
-}
-
-.success {
-  background: linear-gradient(135deg, var(--success), #00897b);
-}
-
-.danger {
-  background: linear-gradient(135deg, var(--danger), #c62828);
-}
-
-.secondary {
-  background: linear-gradient(135deg, #546e7a, #78909c);
+.btn-sm {
+  padding: 8px 16px;
+  font-size: 13px;
+  margin: 0;
 }
 
 /* ========== TABLE ========== */
 .table-scroll {
   width: 100%;
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
   margin-top: 20px;
   border-radius: 12px;
   box-shadow: var(--shadow-sm);
@@ -557,8 +445,7 @@ tbody tr {
 }
 
 tbody tr:hover {
-  background: linear-gradient(135deg, rgba(26, 35, 126, 0.05), rgba(0, 191, 165, 0.05));
-  transform: scale(1.01);
+  background: rgba(26, 35, 126, 0.05);
 }
 
 tbody tr:last-child td {
@@ -608,241 +495,6 @@ input[type="file"]:hover {
   margin: 0;
 }
 
-#statusFilter {
-  min-width: 180px;
-  margin: 0;
-}
-
-/* ========== PROGRESS INDICATORS ========== */
-.upload-progress {
-  display: none;
-  margin-top: 16px;
-  padding: 16px;
-  background: linear-gradient(135deg, rgba(26, 35, 126, 0.05), rgba(0, 191, 165, 0.05));
-  border-radius: 12px;
-  border: 2px solid var(--border);
-}
-
-.progress-bar-container {
-  width: 100%;
-  height: 8px;
-  background: var(--border);
-  border-radius: 10px;
-  overflow: hidden;
-  margin-bottom: 8px;
-}
-
-.progress-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--success), var(--accent));
-  width: 0%;
-  transition: width 0.3s ease;
-  animation: shimmer 2s infinite;
-}
-
-@keyframes shimmer {
-  0% { background-position: -100% 0; }
-  100% { background-position: 100% 0; }
-}
-
-.progress-text {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-medium);
-  text-align: center;
-}
-
-/* ========== NOTIFICATION TOAST ========== */
-.toast {
-  position: fixed;
-  top: 100px;
-  right: 32px;
-  background: linear-gradient(135deg, #ffffff, #f8fafb);
-  padding: 16px 24px;
-  border-radius: 12px;
-  box-shadow: var(--shadow-xl);
-  border-left: 4px solid var(--success);
-  display: none;
-  align-items: center;
-  gap: 12px;
-  z-index: 1000;
-  animation: slideInRight 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(100px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.toast.success {
-  border-left-color: var(--success);
-}
-
-.toast.error {
-  border-left-color: var(--danger);
-}
-
-.toast.warning {
-  border-left-color: var(--warning);
-}
-
-.toast i {
-  font-size: 20px;
-}
-
-.toast.success i {
-  color: var(--success);
-}
-
-.toast.error i {
-  color: var(--danger);
-}
-
-.toast.warning i {
-  color: var(--warning);
-}
-
-.toast-message {
-  font-weight: 600;
-  color: var(--text-dark);
-}
-
-/* ========== LOADING SPINNER ========== */
-.loading-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(4px);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
-}
-
-.loading-spinner {
-  width: 60px;
-  height: 60px;
-  border: 5px solid rgba(255, 255, 255, 0.2);
-  border-top: 5px solid #fff;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* ========== CONFIRMATION MODAL ========== */
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(8px);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 1500;
-}
-
-.modal-content {
-  background: linear-gradient(135deg, #ffffff, #f8fafb);
-  border-radius: 24px;
-  padding: 36px;
-  max-width: 450px;
-  width: 90%;
-  box-shadow: var(--shadow-2xl);
-  border: 2px solid var(--border);
-  animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-@keyframes modalPop {
-  0% {
-    opacity: 0;
-    transform: scale(0.8) translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-.modal-icon {
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(135deg, rgba(211, 47, 47, 0.1), rgba(211, 47, 47, 0.2));
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 40px;
-  color: var(--danger);
-  margin: 0 auto 20px;
-}
-
-.modal-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--primary);
-  text-align: center;
-  margin-bottom: 12px;
-}
-
-.modal-text {
-  font-size: 15px;
-  color: var(--text-medium);
-  text-align: center;
-  margin-bottom: 24px;
-}
-
-.modal-actions {
-  display: flex;
-  gap: 12px;
-}
-
-.modal-actions .btn {
-  flex: 1;
-  margin: 0;
-}
-
-/* ========== EMPTY STATE ========== */
-.empty-state {
-  text-align: center;
-  padding: 60px 20px;
-}
-
-.empty-icon {
-  width: 100px;
-  height: 100px;
-  background: linear-gradient(135deg, rgba(26, 35, 126, 0.1), rgba(0, 191, 165, 0.1));
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 48px;
-  color: var(--text-light);
-  margin-bottom: 20px;
-}
-
-.empty-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--primary);
-  margin-bottom: 8px;
-}
-
-.empty-text {
-  font-size: 15px;
-  color: var(--text-medium);
-}
-
 /* ========== BADGE ========== */
 .badge {
   display: inline-flex;
@@ -857,59 +509,74 @@ input[type="file"]:hover {
 }
 
 .badge.success {
-  background: linear-gradient(135deg, rgba(0, 200, 83, 0.1), rgba(0, 200, 83, 0.2));
+  background: rgba(0, 200, 83, 0.15);
   color: var(--success);
 }
 
 .badge.danger {
-  background: linear-gradient(135deg, rgba(211, 47, 47, 0.1), rgba(211, 47, 47, 0.2));
+  background: rgba(211, 47, 47, 0.15);
   color: var(--danger);
 }
 
-.badge.warning {
-  background: linear-gradient(135deg, rgba(255, 160, 0, 0.1), rgba(255, 160, 0, 0.2));
-  color: var(--warning);
+/* ========== STUDENT MAPPING INTERFACE ========== */
+.mapping-interface {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  border: 2px solid var(--border);
 }
 
-/* ========== ANALYTICS SECTION ========== */
-.analytics-header {
-  margin-bottom: 32px;
-}
-
-.analytics-search {
-  display: flex;
+.mapping-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: 16px;
+  margin-bottom: 16px;
+}
+
+.student-selection {
+  background: var(--bg-main);
+  border-radius: 12px;
+  padding: 16px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.student-checkbox {
+  display: flex;
   align-items: center;
+  padding: 10px;
+  margin-bottom: 8px;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.analytics-search select {
+.student-checkbox:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.student-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+.student-checkbox label {
   flex: 1;
-  margin: 0;
+  cursor: pointer;
+  font-weight: 500;
 }
 
+/* ========== ANALYTICS ========== */
 .analytics-section {
   margin-bottom: 40px;
 }
 
-.section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--primary);
-  margin: 0 0 24px 0;
-  padding-bottom: 12px;
-  border-bottom: 2px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.section-title i {
-  font-size: 18px;
-  color: var(--accent);
-}
-
-/* ========== STUDENT LISTS ========== */
 .student-lists {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
@@ -919,7 +586,7 @@ input[type="file"]:hover {
 
 .student-list-card {
   background: #fff;
-  border-radius: 20px;
+  border-radius: 16px;
   padding: 24px;
   border: 2px solid var(--border);
   box-shadow: var(--shadow-md);
@@ -969,34 +636,10 @@ input[type="file"]:hover {
   color: var(--danger);
 }
 
-.btn-sm {
-  padding: 8px 16px;
-  font-size: 13px;
-  margin: 0;
-}
-
 .student-list {
   max-height: 500px;
   overflow-y: auto;
   padding-right: 8px;
-}
-
-.student-list::-webkit-scrollbar {
-  width: 8px;
-}
-
-.student-list::-webkit-scrollbar-track {
-  background: var(--bg-main);
-  border-radius: 10px;
-}
-
-.student-list::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 10px;
-}
-
-.student-list::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
 }
 
 .student-item {
@@ -1006,10 +649,9 @@ input[type="file"]:hover {
   padding: 14px 16px;
   margin-bottom: 10px;
   background: linear-gradient(135deg, #f8fafb, #fff);
-  border-radius: 12px;
+  border-radius: 10px;
   border: 1px solid var(--border);
   transition: all 0.3s ease;
-  animation: itemSlideIn 0.4s ease backwards;
 }
 
 .student-item:hover {
@@ -1088,31 +730,14 @@ input[type="file"]:hover {
 }
 
 .attended-list .student-status {
-  background: linear-gradient(135deg, rgba(0, 200, 83, 0.1), rgba(0, 200, 83, 0.2));
+  background: rgba(0, 200, 83, 0.15);
   color: var(--success);
 }
 
 .not-attended-list .student-status {
-  background: linear-gradient(135deg, rgba(211, 47, 47, 0.1), rgba(211, 47, 47, 0.2));
+  background: rgba(211, 47, 47, 0.15);
   color: var(--danger);
 }
-
-@keyframes itemSlideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.student-item:nth-child(1) { animation-delay: 0.05s; }
-.student-item:nth-child(2) { animation-delay: 0.1s; }
-.student-item:nth-child(3) { animation-delay: 0.15s; }
-.student-item:nth-child(4) { animation-delay: 0.2s; }
-.student-item:nth-child(5) { animation-delay: 0.25s; }
 
 .empty-list {
   text-align: center;
@@ -1131,6 +756,179 @@ input[type="file"]:hover {
   font-weight: 600;
 }
 
+/* ========== EMPTY STATE ========== */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-icon {
+  width: 100px;
+  height: 100px;
+  background: rgba(26, 35, 126, 0.1);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  color: var(--text-light);
+  margin-bottom: 20px;
+}
+
+.empty-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.empty-text {
+  font-size: 15px;
+  color: var(--text-medium);
+}
+
+/* ========== NOTIFICATION TOAST ========== */
+.toast {
+  position: fixed;
+  top: 100px;
+  right: 32px;
+  background: #fff;
+  padding: 16px 24px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-xl);
+  border-left: 4px solid var(--success);
+  display: none;
+  align-items: center;
+  gap: 12px;
+  z-index: 1000;
+  animation: slideInRight 0.4s ease;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.toast.success { border-left-color: var(--success); }
+.toast.error { border-left-color: var(--danger); }
+.toast.warning { border-left-color: var(--warning); }
+
+.toast i {
+  font-size: 20px;
+}
+
+.toast.success i { color: var(--success); }
+.toast.error i { color: var(--danger); }
+.toast.warning i { color: var(--warning); }
+
+.toast-message {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* ========== LOADING SPINNER ========== */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.loading-spinner {
+  width: 60px;
+  height: 60px;
+  border: 5px solid rgba(255, 255, 255, 0.2);
+  border-top: 5px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ========== CONFIRMATION MODAL ========== */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1500;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 24px;
+  padding: 36px;
+  max-width: 450px;
+  width: 90%;
+  box-shadow: var(--shadow-xl);
+  border: 2px solid var(--border);
+  animation: modalPop 0.4s ease;
+}
+
+@keyframes modalPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-icon {
+  width: 80px;
+  height: 80px;
+  background: rgba(211, 47, 47, 0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  color: var(--danger);
+  margin: 0 auto 20px;
+}
+
+.modal-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.modal-text {
+  font-size: 15px;
+  color: var(--text-medium);
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.modal-actions .btn {
+  flex: 1;
+  margin: 0;
+}
+
 /* ========== FOOTER ========== */
 .footer {
   text-align: center;
@@ -1147,11 +945,6 @@ input[type="file"]:hover {
     padding: 24px 20px;
   }
 
-  .card {
-    padding: 24px 20px;
-    border-radius: 20px;
-  }
-
   .header-content {
     flex-direction: column;
     padding: 20px;
@@ -1164,7 +957,6 @@ input[type="file"]:hover {
 
   .grid {
     grid-template-columns: 1fr;
-    gap: 12px;
   }
 
   .btn {
@@ -1172,42 +964,18 @@ input[type="file"]:hover {
     justify-content: center;
   }
 
-  th, td {
-    white-space: nowrap;
-    font-size: 13px;
-    padding: 10px 8px;
-  }
-  
   .student-lists {
     grid-template-columns: 1fr;
   }
-  
-  .analytics-search {
-    flex-direction: column;
-  }
-  
-  .analytics-search select,
-  .analytics-search button {
-    width: 100%;
-  }
-  
-  .list-header {
-    flex-direction: column;
-    gap: 12px;
-    align-items: flex-start;
-  }
-  
-  .btn-sm {
-    width: 100%;
+
+  .mapping-grid {
+    grid-template-columns: 1fr;
   }
 }
 </style>
 </head>
 
 <body>
-
-<!-- Background Decoration -->
-<div class="bg-decoration"></div>
 
 <!-- Header -->
 <header>
@@ -1273,187 +1041,285 @@ input[type="file"]:hover {
   </div>
 </div>
 
-<!-- ================= CREATE / EDIT EXAM ================= -->
-<div class="card">
-  <h3><i class="fa-solid fa-file-circle-plus"></i> Create / Edit Examination</h3>
-  <div class="grid">
-    <input id="exam_id" placeholder="Exam ID *">
-    <input id="exam_name" placeholder="Exam Name">
-    <input id="partA_count" type="number" placeholder="Part A Questions (1 Mark)">
-    <input id="partB_count" type="number" placeholder="Part B Questions (2 Marks)">
-    <input id="duration_min" type="number" placeholder="Duration (minutes)">
-    <input id="violation_limit" type="number" placeholder="Violation Limit">
-    
-    <select id="calculator">
-      <option value="YES">Calculator Enabled</option>
-      <option value="NO">Calculator Disabled</option>
-    </select>
-    
-    <select id="review">
-      <option value="YES">Review Enabled</option>
-      <option value="NO">Review Disabled</option>
-    </select>
-    
-    <input id="start_datetime" type="datetime-local" placeholder="Start Date & Time">
-    <input id="end_datetime" type="datetime-local" placeholder="End Date & Time">
-    
-    <select id="exam_status">
-      <option value="ENABLED">Enabled</option>
-      <option value="DISABLED">Disabled</option>
-    </select>
-  </div>
-  
-  <button class="btn primary" onclick="createExam()">
-    <i class="fa-solid fa-plus"></i>
-    <span>Create Exam</span>
-  </button>
-  <button class="btn secondary" onclick="updateExam()">
-    <i class="fa-solid fa-pen-to-square"></i>
-    <span>Update Exam</span>
-  </button>
-</div>
-
-<!-- ================= EXAM LIST ================= -->
-<div class="card">
-  <h3><i class="fa-solid fa-list-check"></i> Created Examinations</h3>
-  
-  <!-- Search and Filter -->
-  <div class="search-filter-bar">
-    <div class="search-box">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" id="examSearch" placeholder="Search exams..." onkeyup="filterExams()">
-    </div>
-    <select id="statusFilter" onchange="filterExams()">
-      <option value="">All Status</option>
-      <option value="ENABLED">Enabled Only</option>
-      <option value="DISABLED">Disabled Only</option>
-    </select>
-  </div>
-  
-  <div class="table-scroll">
-    <table>
-      <thead>
-        <tr>
-          <th>Exam ID</th>
-          <th>Exam Name</th>
-          <th>Status</th>
-          <th>Start Time</th>
-          <th>End Time</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="examTable"></tbody>
-    </table>
-  </div>
-</div>
-
-<!-- ================= ADD QUESTION ================= -->
-<div class="card">
-  <h3><i class="fa-solid fa-circle-question"></i> Add Question (Single)</h3>
-  <div class="grid">
-    <input id="q_exam_id" placeholder="Exam ID">
-    <select id="q_part">
-      <option value="PART A">PART A</option>
-      <option value="PART B">PART B</option>
-    </select>
-    <input id="q_qid" placeholder="Question ID">
-    <input id="q_question" placeholder="Question Text" style="grid-column: 1 / -1;">
-    <input id="q_A" placeholder="Option A">
-    <input id="q_B" placeholder="Option B">
-    <input id="q_C" placeholder="Option C">
-    <input id="q_D" placeholder="Option D">
-    <input id="q_correct" placeholder="Correct Answer (A/B/C/D)">
-    <input id="q_image" placeholder="Image URL (optional)" style="grid-column: 1 / -1;">
-  </div>
-  <button class="btn success" onclick="addSingleQuestion()">
-    <i class="fa-solid fa-check"></i>
-    <span>Add Question</span>
-  </button>
-</div>
-
-<!-- ================= BULK UPLOAD ================= -->
-<div class="card">
-  <h3><i class="fa-solid fa-cloud-arrow-up"></i> Bulk Upload</h3>
-  
-  <h4 style="color: var(--primary); margin-bottom: 16px; font-size: 16px;">
-    <i class="fa-solid fa-circle-question"></i> Questions Upload
-  </h4>
-  <input type="file" id="questionFile" accept=".csv">
-  <button class="btn primary" onclick="uploadQuestions()">
-    <i class="fa-solid fa-upload"></i>
-    <span>Upload Questions</span>
-  </button>
-  <button class="btn secondary" onclick="downloadQuestionTemplate()">
-    <i class="fa-solid fa-download"></i>
-    <span>Download Template</span>
-  </button>
-  
-  <hr style="margin: 24px 0; border: none; border-top: 2px solid var(--border);">
-  
-  <h4 style="color: var(--primary); margin-bottom: 16px; font-size: 16px;">
-    <i class="fa-solid fa-user-group"></i> Students Upload
-  </h4>
-  <input type="file" id="studentFile" accept=".csv">
-  <button class="btn primary" onclick="uploadStudents()">
-    <i class="fa-solid fa-upload"></i>
-    <span>Upload Students</span>
-  </button>
-  <button class="btn secondary" onclick="downloadStudentTemplate()">
-    <i class="fa-solid fa-download"></i>
-    <span>Download Template</span>
-  </button>
-</div>
-
-<!-- ================= EXAM MAPPING ================= -->
-<div class="card">
-  <h3><i class="fa-solid fa-link"></i> Exam - Student Mapping</h3>
-  <input type="file" id="mapFile" accept=".csv">
-  <button class="btn primary" onclick="uploadMapping()">
-    <i class="fa-solid fa-upload"></i>
-    <span>Upload Mapping</span>
-  </button>
-  <button class="btn secondary" onclick="downloadMapTemplate()">
-    <i class="fa-solid fa-download"></i>
-    <span>Download Template</span>
-  </button>
-</div>
-
-<!-- ================= RESULTS MANAGEMENT ================= -->
-<div class="card">
-  <h3><i class="fa-solid fa-chart-simple"></i> Student Results Management</h3>
-  
-  <div class="grid">
-    <input id="result_exam_id" placeholder="Enter Exam ID">
-    <button class="btn primary" onclick="loadResults()">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <span>Load Results</span>
+<!-- ================= TAB CONTAINER ================= -->
+<div class="tab-container">
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('exams')">
+      <i class="fa-solid fa-file-lines"></i>
+      <span>Exams</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('questions')">
+      <i class="fa-solid fa-circle-question"></i>
+      <span>Questions</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('students')">
+      <i class="fa-solid fa-user-group"></i>
+      <span>Students</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('mapping')">
+      <i class="fa-solid fa-link"></i>
+      <span>Mapping</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('results')">
+      <i class="fa-solid fa-chart-simple"></i>
+      <span>Results</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('analytics')">
+      <i class="fa-solid fa-chart-pie"></i>
+      <span>Analytics</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('reports')">
+      <i class="fa-solid fa-file-export"></i>
+      <span>Reports</span>
     </button>
   </div>
-  
-  <div class="table-scroll">
-    <table>
-      <thead>
-        <tr>
-          <th>Exam ID</th>
-          <th>Roll Number</th>
-          <th>Marks</th>
-          <th>Violations</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="resultTable"></tbody>
-    </table>
-  </div>
-</div>
 
-<!-- ================= EXAM ANALYTICS ================= -->
-<div class="card">
-  <h3><i class="fa-solid fa-chart-pie"></i> Exam Analytics & Insights</h3>
-  
-  <div class="analytics-header">
-    <div class="analytics-search">
-      <select id="analytics_exam_id">
+  <!-- ================= EXAMS TAB ================= -->
+  <div id="exams-tab" class="tab-content active">
+    <h3 class="section-title">
+      <i class="fa-solid fa-file-circle-plus"></i>
+      Create / Edit Examination
+    </h3>
+    
+    <div class="grid">
+      <input id="exam_id" placeholder="Exam ID *">
+      <input id="exam_name" placeholder="Exam Name">
+      <input id="partA_count" type="number" placeholder="Part A Questions (1 Mark)">
+      <input id="partB_count" type="number" placeholder="Part B Questions (2 Marks)">
+      <input id="duration_min" type="number" placeholder="Duration (minutes)">
+      <input id="violation_limit" type="number" placeholder="Violation Limit">
+      
+      <select id="calculator">
+        <option value="YES">Calculator Enabled</option>
+        <option value="NO">Calculator Disabled</option>
+      </select>
+      
+      <select id="review">
+        <option value="YES">Review Enabled</option>
+        <option value="NO">Review Disabled</option>
+      </select>
+      
+      <input id="start_datetime" type="datetime-local" placeholder="Start Date & Time">
+      <input id="end_datetime" type="datetime-local" placeholder="End Date & Time">
+      
+      <select id="exam_status">
+        <option value="ENABLED">Enabled</option>
+        <option value="DISABLED">Disabled</option>
+      </select>
+    </div>
+    
+    <button class="btn primary" onclick="createExam()">
+      <i class="fa-solid fa-plus"></i>
+      <span>Create Exam</span>
+    </button>
+    <button class="btn secondary" onclick="updateExam()">
+      <i class="fa-solid fa-pen-to-square"></i>
+      <span>Update Exam</span>
+    </button>
+
+    <h3 class="section-title" style="margin-top: 40px;">
+      <i class="fa-solid fa-list-check"></i>
+      Created Examinations
+    </h3>
+    
+    <div class="search-filter-bar">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="examSearch" placeholder="Search exams..." onkeyup="filterExams()">
+      </div>
+      <select id="statusFilter" onchange="filterExams()" style="min-width: 180px; margin: 0;">
+        <option value="">All Status</option>
+        <option value="ENABLED">Enabled Only</option>
+        <option value="DISABLED">Disabled Only</option>
+      </select>
+    </div>
+    
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Exam ID</th>
+            <th>Exam Name</th>
+            <th>Status</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="examTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ================= QUESTIONS TAB ================= -->
+  <div id="questions-tab" class="tab-content">
+    <h3 class="section-title">
+      <i class="fa-solid fa-circle-question"></i>
+      Add Question (Single)
+    </h3>
+    
+    <div class="grid">
+      <input id="q_exam_id" placeholder="Exam ID">
+      <select id="q_part">
+        <option value="PART A">PART A</option>
+        <option value="PART B">PART B</option>
+      </select>
+      <input id="q_qid" placeholder="Question ID">
+      <input id="q_question" placeholder="Question Text" style="grid-column: 1 / -1;">
+      <input id="q_A" placeholder="Option A">
+      <input id="q_B" placeholder="Option B">
+      <input id="q_C" placeholder="Option C">
+      <input id="q_D" placeholder="Option D">
+      <input id="q_correct" placeholder="Correct Answer (A/B/C/D)">
+      <input id="q_image" placeholder="Image URL (optional)" style="grid-column: 1 / -1;">
+    </div>
+    
+    <button class="btn success" onclick="addSingleQuestion()">
+      <i class="fa-solid fa-check"></i>
+      <span>Add Question</span>
+    </button>
+
+    <h3 class="section-title" style="margin-top: 40px;">
+      <i class="fa-solid fa-cloud-arrow-up"></i>
+      Bulk Questions Upload
+    </h3>
+    
+    <input type="file" id="questionFile" accept=".csv">
+    <button class="btn primary" onclick="uploadQuestions()">
+      <i class="fa-solid fa-upload"></i>
+      <span>Upload Questions</span>
+    </button>
+    <button class="btn secondary" onclick="downloadQuestionTemplate()">
+      <i class="fa-solid fa-download"></i>
+      <span>Download Template</span>
+    </button>
+  </div>
+
+  <!-- ================= STUDENTS TAB ================= -->
+  <div id="students-tab" class="tab-content">
+    <h3 class="section-title">
+      <i class="fa-solid fa-cloud-arrow-up"></i>
+      Bulk Students Upload
+    </h3>
+    
+    <input type="file" id="studentFile" accept=".csv">
+    <button class="btn primary" onclick="uploadStudents()">
+      <i class="fa-solid fa-upload"></i>
+      <span>Upload Students</span>
+    </button>
+    <button class="btn secondary" onclick="downloadStudentTemplate()">
+      <i class="fa-solid fa-download"></i>
+      <span>Download Template</span>
+    </button>
+  </div>
+
+  <!-- ================= MAPPING TAB ================= -->
+  <div id="mapping-tab" class="tab-content">
+    <h3 class="section-title">
+      <i class="fa-solid fa-link"></i>
+      Exam - Student Mapping
+    </h3>
+    
+    <!-- Frontend Mapping Interface -->
+    <div class="mapping-interface">
+      <h4 style="color: var(--primary); margin-bottom: 16px; font-size: 18px; font-weight: 700;">
+        <i class="fa-solid fa-users-gear"></i> Interactive Mapping
+      </h4>
+      
+      <div class="mapping-grid">
+        <select id="map_exam_select" onchange="updateMappingUI()">
+          <option value="">Select Exam</option>
+        </select>
+        <select id="map_dept_select" onchange="updateMappingUI()">
+          <option value="">Select Department</option>
+        </select>
+        <select id="map_year_select" onchange="updateMappingUI()">
+          <option value="">Select Year</option>
+        </select>
+        <select id="map_section_select" onchange="updateMappingUI()">
+          <option value="">Select Section</option>
+        </select>
+      </div>
+      
+      <div id="student_selection_area" class="student-selection" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <span style="font-weight: 700; color: var(--primary);">
+            <span id="selected_count">0</span> Students Selected
+          </span>
+          <button class="btn-sm success" onclick="selectAllStudents()">
+            <i class="fa-solid fa-check-double"></i> Select All
+          </button>
+        </div>
+        <div id="student_checkboxes"></div>
+      </div>
+      
+      <button class="btn primary" onclick="mapSelectedStudents()" id="map_button" style="display: none;">
+        <i class="fa-solid fa-link"></i>
+        <span>Map Selected Students</span>
+      </button>
+    </div>
+    
+    <hr style="margin: 32px 0; border: none; border-top: 2px solid var(--border);">
+    
+    <!-- CSV Upload Option -->
+    <h4 style="color: var(--primary); margin-bottom: 16px; font-size: 18px; font-weight: 700;">
+      <i class="fa-solid fa-file-csv"></i> Bulk CSV Upload
+    </h4>
+    <input type="file" id="mapFile" accept=".csv">
+    <button class="btn primary" onclick="uploadMapping()">
+      <i class="fa-solid fa-upload"></i>
+      <span>Upload Mapping CSV</span>
+    </button>
+    <button class="btn secondary" onclick="downloadMapTemplate()">
+      <i class="fa-solid fa-download"></i>
+      <span>Download Template</span>
+    </button>
+  </div>
+
+  <!-- ================= RESULTS TAB ================= -->
+  <div id="results-tab" class="tab-content">
+    <h3 class="section-title">
+      <i class="fa-solid fa-chart-simple"></i>
+      Student Results Management
+    </h3>
+    
+    <div class="grid">
+      <select id="result_exam_id" onchange="loadResults()">
+        <option value="">Select Exam to View Results</option>
+      </select>
+      <button class="btn primary" onclick="loadAllResultsExams()" style="margin: 0;">
+        <i class="fa-solid fa-rotate"></i>
+        <span>Refresh Exam List</span>
+      </button>
+    </div>
+    
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Exam ID</th>
+            <th>Roll Number</th>
+            <th>Student Name</th>
+            <th>Marks</th>
+            <th>Violations</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="resultTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ================= ANALYTICS TAB ================= -->
+  <div id="analytics-tab" class="tab-content">
+    <h3 class="section-title">
+      <i class="fa-solid fa-chart-pie"></i>
+      Exam Analytics & Insights
+    </h3>
+    
+    <div style="display: flex; gap: 16px; margin-bottom: 32px;">
+      <select id="analytics_exam_id" style="flex: 1; margin: 0;">
         <option value="">Select Exam for Analytics</option>
       </select>
       <button class="btn primary" onclick="loadExamAnalytics()" style="margin: 0;">
@@ -1461,188 +1327,191 @@ input[type="file"]:hover {
         <span>Generate Analytics</span>
       </button>
     </div>
-  </div>
-  
-  <div id="analyticsContent" style="display: none;">
     
-    <!-- Question Statistics -->
-    <div class="analytics-section">
-      <h4 class="section-title">
-        <i class="fa-solid fa-circle-question"></i>
-        Question Distribution
-      </h4>
-      <div class="stats-grid">
-        <div class="stat-card stat-primary">
-          <div class="stat-icon">
-            <i class="fa-solid fa-a"></i>
+    <div id="analyticsContent" style="display: none;">
+      
+      <!-- Question Statistics -->
+      <div class="analytics-section">
+        <h4 class="section-title">
+          <i class="fa-solid fa-circle-question"></i>
+          Question Distribution
+        </h4>
+        <div class="stats-grid">
+          <div class="stat-card stat-primary">
+            <div class="stat-icon">
+              <i class="fa-solid fa-a"></i>
+            </div>
+            <div class="stat-info">
+              <p class="stat-label">Part A Questions</p>
+              <h2 class="stat-value" id="ana_partA_count">0</h2>
+            </div>
           </div>
-          <div class="stat-info">
-            <p class="stat-label">Part A Questions</p>
-            <h2 class="stat-value" id="ana_partA_count">0</h2>
+          
+          <div class="stat-card stat-info">
+            <div class="stat-icon">
+              <i class="fa-solid fa-b"></i>
+            </div>
+            <div class="stat-info">
+              <p class="stat-label">Part B Questions</p>
+              <h2 class="stat-value" id="ana_partB_count">0</h2>
+            </div>
           </div>
-        </div>
-        
-        <div class="stat-card stat-info">
-          <div class="stat-icon">
-            <i class="fa-solid fa-b"></i>
-          </div>
-          <div class="stat-info">
-            <p class="stat-label">Part B Questions</p>
-            <h2 class="stat-value" id="ana_partB_count">0</h2>
-          </div>
-        </div>
-        
-        <div class="stat-card stat-warning">
-          <div class="stat-icon">
-            <i class="fa-solid fa-list-ol"></i>
-          </div>
-          <div class="stat-info">
-            <p class="stat-label">Total Questions</p>
-            <h2 class="stat-value" id="ana_total_questions">0</h2>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Student Statistics -->
-    <div class="analytics-section">
-      <h4 class="section-title">
-        <i class="fa-solid fa-users"></i>
-        Student Participation
-      </h4>
-      <div class="stats-grid">
-        <div class="stat-card stat-info">
-          <div class="stat-icon">
-            <i class="fa-solid fa-user-group"></i>
-          </div>
-          <div class="stat-info">
-            <p class="stat-label">Mapped Students</p>
-            <h2 class="stat-value" id="ana_mapped_students">0</h2>
+          
+          <div class="stat-card stat-warning">
+            <div class="stat-icon">
+              <i class="fa-solid fa-list-ol"></i>
+            </div>
+            <div class="stat-info">
+              <p class="stat-label">Total Questions</p>
+              <h2 class="stat-value" id="ana_total_questions">0</h2>
+            </div>
           </div>
         </div>
-        
-        <div class="stat-card stat-success">
-          <div class="stat-icon">
-            <i class="fa-solid fa-user-check"></i>
-          </div>
-          <div class="stat-info">
-            <p class="stat-label">Attended</p>
-            <h2 class="stat-value" id="ana_attended_students">0</h2>
-          </div>
-        </div>
-        
-        <div class="stat-card stat-danger">
-          <div class="stat-icon">
-            <i class="fa-solid fa-user-xmark"></i>
-          </div>
-          <div class="stat-info">
-            <p class="stat-label">Not Attended</p>
-            <h2 class="stat-value" id="ana_not_attended_students">0</h2>
-          </div>
-        </div>
-        
-        <div class="stat-card stat-warning">
-          <div class="stat-icon">
-            <i class="fa-solid fa-percent"></i>
-          </div>
-          <div class="stat-info">
-            <p class="stat-label">Attendance Rate</p>
-            <h2 class="stat-value" id="ana_attendance_rate">0%</h2>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Student Lists -->
-    <div class="student-lists">
-      <div class="student-list-card attended-list">
-        <div class="list-header">
-          <div class="list-title">
-            <i class="fa-solid fa-user-check"></i>
-            <span>Attended Students (<span id="attended_count">0</span>)</span>
-          </div>
-          <button class="btn success btn-sm" onclick="exportStudentList('attended')">
-            <i class="fa-solid fa-download"></i>
-            <span>Export</span>
-          </button>
-        </div>
-        <div class="search-box" style="margin-bottom: 16px;">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="text" id="attendedSearch" placeholder="Search attended students..." onkeyup="filterStudentList('attended')">
-        </div>
-        <div class="student-list" id="attendedList"></div>
       </div>
       
-      <div class="student-list-card not-attended-list">
-        <div class="list-header">
-          <div class="list-title">
-            <i class="fa-solid fa-user-xmark"></i>
-            <span>Not Attended Students (<span id="not_attended_count">0</span>)</span>
+      <!-- Student Statistics -->
+      <div class="analytics-section">
+        <h4 class="section-title">
+          <i class="fa-solid fa-users"></i>
+          Student Participation
+        </h4>
+        <div class="stats-grid">
+          <div class="stat-card stat-info">
+            <div class="stat-icon">
+              <i class="fa-solid fa-user-group"></i>
+            </div>
+            <div class="stat-info">
+              <p class="stat-label">Mapped Students</p>
+              <h2 class="stat-value" id="ana_mapped_students">0</h2>
+            </div>
           </div>
-          <button class="btn danger btn-sm" onclick="exportStudentList('not-attended')">
-            <i class="fa-solid fa-download"></i>
-            <span>Export</span>
-          </button>
+          
+          <div class="stat-card stat-success">
+            <div class="stat-icon">
+              <i class="fa-solid fa-user-check"></i>
+            </div>
+            <div class="stat-info">
+              <p class="stat-label">Attended</p>
+              <h2 class="stat-value" id="ana_attended_students">0</h2>
+            </div>
+          </div>
+          
+          <div class="stat-card stat-danger">
+            <div class="stat-icon">
+              <i class="fa-solid fa-user-xmark"></i>
+            </div>
+            <div class="stat-info">
+              <p class="stat-label">Not Attended</p>
+              <h2 class="stat-value" id="ana_not_attended_students">0</h2>
+            </div>
+          </div>
+          
+          <div class="stat-card stat-warning">
+            <div class="stat-icon">
+              <i class="fa-solid fa-percent"></i>
+            </div>
+            <div class="stat-info">
+              <p class="stat-label">Attendance Rate</p>
+              <h2 class="stat-value" id="ana_attendance_rate">0%</h2>
+            </div>
+          </div>
         </div>
-        <div class="search-box" style="margin-bottom: 16px;">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="text" id="notAttendedSearch" placeholder="Search not attended students..." onkeyup="filterStudentList('not-attended')">
-        </div>
-        <div class="student-list" id="notAttendedList"></div>
       </div>
+      
+      <!-- Student Lists -->
+      <div class="student-lists">
+        <div class="student-list-card attended-list">
+          <div class="list-header">
+            <div class="list-title">
+              <i class="fa-solid fa-user-check"></i>
+              <span>Attended Students (<span id="attended_count">0</span>)</span>
+            </div>
+            <button class="btn success btn-sm" onclick="exportStudentList('attended')">
+              <i class="fa-solid fa-download"></i>
+              <span>Export</span>
+            </button>
+          </div>
+          <div class="search-box" style="margin-bottom: 16px;">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="attendedSearch" placeholder="Search attended students..." onkeyup="filterStudentList('attended')">
+          </div>
+          <div class="student-list" id="attendedList"></div>
+        </div>
+        
+        <div class="student-list-card not-attended-list">
+          <div class="list-header">
+            <div class="list-title">
+              <i class="fa-solid fa-user-xmark"></i>
+              <span>Not Attended Students (<span id="not_attended_count">0</span>)</span>
+            </div>
+            <button class="btn danger btn-sm" onclick="exportStudentList('not-attended')">
+              <i class="fa-solid fa-download"></i>
+              <span>Export</span>
+            </button>
+          </div>
+          <div class="search-box" style="margin-bottom: 16px;">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="notAttendedSearch" placeholder="Search not attended students..." onkeyup="filterStudentList('not-attended')">
+          </div>
+          <div class="student-list" id="notAttendedList"></div>
+        </div>
+      </div>
+      
     </div>
     
-  </div>
-  
-  <div id="analyticsEmpty" class="empty-state">
-    <div class="empty-icon">
-      <i class="fa-solid fa-chart-pie"></i>
+    <div id="analyticsEmpty" class="empty-state">
+      <div class="empty-icon">
+        <i class="fa-solid fa-chart-pie"></i>
+      </div>
+      <h4 class="empty-title">No Analytics Available</h4>
+      <p class="empty-text">Select an exam to view detailed analytics and insights</p>
     </div>
-    <h4 class="empty-title">No Analytics Available</h4>
-    <p class="empty-text">Select an exam to view detailed analytics and insights</p>
   </div>
-  
-</div>
 
-<!-- ================= REPORT GENERATION ================= -->
-<div class="card report-area">
-  <h3><i class="fa-solid fa-file-export"></i> Generate Exam Report</h3>
-  
-  <div class="grid">
-    <select id="rep_exam_id"></select>
-    <input id="rep_exam_name" placeholder="Exam Name" readonly>
-    <select id="rep_dept"></select>
-    <select id="rep_year"></select>
-    <select id="rep_section"></select>
+  <!-- ================= REPORTS TAB ================= -->
+  <div id="reports-tab" class="tab-content">
+    <h3 class="section-title">
+      <i class="fa-solid fa-file-export"></i>
+      Generate Exam Report
+    </h3>
+    
+    <div class="grid">
+      <select id="rep_exam_id"></select>
+      <input id="rep_exam_name" placeholder="Exam Name" readonly>
+      <select id="rep_dept"></select>
+      <select id="rep_year"></select>
+      <select id="rep_section"></select>
+    </div>
+    
+    <button class="btn primary" onclick="generateReport()">
+      <i class="fa-solid fa-rotate"></i>
+      <span>Generate Report</span>
+    </button>
+    <button class="btn success" onclick="downloadExcel()">
+      <i class="fa-solid fa-file-excel"></i>
+      <span>Download Excel</span>
+    </button>
+    <button class="btn secondary" onclick="downloadPDF()">
+      <i class="fa-solid fa-file-pdf"></i>
+      <span>Download PDF</span>
+    </button>
+    
+    <div class="table-scroll">
+      <table id="reportTable">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Roll Number</th>
+            <th>Student Name</th>
+            <th>Total Marks</th>
+            <th>Violations</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
   </div>
-  
-  <button class="btn primary" onclick="generateReport()">
-    <i class="fa-solid fa-rotate"></i>
-    <span>Generate Report</span>
-  </button>
-  <button class="btn success" onclick="downloadExcel()">
-    <i class="fa-solid fa-file-excel"></i>
-    <span>Download Excel</span>
-  </button>
-  <button class="btn secondary" onclick="downloadPDF()">
-    <i class="fa-solid fa-file-pdf"></i>
-    <span>Download PDF</span>
-  </button>
-  
-  <div class="table-scroll">
-    <table id="reportTable">
-      <thead>
-        <tr>
-          <th>S.No</th>
-          <th>Roll Number</th>
-          <th>Student Name</th>
-          <th>Total Marks</th>
-          <th>Violations</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
+
 </div>
 
 <!-- Footer -->
@@ -1689,16 +1558,30 @@ input[type="file"]:hover {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
 
 <script>
-const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzL8x25iHGNXOXl1sqRTDu7PJR4_X9-s_ocW8PiiuhqdObs1soEW6fw6swU6dAJQ4TN/exec";
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxbty7zjRTH7hV6RBwP61g5W7UyIMnvsE2chwY8QJBFWjctELi4E9caEGlfMEWGEU3m/exec";
 
-let USERS=[], EXAMS=[], REPORT_DATA=[];
+let USERS = [], EXAMS = [], REPORT_DATA = [];
 let ALL_EXAMS_DATA = [];
 let attendedStudentsList = [];
 let notAttendedStudentsList = [];
+let filteredStudentsForMapping = [];
+
+/* ================= TAB SWITCHING ================= */
+function switchTab(tabName) {
+  document.querySelectorAll('.tab-content').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  
+  document.getElementById(`${tabName}-tab`).classList.add('active');
+  event.target.closest('.tab-btn').classList.add('active');
+}
 
 /* ================= UTILITY FUNCTIONS ================= */
 
-// Show Toast Notification
 function showToast(message, type = 'success') {
   const toast = document.getElementById('toast');
   const toastMessage = document.getElementById('toastMessage');
@@ -1722,17 +1605,14 @@ function showToast(message, type = 'success') {
   }, 3000);
 }
 
-// Show Loading Overlay
 function showLoading() {
   document.getElementById('loadingOverlay').style.display = 'flex';
 }
 
-// Hide Loading Overlay
 function hideLoading() {
   document.getElementById('loadingOverlay').style.display = 'none';
 }
 
-// Confirmation Modal
 let confirmCallback = null;
 
 function showConfirmModal(title, message, onConfirm) {
@@ -1754,9 +1634,10 @@ document.getElementById('modalConfirmBtn').onclick = () => {
   closeModal();
 };
 
-// Counter Animation
 function animateCounter(id, start, end, duration) {
   const element = document.getElementById(id);
+  if (!element) return;
+  
   const range = end - start;
   const increment = range / (duration / 16);
   let current = start;
@@ -1771,7 +1652,6 @@ function animateCounter(id, start, end, duration) {
   }, 16);
 }
 
-// Update Dashboard Statistics
 function updateDashboardStats() {
   const totalExams = EXAMS.length;
   const activeExams = EXAMS.filter(e => e[10] === 'ENABLED').length;
@@ -1782,7 +1662,6 @@ function updateDashboardStats() {
   animateCounter('totalStudents', 0, totalStudents, 1400);
 }
 
-// Filter Exams
 function filterExams() {
   const searchTerm = document.getElementById('examSearch').value.toLowerCase();
   const statusFilter = document.getElementById('statusFilter').value;
@@ -1839,7 +1718,6 @@ function displayExams(exams) {
   });
 }
 
-// Format DateTime
 function formatDateTime(dt) {
   if (!dt) return '-';
   const date = new Date(dt);
@@ -1852,7 +1730,6 @@ function formatDateTime(dt) {
   });
 }
 
-// Form Validation
 function validateExamForm() {
   const required = [
     {id: 'exam_id', name: 'Exam ID'},
@@ -1875,7 +1752,6 @@ function validateExamForm() {
   return true;
 }
 
-// Clear Form
 function clearExamForm() {
   ['exam_id', 'exam_name', 'partA_count', 'partB_count', 
    'duration_min', 'violation_limit', 'start_datetime', 'end_datetime'].forEach(id => {
@@ -1886,7 +1762,7 @@ function clearExamForm() {
   document.getElementById('exam_status').value = 'ENABLED';
 }
 
-/* ================= CREATE EXAM ================= */
+/* ================= EXAM CRUD ================= */
 function createExam(){
  if (!validateExamForm()) return;
  
@@ -1941,7 +1817,6 @@ function createExam(){
  });
 }
 
-/* ================= UPDATE EXAM ================= */
 function updateExam(){
  if (!exam_id.value) {
    showToast("Please enter Exam ID to update", 'error');
@@ -1980,11 +1855,10 @@ function updateExam(){
  });
 }
 
-/* ================= LOAD EXAMS ================= */
 function loadExams(){
  showLoading();
  
- fetch(WEBAPP_URL,{method:"POST",body:new URLSearchParams({action:"getAllExams"})})
+ return fetch(WEBAPP_URL,{method:"POST",body:new URLSearchParams({action:"getAllExams"})})
  .then(r=>r.json())
  .then(d=>{
    hideLoading();
@@ -1993,208 +1867,26 @@ function loadExams(){
    
    rep_exam_id.innerHTML='<option value="">Select Exam</option>';
    analytics_exam_id.innerHTML='<option value="">Select Exam for Analytics</option>';
+   map_exam_select.innerHTML='<option value="">Select Exam</option>';
    
    d.forEach(ex => {
      rep_exam_id.innerHTML+=`<option>${ex[0]}</option>`;
      analytics_exam_id.innerHTML+=`<option value="${ex[0]}">${ex[0]} - ${ex[1]}</option>`;
+     map_exam_select.innerHTML+=`<option value="${ex[0]}">${ex[0]} - ${ex[1]}</option>`;
    });
    
    displayExams(d);
    updateDashboardStats();
+   
+   console.log('Exams loaded:', d.length);
+   return d;
  })
  .catch(err => {
    hideLoading();
    showToast("Failed to load exams", 'error');
    console.error(err);
+   throw err;
  });
-}
-
-/* ================= EXAM ANALYTICS ================= */
-async function loadExamAnalytics() {
-  const exam_id = document.getElementById('analytics_exam_id').value;
-  
-  if (!exam_id) {
-    showToast("Please select an exam", 'warning');
-    return;
-  }
-  
-  showLoading();
-  
-  try {
-    // Get exam details
-    const exam = EXAMS.find(e => e[0] === exam_id);
-    if (!exam) {
-      hideLoading();
-      showToast("Exam not found", 'error');
-      return;
-    }
-    
-    // Fetch questions for this exam
-    const questionsResponse = await fetch(WEBAPP_URL, {
-      method: "POST",
-      body: new URLSearchParams({
-        action: "getQuestions",
-        exam_id: exam_id
-      })
-    });
-    const questions = await questionsResponse.json();
-    
-    // Fetch exam mappings
-    const mappingsResponse = await fetch(WEBAPP_URL, {
-      method: "POST",
-      body: new URLSearchParams({
-        action: "getExamMappings",
-        exam_id: exam_id
-      })
-    });
-    const mappings = await mappingsResponse.json();
-    
-    // Fetch results
-    const resultsResponse = await fetch(
-      WEBAPP_URL + "?action=getResults&exam_id=" + encodeURIComponent(exam_id),
-      { method: "POST" }
-    );
-    const results = await resultsResponse.json();
-    
-    // Calculate statistics
-    const partAQuestions = questions.filter(q => q[1] === "PART A").length;
-    const partBQuestions = questions.filter(q => q[1] === "PART B").length;
-    const totalQuestions = questions.length;
-    
-    // Get mapped students
-    const mappedRollNumbers = new Set(mappings.map(m => m[1]));
-    const mappedStudents = USERS.filter(u => mappedRollNumbers.has(u[3]));
-    
-    // Get attended students
-    const attendedRollNumbers = new Set(results.map(r => r[1]));
-    const attendedStudents = mappedStudents.filter(u => attendedRollNumbers.has(u[3]));
-    const notAttendedStudents = mappedStudents.filter(u => !attendedRollNumbers.has(u[3]));
-    
-    // Store for filtering
-    attendedStudentsList = attendedStudents;
-    notAttendedStudentsList = notAttendedStudents;
-    
-    const attendanceRate = mappedStudents.length > 0 
-      ? ((attendedStudents.length / mappedStudents.length) * 100).toFixed(1)
-      : 0;
-    
-    // Update UI
-    animateCounter('ana_partA_count', 0, partAQuestions, 800);
-    animateCounter('ana_partB_count', 0, partBQuestions, 1000);
-    animateCounter('ana_total_questions', 0, totalQuestions, 1200);
-    animateCounter('ana_mapped_students', 0, mappedStudents.length, 1000);
-    animateCounter('ana_attended_students', 0, attendedStudents.length, 1200);
-    animateCounter('ana_not_attended_students', 0, notAttendedStudents.length, 1400);
-    
-    // Update attendance rate
-    setTimeout(() => {
-      document.getElementById('ana_attendance_rate').textContent = attendanceRate + '%';
-    }, 1600);
-    
-    // Display student lists
-    displayStudentList('attended', attendedStudents);
-    displayStudentList('not-attended', notAttendedStudents);
-    
-    // Show analytics content
-    document.getElementById('analyticsContent').style.display = 'block';
-    document.getElementById('analyticsEmpty').style.display = 'none';
-    
-    hideLoading();
-    showToast(`Analytics generated for ${exam_id}`, 'success');
-    
-  } catch (err) {
-    hideLoading();
-    showToast("Failed to load analytics. Please try again.", 'error');
-    console.error(err);
-  }
-}
-
-function displayStudentList(type, students) {
-  const listId = type === 'attended' ? 'attendedList' : 'notAttendedList';
-  const countId = type === 'attended' ? 'attended_count' : 'not_attended_count';
-  const list = document.getElementById(listId);
-  
-  document.getElementById(countId).textContent = students.length;
-  
-  if (students.length === 0) {
-    list.innerHTML = `
-      <div class="empty-list">
-        <i class="fa-solid fa-inbox"></i>
-        <p>No students in this category</p>
-      </div>
-    `;
-    return;
-  }
-  
-  list.innerHTML = students.map((student, index) => {
-    const initials = student[4] ? student[4].split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : '??';
-    const statusText = type === 'attended' ? 'Submitted' : 'Absent';
-    
-    return `
-      <div class="student-item" style="animation-delay: ${index * 0.05}s">
-        <div class="student-info">
-          <div class="student-avatar">${initials}</div>
-          <div class="student-details">
-            <div class="student-name">${student[4] || 'Unknown'}</div>
-            <div class="student-roll">${student[3] || 'N/A'}</div>
-            ${student[5] || student[6] || student[7] ? `
-              <div class="student-dept">
-                ${student[5] ? `<span>${student[5]}</span>` : ''}
-                ${student[6] ? `<span>${student[6]}</span>` : ''}
-                ${student[7] ? `<span>${student[7]}</span>` : ''}
-              </div>
-            ` : ''}
-          </div>
-        </div>
-        <div class="student-status">${statusText}</div>
-      </div>
-    `;
-  }).join('');
-}
-
-function filterStudentList(type) {
-  const searchId = type === 'attended' ? 'attendedSearch' : 'notAttendedSearch';
-  const searchTerm = document.getElementById(searchId).value.toLowerCase();
-  const students = type === 'attended' ? attendedStudentsList : notAttendedStudentsList;
-  
-  const filtered = students.filter(student => {
-    const name = (student[4] || '').toLowerCase();
-    const roll = (student[3] || '').toLowerCase();
-    const dept = (student[5] || '').toLowerCase();
-    const year = (student[6] || '').toLowerCase();
-    const section = (student[7] || '').toLowerCase();
-    
-    return name.includes(searchTerm) || 
-           roll.includes(searchTerm) || 
-           dept.includes(searchTerm) ||
-           year.includes(searchTerm) ||
-           section.includes(searchTerm);
-  });
-  
-  displayStudentList(type, filtered);
-}
-
-function exportStudentList(type) {
-  const students = type === 'attended' ? attendedStudentsList : notAttendedStudentsList;
-  const exam_id = document.getElementById('analytics_exam_id').value;
-  
-  if (students.length === 0) {
-    showToast("No students to export", 'warning');
-    return;
-  }
-  
-  // Create CSV content
-  let csv = "Roll No,Name,Department,Year,Section\n";
-  
-  students.forEach(student => {
-    csv += `${student[3] || ''},${student[4] || ''},${student[5] || ''},${student[6] || ''},${student[7] || ''}\n`;
-  });
-  
-  // Download CSV
-  const filename = `${exam_id}_${type}_students_${new Date().toISOString().split('T')[0]}.csv`;
-  downloadCSV(csv, filename);
-  
-  showToast(`${type === 'attended' ? 'Attended' : 'Not Attended'} students list exported`, 'success');
 }
 
 function editExam(ex){
@@ -2209,6 +1901,10 @@ function editExam(ex){
  start_datetime.value=ex[8];
  end_datetime.value=ex[9];
  exam_status.value=ex[10];
+ 
+ switchTab('exams');
+ document.querySelectorAll('.tab-btn')[0].classList.add('active');
+ 
  window.scrollTo({top: 0, behavior: 'smooth'});
  showToast("Exam loaded for editing", 'success');
 }
@@ -2251,8 +1947,7 @@ function sendBulkQuestions(data){
      document.getElementById(id).value = '';
    });
    questionFile.value = '';
-   
-   animateCounter('totalQuestions', 0, parseInt(document.getElementById('totalQuestions').textContent) + data.length, 800);
+   loadTotalQuestions();
  })
  .catch(err => {
    hideLoading();
@@ -2295,7 +1990,112 @@ function downloadStudentTemplate(){
  showToast("Template downloaded", 'success');
 }
 
-/* ================= MAPPING ================= */
+/* ================= MAPPING - INTERACTIVE UI ================= */
+function updateMappingUI() {
+  const exam = map_exam_select.value;
+  const dept = map_dept_select.value;
+  const year = map_year_select.value;
+  const section = map_section_select.value;
+  
+  if (!exam || !dept || !year || !section) {
+    document.getElementById('student_selection_area').style.display = 'none';
+    document.getElementById('map_button').style.display = 'none';
+    return;
+  }
+  
+  filteredStudentsForMapping = USERS.filter(u => 
+    u[5] === dept && u[6] === year && u[7] === section
+  );
+  
+  if (filteredStudentsForMapping.length === 0) {
+    document.getElementById('student_selection_area').style.display = 'block';
+    document.getElementById('student_checkboxes').innerHTML = `
+      <div class="empty-list">
+        <i class="fa-solid fa-user-slash"></i>
+        <p>No students found for this combination</p>
+      </div>
+    `;
+    document.getElementById('map_button').style.display = 'none';
+    return;
+  }
+  
+  const checkboxesHTML = filteredStudentsForMapping.map((student, index) => `
+    <div class="student-checkbox">
+      <input type="checkbox" id="student_${index}" value="${student[3]}" onchange="updateSelectedCount()">
+      <label for="student_${index}">
+        <strong>${student[4]}</strong> - ${student[3]} (${student[5]}, ${student[6]}, ${student[7]})
+      </label>
+    </div>
+  `).join('');
+  
+  document.getElementById('student_checkboxes').innerHTML = checkboxesHTML;
+  document.getElementById('student_selection_area').style.display = 'block';
+  document.getElementById('map_button').style.display = 'inline-flex';
+  updateSelectedCount();
+}
+
+function updateSelectedCount() {
+  const checkboxes = document.querySelectorAll('#student_checkboxes input[type="checkbox"]:checked');
+  document.getElementById('selected_count').textContent = checkboxes.length;
+}
+
+function selectAllStudents() {
+  const checkboxes = document.querySelectorAll('#student_checkboxes input[type="checkbox"]');
+  const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+  
+  checkboxes.forEach(cb => {
+    cb.checked = !allChecked;
+  });
+  
+  updateSelectedCount();
+}
+
+async function mapSelectedStudents() {
+  const exam_id = map_exam_select.value;
+  const dept = map_dept_select.value;
+  const year = map_year_select.value;
+  const section = map_section_select.value;
+  
+  const selectedCheckboxes = document.querySelectorAll('#student_checkboxes input[type="checkbox"]:checked');
+  
+  if (selectedCheckboxes.length === 0) {
+    showToast("Please select at least one student", 'warning');
+    return;
+  }
+  
+  showLoading();
+  
+  const mappingPromises = Array.from(selectedCheckboxes).map(cb => {
+    return fetch(WEBAPP_URL, {
+      method: "POST",
+      body: new URLSearchParams({
+        action: "mapExam",
+        exam_id: exam_id,
+        roll_no: cb.value,
+        dept: dept,
+        year: year,
+        section: section
+      })
+    });
+  });
+  
+  try {
+    await Promise.all(mappingPromises);
+    hideLoading();
+    showToast(`Successfully mapped ${selectedCheckboxes.length} student(s)`, 'success');
+    
+    document.querySelectorAll('#student_checkboxes input[type="checkbox"]').forEach(cb => {
+      cb.checked = false;
+    });
+    updateSelectedCount();
+  } catch (err) {
+    hideLoading();
+    showToast("Some mappings failed. Please try again.", 'error');
+    console.error(err);
+  }
+}
+
+/* ================= MAPPING - CSV UPLOAD ================= */
 function uploadMapping(){
  if (!mapFile.files[0]) {
    showToast("Please select a CSV file", 'warning');
@@ -2358,28 +2158,62 @@ function parseCSV(file,cb){
 
 /* ================= TEMPLATES ================= */
 function downloadQuestionTemplate(){
- downloadCSV("exam_id,part,qid,question,optA,optB,optC,optD,correct,image_url","question_template.csv");
- showToast("Template downloaded", 'success');
+ downloadCSV("exam_id,part,qid,question,optA,optB,optC,optD,correct,image_url","question_upload_template.csv");
+ showToast("Question template downloaded", 'success');
 }
 
 function downloadMapTemplate(){
- downloadCSV("exam_id,roll_no,dept,year,section","exam_student_mapping_template.csv");
- showToast("Template downloaded", 'success');
+ downloadCSV("exam_id,roll_no,dept,year,section","mapping_upload_template.csv");
+ showToast("Mapping template downloaded", 'success');
 }
 
 function downloadCSV(csv,name){
  const a=document.createElement("a");
- a.href="data:text/csv;charset=utf-8,"+csv;
+ a.href="data:text/csv;charset=utf-8,"+encodeURIComponent(csv);
  a.download=name;
  a.click();
 }
 
-/* ================= LOAD RESULTS ================= */
+/* ================= RESULTS ================= */
+function loadAllResultsExams(){
+  showLoading();
+  
+  // Get all results to find unique exam IDs
+  fetch(WEBAPP_URL + "?action=getResults", { method:"POST" })
+  .then(r=>r.json())
+  .then(allResults=>{
+    hideLoading();
+    
+    // Get unique exam IDs from results
+    const uniqueExamIds = [...new Set(allResults.map(r => r[0]))];
+    
+    const resultExamSelect = document.getElementById('result_exam_id');
+    resultExamSelect.innerHTML = '<option value="">Select Exam to View Results</option>';
+    
+    uniqueExamIds.forEach(examId => {
+      const exam = EXAMS.find(e => e[0] === examId);
+      const examName = exam ? exam[1] : examId;
+      resultExamSelect.innerHTML += `<option value="${examId}">${examId} - ${examName}</option>`;
+    });
+    
+    if (uniqueExamIds.length === 0) {
+      showToast("No exam results found yet", 'warning');
+    } else {
+      showToast(`Found ${uniqueExamIds.length} exam(s) with results`, 'success');
+    }
+  })
+  .catch(err=>{
+    hideLoading();
+    showToast("Failed to load exam list. Please try again.", 'error');
+    console.error(err);
+  });
+}
+
 function loadResults(){
- const exam_id = result_exam_id.value.trim();
+ const exam_id = document.getElementById('result_exam_id').value;
 
  if(!exam_id){
-   showToast("Please enter Exam ID", 'warning');
+   showToast("Please select an exam", 'warning');
    return;
  }
  
@@ -2398,7 +2232,7 @@ function loadResults(){
   if(!d || d.length===0){
     resultTable.innerHTML = `
       <tr>
-        <td colspan='6'>
+        <td colspan='7'>
           <div class="empty-state">
             <div class="empty-icon">
               <i class="fa-solid fa-inbox"></i>
@@ -2418,6 +2252,10 @@ function loadResults(){
     const vio    = r[3];
     const status = r[4];
     
+    // Find student name
+    const student = USERS.find(u => u[3] === roll);
+    const studentName = student ? student[4] : 'Unknown';
+    
     const statusBadge = status === 'SUBMITTED'
       ? `<span class="badge success"><i class="fa-solid fa-circle-check"></i> ${status}</span>`
       : `<span class="badge danger"><i class="fa-solid fa-triangle-exclamation"></i> ${status}</span>`;
@@ -2426,6 +2264,7 @@ function loadResults(){
       <tr>
         <td><strong>${exam}</strong></td>
         <td>${roll}</td>
+        <td>${studentName}</td>
         <td><strong>${marks}</strong></td>
         <td><strong style="color: var(--danger);">${vio}</strong></td>
         <td>${statusBadge}</td>
@@ -2450,7 +2289,6 @@ function loadResults(){
  });
 }
 
-/* ================= RE-ENABLE ================= */
 function reenable(exam_id, roll_no){
  showConfirmModal(
    'Re-enable Student?',
@@ -2479,45 +2317,224 @@ function reenable(exam_id, roll_no){
  );
 }
 
-/* ================= LOAD USERS ================= */
-function loadUsers() {
-  fetch(WEBAPP_URL,{
-    method:"POST",
-    body:new URLSearchParams({action:"getAllUsers"})
-  })
-  .then(r=>r.json())
-  .then(d=>{
-    USERS = d;
-
-    const DEPTS = new Set();
-    const YEARS = new Set();
-    const SECTIONS = new Set();
-
-    d.forEach(u=>{
-      if(u[5]) DEPTS.add(u[5]);
-      if(u[6]) YEARS.add(u[6]);
-      if(u[7]) SECTIONS.add(u[7]);
-    });
-
-    rep_dept.innerHTML =
-      '<option value="">All Departments</option>' +
-      [...DEPTS].map(v=>`<option>${v}</option>`).join("");
-
-    rep_year.innerHTML =
-      '<option value="">All Years</option>' +
-      [...YEARS].map(v=>`<option>${v}</option>`).join("");
-
-    rep_section.innerHTML =
-      '<option value="">All Sections</option>' +
-      [...SECTIONS].map(v=>`<option>${v}</option>`).join("");
+/* ================= ANALYTICS ================= */
+async function loadExamAnalytics() {
+  const exam_id = document.getElementById('analytics_exam_id').value;
+  
+  if (!exam_id) {
+    showToast("Please select an exam", 'warning');
+    return;
+  }
+  
+  showLoading();
+  
+  try {
+    console.log('Loading analytics for exam:', exam_id);
     
-    updateDashboardStats();
-  });
+    const exam = EXAMS.find(e => e[0] === exam_id);
+    if (!exam) {
+      hideLoading();
+      showToast("Exam not found", 'error');
+      return;
+    }
+    
+    // Fetch questions
+    console.log('Fetching questions...');
+    const questionsResponse = await fetch(WEBAPP_URL, {
+      method: "POST",
+      body: new URLSearchParams({
+        action: "getQuestions",
+        exam_id: exam_id
+      })
+    });
+    
+    if (!questionsResponse.ok) {
+      throw new Error('Failed to fetch questions');
+    }
+    
+    const questions = await questionsResponse.json();
+    console.log('Questions received:', questions.length);
+    
+    // Fetch mappings
+    console.log('Fetching mappings...');
+    const mappingsResponse = await fetch(WEBAPP_URL, {
+      method: "POST",
+      body: new URLSearchParams({
+        action: "getExamMappings",
+        exam_id: exam_id
+      })
+    });
+    
+    if (!mappingsResponse.ok) {
+      throw new Error('Failed to fetch mappings');
+    }
+    
+    const mappings = await mappingsResponse.json();
+    console.log('Mappings received:', mappings.length);
+    
+    // Check if mappings is an error object
+    if (mappings.error) {
+      console.log('Mappings error:', mappings.error);
+      // Continue with empty mappings
+      mappings.length = 0;
+    }
+    
+    // Fetch results
+    console.log('Fetching results...');
+    const resultsResponse = await fetch(
+      WEBAPP_URL + "?action=getResults&exam_id=" + encodeURIComponent(exam_id),
+      { method: "POST" }
+    );
+    
+    if (!resultsResponse.ok) {
+      throw new Error('Failed to fetch results');
+    }
+    
+    const results = await resultsResponse.json();
+    console.log('Results received:', results.length);
+    
+    // Calculate statistics
+    const partAQuestions = questions.filter(q => q[1] === "PART A").length;
+    const partBQuestions = questions.filter(q => q[1] === "PART B").length;
+    const totalQuestions = questions.length;
+    
+    console.log('Question stats:', {partA: partAQuestions, partB: partBQuestions, total: totalQuestions});
+    
+    // Get mapped students
+    const mappedRollNumbers = new Set(Array.isArray(mappings) ? mappings.map(m => m[1]) : []);
+    const mappedStudents = USERS.filter(u => mappedRollNumbers.has(u[3]));
+    
+    console.log('Mapped students:', mappedStudents.length);
+    
+    // Get attended students
+    const attendedRollNumbers = new Set(Array.isArray(results) ? results.map(r => r[1]) : []);
+    const attendedStudents = mappedStudents.filter(u => attendedRollNumbers.has(u[3]));
+    const notAttendedStudents = mappedStudents.filter(u => !attendedRollNumbers.has(u[3]));
+    
+    console.log('Attended:', attendedStudents.length, 'Not attended:', notAttendedStudents.length);
+    
+    attendedStudentsList = attendedStudents;
+    notAttendedStudentsList = notAttendedStudents;
+    
+    const attendanceRate = mappedStudents.length > 0 
+      ? ((attendedStudents.length / mappedStudents.length) * 100).toFixed(1)
+      : 0;
+    
+    // Update UI
+    animateCounter('ana_partA_count', 0, partAQuestions, 800);
+    animateCounter('ana_partB_count', 0, partBQuestions, 1000);
+    animateCounter('ana_total_questions', 0, totalQuestions, 1200);
+    animateCounter('ana_mapped_students', 0, mappedStudents.length, 1000);
+    animateCounter('ana_attended_students', 0, attendedStudents.length, 1200);
+    animateCounter('ana_not_attended_students', 0, notAttendedStudents.length, 1400);
+    
+    setTimeout(() => {
+      document.getElementById('ana_attendance_rate').textContent = attendanceRate + '%';
+    }, 1600);
+    
+    displayStudentList('attended', attendedStudents);
+    displayStudentList('not-attended', notAttendedStudents);
+    
+    document.getElementById('analyticsContent').style.display = 'block';
+    document.getElementById('analyticsEmpty').style.display = 'none';
+    
+    hideLoading();
+    showToast(`Analytics generated for ${exam_id}`, 'success');
+    
+  } catch (err) {
+    console.error('Analytics error:', err);
+    hideLoading();
+    showToast("Failed to load analytics: " + err.message, 'error');
+  }
 }
 
-loadUsers();
+function displayStudentList(type, students) {
+  const listId = type === 'attended' ? 'attendedList' : 'notAttendedList';
+  const countId = type === 'attended' ? 'attended_count' : 'not_attended_count';
+  const list = document.getElementById(listId);
+  
+  document.getElementById(countId).textContent = students.length;
+  
+  if (students.length === 0) {
+    list.innerHTML = `
+      <div class="empty-list">
+        <i class="fa-solid fa-inbox"></i>
+        <p>No students in this category</p>
+      </div>
+    `;
+    return;
+  }
+  
+  list.innerHTML = students.map(student => {
+    const initials = student[4] ? student[4].split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : '??';
+    const statusText = type === 'attended' ? 'Submitted' : 'Absent';
+    
+    return `
+      <div class="student-item">
+        <div class="student-info">
+          <div class="student-avatar">${initials}</div>
+          <div class="student-details">
+            <div class="student-name">${student[4] || 'Unknown'}</div>
+            <div class="student-roll">${student[3] || 'N/A'}</div>
+            ${student[5] || student[6] || student[7] ? `
+              <div class="student-dept">
+                ${student[5] ? `<span>${student[5]}</span>` : ''}
+                ${student[6] ? `<span>${student[6]}</span>` : ''}
+                ${student[7] ? `<span>${student[7]}</span>` : ''}
+              </div>
+            ` : ''}
+          </div>
+        </div>
+        <div class="student-status">${statusText}</div>
+      </div>
+    `;
+  }).join('');
+}
 
-/* ================= REPORT GENERATION ================= */
+function filterStudentList(type) {
+  const searchId = type === 'attended' ? 'attendedSearch' : 'notAttendedSearch';
+  const searchTerm = document.getElementById(searchId).value.toLowerCase();
+  const students = type === 'attended' ? attendedStudentsList : notAttendedStudentsList;
+  
+  const filtered = students.filter(student => {
+    const name = (student[4] || '').toLowerCase();
+    const roll = (student[3] || '').toLowerCase();
+    const dept = (student[5] || '').toLowerCase();
+    const year = (student[6] || '').toLowerCase();
+    const section = (student[7] || '').toLowerCase();
+    
+    return name.includes(searchTerm) || 
+           roll.includes(searchTerm) || 
+           dept.includes(searchTerm) ||
+           year.includes(searchTerm) ||
+           section.includes(searchTerm);
+  });
+  
+  displayStudentList(type, filtered);
+}
+
+function exportStudentList(type) {
+  const students = type === 'attended' ? attendedStudentsList : notAttendedStudentsList;
+  const exam_id = document.getElementById('analytics_exam_id').value;
+  
+  if (students.length === 0) {
+    showToast("No students to export", 'warning');
+    return;
+  }
+  
+  let csv = "Roll No,Name,Department,Year,Section\n";
+  
+  students.forEach(student => {
+    csv += `${student[3] || ''},${student[4] || ''},${student[5] || ''},${student[6] || ''},${student[7] || ''}\n`;
+  });
+  
+  const filename = `${exam_id}_${type}_students_${new Date().toISOString().split('T')[0]}.csv`;
+  downloadCSV(csv, filename);
+  
+  showToast(`${type === 'attended' ? 'Attended' : 'Not Attended'} students list exported`, 'success');
+}
+
+/* ================= REPORTS ================= */
 rep_exam_id.onchange=()=>{
  const ex=EXAMS.find(e=>e[0]===rep_exam_id.value);
  rep_exam_name.value=ex?ex[1]:"";
@@ -2595,7 +2612,6 @@ function generateReport(){
  });
 }
 
-/* ================= EXCEL EXPORT ================= */
 function downloadExcel(){
  if(!REPORT_DATA.length){
    showToast("Please generate report first", 'warning');
@@ -2626,7 +2642,6 @@ function downloadExcel(){
  showToast("Excel report downloaded successfully!", 'success');
 }
 
-/* ================= PDF EXPORT ================= */
 function downloadPDF(){
  if(!REPORT_DATA.length){
    showToast("Please generate report first", 'warning');
@@ -2694,13 +2709,94 @@ function downloadPDF(){
      2: { halign: "left" }
    },
    headStyles:{
-     fillColor: [21,101,192]
+     fillColor: [26, 35, 126]
    },
    theme: "grid"
  });
 
  doc.save("Exam_Report.pdf");
  showToast("PDF report downloaded successfully!", 'success');
+}
+
+/* ================= LOAD USERS ================= */
+function loadUsers() {
+  return fetch(WEBAPP_URL,{
+    method:"POST",
+    body:new URLSearchParams({action:"getAllUsers"})
+  })
+  .then(r=>r.json())
+  .then(d=>{
+    USERS = d;
+
+    const DEPTS = new Set();
+    const YEARS = new Set();
+    const SECTIONS = new Set();
+
+    d.forEach(u=>{
+      if(u[5]) DEPTS.add(u[5]);
+      if(u[6]) YEARS.add(u[6]);
+      if(u[7]) SECTIONS.add(u[7]);
+    });
+
+    rep_dept.innerHTML =
+      '<option value="">All Departments</option>' +
+      [...DEPTS].map(v=>`<option>${v}</option>`).join("");
+
+    rep_year.innerHTML =
+      '<option value="">All Years</option>' +
+      [...YEARS].map(v=>`<option>${v}</option>`).join("");
+
+    rep_section.innerHTML =
+      '<option value="">All Sections</option>' +
+      [...SECTIONS].map(v=>`<option>${v}</option>`).join("");
+    
+    map_dept_select.innerHTML =
+      '<option value="">Select Department</option>' +
+      [...DEPTS].map(v=>`<option>${v}</option>`).join("");
+
+    map_year_select.innerHTML =
+      '<option value="">Select Year</option>' +
+      [...YEARS].map(v=>`<option>${v}</option>`).join("");
+
+    map_section_select.innerHTML =
+      '<option value="">Select Section</option>' +
+      [...SECTIONS].map(v=>`<option>${v}</option>`).join("");
+    
+    // Update dashboard stats after loading users
+    updateDashboardStats();
+    
+    console.log('Users loaded:', d.length);
+    return d;
+  })
+  .catch(err => {
+    console.error('Failed to load users:', err);
+    throw err;
+  });
+}
+
+/* ================= LOAD TOTAL QUESTIONS COUNT ================= */
+function loadTotalQuestions() {
+  return fetch(WEBAPP_URL, {
+    method: "POST",
+    body: new URLSearchParams({action: "getAllQuestions"})
+  })
+  .then(r => r.json())
+  .then(questions => {
+    console.log('Questions loaded:', questions.length);
+    if (questions && Array.isArray(questions) && questions.length > 0) {
+      setTimeout(() => {
+        animateCounter('totalQuestions', 0, questions.length, 1600);
+      }, 500);
+    } else {
+      document.getElementById('totalQuestions').textContent = '0';
+    }
+    return questions;
+  })
+  .catch(err => {
+    console.error('Failed to load questions count:', err);
+    document.getElementById('totalQuestions').textContent = '0';
+    throw err;
+  });
 }
 
 /* ================= LOGOUT ================= */
@@ -2715,10 +2811,42 @@ function logout(){
  );
 }
 
-// Initialize
-loadExams();
+// Initialize - Load all data sequentially to ensure proper loading
+async function initializeDashboard() {
+  console.log('Initializing dashboard...');
+  showLoading();
+  
+  try {
+    // Load users first
+    console.log('Loading users...');
+    await loadUsers();
+    
+    // Load exams
+    console.log('Loading exams...');
+    await loadExams();
+    
+    // Load questions count
+    console.log('Loading questions...');
+    await loadTotalQuestions();
+    
+    // Load results exams list
+    console.log('Loading results exams...');
+    loadAllResultsExams();
+    
+    hideLoading();
+    console.log('Dashboard initialized successfully');
+    showToast('Dashboard loaded successfully', 'success');
+    
+  } catch (err) {
+    console.error('Initialization error:', err);
+    hideLoading();
+    showToast('Error loading dashboard data', 'error');
+  }
+}
+
+// Start initialization when page loads
+initializeDashboard();
 </script>
 
 </body>
-
 </html>
