@@ -859,6 +859,22 @@ input[type="file"]:hover { border-color: var(--primary); background: rgba(26,35,
 
     <hr style="margin:24px 0;border:none;border-top:2px solid var(--border);">
 
+    <!-- DEBUG PANEL — remove after confirming delete works -->
+    <div id="debugPanel" style="background:#1a1a2e;border-radius:12px;padding:16px;margin-bottom:20px;border:2px solid #3949ab;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <span style="color:#00bfa5;font-weight:700;font-size:14px;"><i class="fa-solid fa-bug"></i> Delete Debug Tester</span>
+        <button onclick="document.getElementById('debugPanel').style.display='none'" style="background:transparent;border:none;color:#718096;cursor:pointer;font-size:18px;">✕</button>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+        <input id="debug_exam_id" placeholder="Exam ID to test" style="background:#0d1642;border-color:#3949ab;color:#fff;font-size:13px;padding:10px;">
+        <input id="debug_roll_no" placeholder="Roll No to test" style="background:#0d1642;border-color:#3949ab;color:#fff;font-size:13px;padding:10px;">
+      </div>
+      <button onclick="testDeleteDirect()" style="background:linear-gradient(135deg,#d32f2f,#c62828);border:none;border-radius:8px;color:#fff;padding:10px 20px;font-weight:700;cursor:pointer;width:100%;margin-bottom:10px;">
+        <i class="fa-solid fa-vial"></i> Test Delete Now
+      </button>
+      <pre id="debugOutput" style="background:#0d1642;color:#00bfa5;padding:12px;border-radius:8px;font-size:12px;min-height:60px;overflow-x:auto;white-space:pre-wrap;word-break:break-all;">Response will appear here...</pre>
+    </div>
+
     <!-- BULK CSV UPLOAD -->
     <h4 style="color:var(--primary);margin-bottom:16px;font-size:18px;font-weight:700;">
       <i class="fa-solid fa-file-csv"></i> Bulk CSV Upload
@@ -1052,7 +1068,7 @@ input[type="file"]:hover { border-color: var(--primary); background: rgba(26,35,
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
 
 <script>
-const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbylv9I7RT2dmx6UHMh5CDqYcoW-Sa46yNIldCMkCoKJhLjSk-Ga5B-MO6h6wz4x-WpW/exec";
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbyqruITDMdetWm0f2xwgRUFfvprhf-7d6DaKay-7s3swJoMlx0vHe1BkZLk1dq6vLKN/exec";
 
 let USERS = [], EXAMS = [], REPORT_DATA = [];
 let ALL_EXAMS_DATA = [];
@@ -1459,40 +1475,60 @@ async function deleteSelectedMappings() {
     async () => {
       showLoading();
       try {
-        // ✅ Calls deleteMapping action — now exists in doPost switch
+        // Delete each selected student one by one with full debug logging
+        const rollNumbers = Array.from(sel).map(cb => cb.value);
+        console.log('[DELETE] exam_id:', exam_id, '| rolls:', rollNumbers);
+
         const results = await Promise.allSettled(
-          Array.from(sel).map(cb =>
+          rollNumbers.map(roll_no =>
             fetch(WEBAPP_URL, {
               method: 'POST',
               body: new URLSearchParams({
                 action: 'deleteMapping',
                 exam_id: exam_id,
-                roll_no: cb.value
+                roll_no: roll_no
               })
-            }).then(r => r.json())
+            })
+            .then(r => r.json())
+            .then(json => {
+              console.log('[DELETE RESULT] roll:', roll_no, '| response:', JSON.stringify(json));
+              return { roll_no, ...json };
+            })
+            .catch(err => {
+              console.error('[DELETE ERROR] roll:', roll_no, '| error:', err);
+              return { roll_no, error: err.message };
+            })
           )
         );
 
-        const succeeded = results.filter(r => r.status === 'fulfilled' && r.value && r.value.deleted).length;
+        const succeeded = results.filter(r => r.status === 'fulfilled' && r.value && r.value.deleted === true).length;
         const failed    = results.length - succeeded;
+        const failReasons = results
+          .filter(r => r.status === 'fulfilled' && (!r.value || !r.value.deleted))
+          .map(r => r.value ? (r.value.error || 'unknown') : 'fetch failed');
+
+        console.log('[DELETE SUMMARY] succeeded:', succeeded, '| failed:', failed, '| reasons:', failReasons);
 
         hideLoading();
 
         if (succeeded > 0) {
-          showToast(`${succeeded} mapping(s) deleted. Other exam mappings retained.${failed>0?' '+failed+' failed.':''}`, succeeded === results.length ? 'success' : 'warning');
+          const msg = `${succeeded} mapping(s) deleted successfully.` +
+            (failed > 0 ? ` ${failed} failed: ${failReasons.join(', ')}` : '');
+          showToast(msg, succeeded === results.length ? 'success' : 'warning');
         } else {
-          showToast('Deletion failed. Check backend and try again.', 'error');
+          const errMsg = failReasons.length ? failReasons.join('; ') : 'No matches found in sheet';
+          showToast('Delete failed: ' + errMsg, 'error');
         }
 
-        // Reset UI but keep exam selection so admin can verify
+        // Reload the mapping list to confirm changes
         allMappedForDelete = [];
         filteredStudentsForDelete = [];
-        // Reload the mappings for this exam to verify
         await updateDeleteMappingUI();
 
       } catch (err) {
+        console.error('[DELETE EXCEPTION]', err);
         hideLoading();
-        showToast('Some deletions failed. Please try again.', 'error');
+        showToast('Delete error: ' + err.message, 'error');
       }
     }
   );
@@ -1812,6 +1848,38 @@ async function getExamMappings(exam_id) {
       USERS.filter(u=>u[5]===d&&u[6]===y&&u[7]===sc).forEach(s=>{ if(!seen.has(s[3])){ out.push(s); seen.add(s[3]); }}); });
     return out;
   } catch { return []; }
+}
+
+/* =============== DEBUG DELETE TESTER =============== */
+async function testDeleteDirect() {
+  const exam_id = document.getElementById('debug_exam_id').value.trim();
+  const roll_no = document.getElementById('debug_roll_no').value.trim();
+  const out = document.getElementById('debugOutput');
+
+  if (!exam_id || !roll_no) {
+    out.textContent = 'ERROR: Both exam_id and roll_no are required.';
+    out.style.color = '#ff5252';
+    return;
+  }
+
+  out.style.color = '#00bfa5';
+  out.textContent = `Sending: action=deleteMapping, exam_id=${exam_id}, roll_no=${roll_no}\n\nWaiting...`;
+
+  try {
+    const body = new URLSearchParams({ action: 'deleteMapping', exam_id, roll_no });
+    console.log('[DEBUG TEST] POST body:', body.toString());
+
+    const raw = await fetch(WEBAPP_URL, { method: 'POST', body });
+    const text = await raw.text();
+
+    console.log('[DEBUG TEST] Raw response:', text);
+    out.textContent = `REQUEST:\nPOST ${WEBAPP_URL}\nbody: ${body.toString()}\n\nRESPONSE (${raw.status}):\n${text}`;
+    out.style.color = text.includes('"deleted":true') ? '#00c853' : '#ff5252';
+  } catch (err) {
+    out.textContent = 'FETCH ERROR: ' + err.message;
+    out.style.color = '#ff5252';
+    console.error('[DEBUG TEST] Error:', err);
+  }
 }
 
 /* =============== LOGOUT =============== */
