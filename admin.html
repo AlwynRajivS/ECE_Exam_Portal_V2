@@ -1516,7 +1516,7 @@ input[type="file"]:hover {
 
 <!-- Footer -->
 <div class="footer">
-  © 2026 KCET - Department of Electronics and Communication Engineering
+  © 2024 KCET - Department of Electronics and Communication Engineering
 </div>
 
 </div>
@@ -1553,12 +1553,15 @@ input[type="file"]:hover {
   </div>
 </div>
 
+
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
 
 <script>
-const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxbty7zjRTH7hV6RBwP61g5W7UyIMnvsE2chwY8QJBFWjctELi4E9caEGlfMEWGEU3m/exec";
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxPjgyvQgjwJTIHwy8aeiLTly8vFE_2c-qj5rcHAVDp9A-5MwjuuuLKk7877GJkCGhN/exec";
 
 let USERS = [], EXAMS = [], REPORT_DATA = [];
 let ALL_EXAMS_DATA = [];
@@ -1653,14 +1656,26 @@ function animateCounter(id, start, end, duration) {
 }
 
 function updateDashboardStats() {
-  const totalExams = EXAMS.length;
-  const activeExams = EXAMS.filter(e => e[10] === 'ENABLED').length;
-  const totalStudents = USERS.length;
+  console.log('📊 Updating dashboard stats...');
   
-  animateCounter('totalExams', 0, totalExams, 1000);
-  animateCounter('activeExams', 0, activeExams, 1200);
-  animateCounter('totalStudents', 0, totalStudents, 1400);
+  // Count only students (role = "student")
+  const students = USERS.filter(u => u[2] && String(u[2]).toLowerCase().trim() === "student");
+  const totalStudents = students.length;
+  
+  // ❌ DELETE OR COMMENT OUT THESE LINES:
+  // const totalExams = EXAMS.length;
+  // const activeExams = EXAMS.filter(e => e[10] === 'ENABLED').length;
+  
+  console.log('Stats:', {totalStudents});
+  
+  // ❌ DELETE OR COMMENT OUT THESE LINES:
+  // animateCounter('totalExams', 0, totalExams, 1000);
+  // animateCounter('activeExams', 0, activeExams, 1200);
+  
+  // ✅ KEEP ONLY THIS:
+  animateCounter('totalStudents', 0, totalStudents, 1600);
 }
+
 
 function filterExams() {
   const searchTerm = document.getElementById('examSearch').value.toLowerCase();
@@ -1855,16 +1870,36 @@ function updateExam(){
  });
 }
 
+// ✅ COPY THIS ENTIRE FUNCTION - Replace your loadExams()
 function loadExams(){
+ console.log('🔵 loadExams() called');
  showLoading();
  
- return fetch(WEBAPP_URL,{method:"POST",body:new URLSearchParams({action:"getAllExams"})})
+ return fetch(WEBAPP_URL,{
+   method:"POST",
+   body:new URLSearchParams({action:"getAllExams"})
+ })
  .then(r=>r.json())
  .then(d=>{
    hideLoading();
+   
+   console.log('🔵 getAllExams response:', d);
+   console.log('🔵 Type of response:', typeof d);
+   console.log('🔵 Is array?', Array.isArray(d));
+   console.log('🔵 Length:', d.length);
+   
+   if (!Array.isArray(d)) {
+     console.error('❌ Response is not an array!');
+     return;
+   }
+   
+   // Store exams
    EXAMS = d;
    ALL_EXAMS_DATA = d;
    
+   console.log('🔵 EXAMS stored, length:', EXAMS.length);
+   
+   // Populate dropdowns
    rep_exam_id.innerHTML='<option value="">Select Exam</option>';
    analytics_exam_id.innerHTML='<option value="">Select Exam for Analytics</option>';
    map_exam_select.innerHTML='<option value="">Select Exam</option>';
@@ -1876,18 +1911,51 @@ function loadExams(){
    });
    
    displayExams(d);
-   updateDashboardStats();
    
-   console.log('Exams loaded:', d.length);
+   // ✅ CALCULATE EXAM STATS
+   const totalExams = d.length;
+   const activeExams = d.filter(e => {
+     console.log('Checking exam:', e[0], 'Status:', e[10]);
+     return e[10] === 'ENABLED';
+   }).length;
+   
+   console.log('🔵 Total Exams:', totalExams);
+   console.log('🔵 Active Exams:', activeExams);
+   
+   // ✅ GET THE ELEMENTS
+   const totalExamsEl = document.getElementById('totalExams');
+   const activeExamsEl = document.getElementById('activeExams');
+   
+   console.log('🔵 totalExams element:', totalExamsEl);
+   console.log('🔵 activeExams element:', activeExamsEl);
+   
+   if (!totalExamsEl || !activeExamsEl) {
+     console.error('❌ Counter elements not found!');
+     return;
+   }
+   
+   // ✅ UPDATE COUNTERS DIRECTLY
+   console.log('🔵 Animating counters...');
+   animateCounter('totalExams', 0, totalExams, 1000);
+   animateCounter('activeExams', 0, activeExams, 1200);
+   
+   // ✅ ALSO SET DIRECTLY (backup)
+   setTimeout(() => {
+     totalExamsEl.textContent = totalExams;
+     activeExamsEl.textContent = activeExams;
+     console.log('🔵 Counter values set directly');
+   }, 1500);
+   
    return d;
  })
  .catch(err => {
    hideLoading();
+   console.error('❌ Error loading exams:', err);
    showToast("Failed to load exams", 'error');
-   console.error(err);
    throw err;
  });
 }
+
 
 function editExam(ex){
  exam_id.value=ex[0];
@@ -2178,13 +2246,11 @@ function downloadCSV(csv,name){
 function loadAllResultsExams(){
   showLoading();
   
-  // Get all results to find unique exam IDs
   fetch(WEBAPP_URL + "?action=getResults", { method:"POST" })
   .then(r=>r.json())
   .then(allResults=>{
     hideLoading();
     
-    // Get unique exam IDs from results
     const uniqueExamIds = [...new Set(allResults.map(r => r[0]))];
     
     const resultExamSelect = document.getElementById('result_exam_id');
@@ -2252,7 +2318,6 @@ function loadResults(){
     const vio    = r[3];
     const status = r[4];
     
-    // Find student name
     const student = USERS.find(u => u[3] === roll);
     const studentName = student ? student[4] : 'Unknown';
     
@@ -2317,7 +2382,7 @@ function reenable(exam_id, roll_no){
  );
 }
 
-/* ================= ANALYTICS ================= */
+// ✅ FIX 4: Complete Analytics Function with Mapped and Not Attended
 async function loadExamAnalytics() {
   const exam_id = document.getElementById('analytics_exam_id').value;
   
@@ -2329,7 +2394,7 @@ async function loadExamAnalytics() {
   showLoading();
   
   try {
-    console.log('Loading analytics for exam:', exam_id);
+    console.log('📊 Loading analytics for exam:', exam_id);
     
     const exam = EXAMS.find(e => e[0] === exam_id);
     if (!exam) {
@@ -2338,8 +2403,8 @@ async function loadExamAnalytics() {
       return;
     }
     
-    // Fetch questions
-    console.log('Fetching questions...');
+    // STEP 1: Fetch questions
+    console.log('❓ Fetching questions...');
     const questionsResponse = await fetch(WEBAPP_URL, {
       method: "POST",
       body: new URLSearchParams({
@@ -2348,79 +2413,46 @@ async function loadExamAnalytics() {
       })
     });
     
-    if (!questionsResponse.ok) {
-      throw new Error('Failed to fetch questions');
-    }
-    
     const questions = await questionsResponse.json();
-    console.log('Questions received:', questions.length);
+    console.log('✅ Questions received:', questions.length);
     
-    // Fetch mappings
-    console.log('Fetching mappings...');
-    const mappingsResponse = await fetch(WEBAPP_URL, {
-      method: "POST",
-      body: new URLSearchParams({
-        action: "getExamMappings",
-        exam_id: exam_id
-      })
-    });
-    
-    if (!mappingsResponse.ok) {
-      throw new Error('Failed to fetch mappings');
-    }
-    
-    const mappings = await mappingsResponse.json();
-    console.log('Mappings received:', mappings.length);
-    
-    // Check if mappings is an error object
-    if (mappings.error) {
-      console.log('Mappings error:', mappings.error);
-      // Continue with empty mappings
-      mappings.length = 0;
-    }
-    
-    // Fetch results
-    console.log('Fetching results...');
+    // STEP 2: Fetch results
+    console.log('📈 Fetching results...');
     const resultsResponse = await fetch(
       WEBAPP_URL + "?action=getResults&exam_id=" + encodeURIComponent(exam_id),
       { method: "POST" }
     );
     
-    if (!resultsResponse.ok) {
-      throw new Error('Failed to fetch results');
-    }
-    
     const results = await resultsResponse.json();
-    console.log('Results received:', results.length);
+    console.log('✅ Results received:', results.length);
     
-    // Calculate statistics
-    const partAQuestions = questions.filter(q => q[1] === "PART A").length;
-    const partBQuestions = questions.filter(q => q[1] === "PART B").length;
-    const totalQuestions = questions.length;
+    // STEP 3: Get mapped students (all students from same dept/year/section as attendees)
+    console.log('🔗 Getting mapped students...');
+    const mappedStudents = await getExamMappings(exam_id);
+    console.log('✅ Mapped students:', mappedStudents.length);
     
-    console.log('Question stats:', {partA: partAQuestions, partB: partBQuestions, total: totalQuestions});
-    
-    // Get mapped students
-    const mappedRollNumbers = new Set(Array.isArray(mappings) ? mappings.map(m => m[1]) : []);
-    const mappedStudents = USERS.filter(u => mappedRollNumbers.has(u[3]));
-    
-    console.log('Mapped students:', mappedStudents.length);
-    
-    // Get attended students
-    const attendedRollNumbers = new Set(Array.isArray(results) ? results.map(r => r[1]) : []);
+    // STEP 4: Calculate attended vs not attended
+    const attendedRollNumbers = new Set(results.map(r => r[1]));
     const attendedStudents = mappedStudents.filter(u => attendedRollNumbers.has(u[3]));
     const notAttendedStudents = mappedStudents.filter(u => !attendedRollNumbers.has(u[3]));
     
-    console.log('Attended:', attendedStudents.length, 'Not attended:', notAttendedStudents.length);
+    console.log('✅ Attended:', attendedStudents.length);
+    console.log('❌ Not attended:', notAttendedStudents.length);
     
+    // Store globally
     attendedStudentsList = attendedStudents;
     notAttendedStudentsList = notAttendedStudents;
+    
+    // Calculate stats
+    const partAQuestions = questions.filter(q => q[1] === "PART A").length;
+    const partBQuestions = questions.filter(q => q[1] === "PART B").length;
+    const totalQuestions = questions.length;
     
     const attendanceRate = mappedStudents.length > 0 
       ? ((attendedStudents.length / mappedStudents.length) * 100).toFixed(1)
       : 0;
     
-    // Update UI
+    // Update UI with animations
     animateCounter('ana_partA_count', 0, partAQuestions, 800);
     animateCounter('ana_partB_count', 0, partBQuestions, 1000);
     animateCounter('ana_total_questions', 0, totalQuestions, 1200);
@@ -2432,6 +2464,9 @@ async function loadExamAnalytics() {
       document.getElementById('ana_attendance_rate').textContent = attendanceRate + '%';
     }, 1600);
     
+    document.getElementById('attended_count').textContent = attendedStudents.length;
+    document.getElementById('not_attended_count').textContent = notAttendedStudents.length;
+    
     displayStudentList('attended', attendedStudents);
     displayStudentList('not-attended', notAttendedStudents);
     
@@ -2442,12 +2477,11 @@ async function loadExamAnalytics() {
     showToast(`Analytics generated for ${exam_id}`, 'success');
     
   } catch (err) {
-    console.error('Analytics error:', err);
+    console.error('❌ Analytics error:', err);
     hideLoading();
     showToast("Failed to load analytics: " + err.message, 'error');
   }
 }
-
 function displayStudentList(type, students) {
   const listId = type === 'attended' ? 'attendedList' : 'notAttendedList';
   const countId = type === 'attended' ? 'attended_count' : 'not_attended_count';
@@ -2466,7 +2500,8 @@ function displayStudentList(type, students) {
   }
   
   list.innerHTML = students.map(student => {
-    const initials = student[4] ? student[4].split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : '??';
+    const name = student[4] || 'Unknown';
+    const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
     const statusText = type === 'attended' ? 'Submitted' : 'Absent';
     
     return `
@@ -2474,7 +2509,7 @@ function displayStudentList(type, students) {
         <div class="student-info">
           <div class="student-avatar">${initials}</div>
           <div class="student-details">
-            <div class="student-name">${student[4] || 'Unknown'}</div>
+            <div class="student-name">${name}</div>
             <div class="student-roll">${student[3] || 'N/A'}</div>
             ${student[5] || student[6] || student[7] ? `
               <div class="student-dept">
@@ -2495,6 +2530,11 @@ function filterStudentList(type) {
   const searchId = type === 'attended' ? 'attendedSearch' : 'notAttendedSearch';
   const searchTerm = document.getElementById(searchId).value.toLowerCase();
   const students = type === 'attended' ? attendedStudentsList : notAttendedStudentsList;
+  
+  if (!students) {
+    console.warn('No students list available for filtering');
+    return;
+  }
   
   const filtered = students.filter(student => {
     const name = (student[4] || '').toLowerCase();
@@ -2597,7 +2637,7 @@ function generateReport(){
              </div>
              <h4 class="empty-title">No Records Found</h4>
              <p class="empty-text">Try adjusting your filter criteria</p>
-           </div>
+          </div>
          </td>
        </tr>`;
      showToast("No records match the selected filters", 'warning');
@@ -2726,13 +2766,19 @@ function loadUsers() {
   })
   .then(r=>r.json())
   .then(d=>{
-    USERS = d;
+    console.log('👥 All users received:', d.length);
+    
+    // ✅ FILTER TO GET ONLY STUDENTS
+    const students = d.filter(u => u[2] && String(u[2]).toLowerCase().trim() === "student");
+    console.log('✅ Filtered students only:', students.length);
+    
+    USERS = students; // Store only students
 
     const DEPTS = new Set();
     const YEARS = new Set();
     const SECTIONS = new Set();
 
-    d.forEach(u=>{
+    students.forEach(u=>{
       if(u[5]) DEPTS.add(u[5]);
       if(u[6]) YEARS.add(u[6]);
       if(u[7]) SECTIONS.add(u[7]);
@@ -2762,11 +2808,10 @@ function loadUsers() {
       '<option value="">Select Section</option>' +
       [...SECTIONS].map(v=>`<option>${v}</option>`).join("");
     
-    // Update dashboard stats after loading users
     updateDashboardStats();
     
-    console.log('Users loaded:', d.length);
-    return d;
+    console.log('Users loaded:', students.length);
+    return students;
   })
   .catch(err => {
     console.error('Failed to load users:', err);
@@ -2774,28 +2819,36 @@ function loadUsers() {
   });
 }
 
-/* ================= LOAD TOTAL QUESTIONS COUNT ================= */
+/* ================= LOAD TOTAL QUESTIONS ================= */
 function loadTotalQuestions() {
-  return fetch(WEBAPP_URL, {
+  // Count questions from all exams
+  fetch(WEBAPP_URL, {
     method: "POST",
-    body: new URLSearchParams({action: "getAllQuestions"})
+    body: new URLSearchParams({action: "getAllExams"})
   })
   .then(r => r.json())
-  .then(questions => {
-    console.log('Questions loaded:', questions.length);
-    if (questions && Array.isArray(questions) && questions.length > 0) {
-      setTimeout(() => {
-        animateCounter('totalQuestions', 0, questions.length, 1600);
-      }, 500);
-    } else {
-      document.getElementById('totalQuestions').textContent = '0';
-    }
-    return questions;
+  .then(exams => {
+    // For each exam, count questions
+    const promises = exams.map(exam =>
+      fetch(WEBAPP_URL, {
+        method: "POST",
+        body: new URLSearchParams({
+          action: "getQuestions",
+          exam_id: exam[0]
+        })
+      }).then(r => r.json())
+    );
+    
+    return Promise.all(promises);
+  })
+  .then(allQuestions => {
+    const totalQuestions = allQuestions.reduce((sum, questions) => sum + questions.length, 0);
+    console.log('Total questions:', totalQuestions);
+    animateCounter('totalQuestions', 0, totalQuestions, 1400);
   })
   .catch(err => {
     console.error('Failed to load questions count:', err);
     document.getElementById('totalQuestions').textContent = '0';
-    throw err;
   });
 }
 
@@ -2811,42 +2864,111 @@ function logout(){
  );
 }
 
-// Initialize - Load all data sequentially to ensure proper loading
+// ✅ FIXED Initialize - Load all data
+// ✅ FIX 5: Initialize Dashboard
+// ✅ FIX 2: Updated initializeDashboard function
 async function initializeDashboard() {
-  console.log('Initializing dashboard...');
+  console.log('🚀 Initializing dashboard...');
   showLoading();
   
   try {
-    // Load users first
-    console.log('Loading users...');
+    // STEP 1: Load users first
+    console.log('👥 Loading users...');
     await loadUsers();
     
-    // Load exams
-    console.log('Loading exams...');
+    // STEP 2: Load exams (this will update Total Exams and Active Exams)
+    console.log('📝 Loading exams...');
     await loadExams();
     
-    // Load questions count
-    console.log('Loading questions...');
-    await loadTotalQuestions();
+    // STEP 3: Load questions count
+    console.log('❓ Loading questions...');
+    loadTotalQuestions();
     
-    // Load results exams list
-    console.log('Loading results exams...');
+    // STEP 4: Load results exams
+    console.log('📈 Loading results...');
     loadAllResultsExams();
     
     hideLoading();
-    console.log('Dashboard initialized successfully');
+    console.log('✅ Dashboard initialized successfully');
+    console.log('Final counts - Exams:', EXAMS.length, 'Users:', USERS.length);
     showToast('Dashboard loaded successfully', 'success');
     
   } catch (err) {
-    console.error('Initialization error:', err);
+    console.error('❌ Initialization error:', err);
     hideLoading();
     showToast('Error loading dashboard data', 'error');
   }
 }
+// ✅ FIX 3: Get Exam Mappings from STUDENT_EXAM_MAP sheet
+async function getExamMappings(exam_id) {
+  try {
+    console.log('🔗 Fetching mappings for:', exam_id);
+    
+    // First, get all results to know who took the exam
+    const resultsResponse = await fetch(
+      WEBAPP_URL + "?action=getResults&exam_id=" + encodeURIComponent(exam_id),
+      { method: "POST" }
+    );
+    const results = await resultsResponse.json();
+    
+    // Get all users
+    const allUsersResponse = await fetch(WEBAPP_URL, {
+      method: "POST",
+      body: new URLSearchParams({action: "getAllUsers"})
+    });
+    const allUsers = await allUsersResponse.json();
+    
+    // Extract unique departments, years, sections from students who took the exam
+    const attendedRolls = new Set(results.map(r => r[1]));
+    const attendedStudents = allUsers.filter(u => attendedRolls.has(u[3]));
+    
+    // Get unique dept/year/section combinations
+    const combinations = new Set();
+    attendedStudents.forEach(s => {
+      if (s[5] && s[6] && s[7]) {
+        combinations.add(`${s[5]}|${s[6]}|${s[7]}`);
+      }
+    });
+    
+    console.log('Found combinations:', Array.from(combinations));
+    
+    // For each combination, get all students from that dept/year/section
+    const mappedStudents = [];
+    const processedRolls = new Set();
+    
+    combinations.forEach(combo => {
+      const [dept, year, section] = combo.split('|');
+      
+      const studentsInCombo = allUsers.filter(u => 
+        u[5] === dept && 
+        u[6] === year && 
+        u[7] === section &&
+        u[2] && String(u[2]).toLowerCase().trim() === "student"
+      );
+      
+      studentsInCombo.forEach(s => {
+        if (!processedRolls.has(s[3])) {
+          mappedStudents.push(s);
+          processedRolls.add(s[3]);
+        }
+      });
+    });
+    
+    console.log('✅ Mapped students found:', mappedStudents.length);
+    return mappedStudents;
+    
+  } catch (err) {
+    console.error('❌ Error fetching mappings:', err);
+    return [];
+  }
+}
+
 
 // Start initialization when page loads
 initializeDashboard();
 </script>
+
+
 
 </body>
 </html>
