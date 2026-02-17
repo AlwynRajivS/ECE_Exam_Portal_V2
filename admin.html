@@ -31,11 +31,7 @@
   --shadow-xl: 0 16px 48px rgba(26, 35, 126, 0.20);
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   font-family: 'Poppins', sans-serif;
@@ -73,7 +69,7 @@ header {
 .header-icon {
   width: 50px;
   height: 50px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255,255,255,0.2);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -81,21 +77,13 @@ header {
   font-size: 24px;
 }
 
-.header-title h1 {
-  font-size: 24px;
-  font-weight: 700;
-  margin: 0;
-}
-
-.header-title p {
-  font-size: 13px;
-  opacity: 0.9;
-}
+.header-title h1 { font-size: 24px; font-weight: 700; margin: 0; }
+.header-title p  { font-size: 13px; opacity: 0.9; }
 
 .logout-btn {
   padding: 10px 20px;
-  background: rgba(255, 255, 255, 0.2);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255,255,255,0.2);
+  border: 2px solid rgba(255,255,255,0.3);
   color: #fff;
   border-radius: 10px;
   font-weight: 600;
@@ -105,11 +93,7 @@ header {
   align-items: center;
   gap: 8px;
 }
-
-.logout-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
-}
+.logout-btn:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); }
 
 /* ========== CONTAINER ========== */
 .container {
@@ -118,7 +102,7 @@ header {
   padding: 40px 32px;
 }
 
-/* ========== ENHANCED STATISTICS GRID ========== */
+/* ========== STATS GRID ========== */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -144,86 +128,40 @@ header {
 .stat-card::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 100%;
+  top: 0; left: 0;
+  width: 4px; height: 100%;
   transition: width 0.3s ease;
 }
-
 .stat-card.stat-primary::before { background: var(--primary); }
 .stat-card.stat-success::before { background: var(--success); }
 .stat-card.stat-warning::before { background: var(--warning); }
-.stat-card.stat-info::before { background: var(--info); }
+.stat-card.stat-info::before    { background: var(--info); }
+.stat-card.stat-danger::before  { background: var(--danger); }
 
-.stat-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-xl);
-  border-color: var(--accent);
-}
-
-.stat-card:hover::before {
-  width: 100%;
-  opacity: 0.05;
-}
+.stat-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-xl); border-color: var(--accent); }
+.stat-card:hover::before { width: 100%; opacity: 0.05; }
 
 .stat-icon {
-  width: 70px;
-  height: 70px;
+  width: 70px; height: 70px;
   border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   font-size: 32px;
   transition: transform 0.3s ease;
   flex-shrink: 0;
 }
+.stat-card:hover .stat-icon { transform: scale(1.1) rotate(5deg); }
+.stat-card.stat-primary .stat-icon { background: rgba(26,35,126,0.15); color: var(--primary); }
+.stat-card.stat-success .stat-icon { background: rgba(0,200,83,0.15);  color: var(--success); }
+.stat-card.stat-warning .stat-icon { background: rgba(255,160,0,0.15); color: var(--warning); }
+.stat-card.stat-info    .stat-icon { background: rgba(2,136,209,0.15); color: var(--info); }
+.stat-card.stat-danger  .stat-icon { background: rgba(211,47,47,0.15); color: var(--danger); }
 
-.stat-card:hover .stat-icon {
-  transform: scale(1.1) rotate(5deg);
-}
-
-.stat-card.stat-primary .stat-icon {
-  background: rgba(26, 35, 126, 0.15);
-  color: var(--primary);
-}
-
-.stat-card.stat-success .stat-icon {
-  background: rgba(0, 200, 83, 0.15);
-  color: var(--success);
-}
-
-.stat-card.stat-warning .stat-icon {
-  background: rgba(255, 160, 0, 0.15);
-  color: var(--warning);
-}
-
-.stat-card.stat-info .stat-icon {
-  background: rgba(2, 136, 209, 0.15);
-  color: var(--info);
-}
-
-.stat-info {
-  flex: 1;
-  min-width: 0;
-}
-
+.stat-info { flex: 1; min-width: 0; }
 .stat-label {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text-light);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 8px;
+  font-size: 13px; font-weight: 700; color: var(--text-light);
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
 }
-
-.stat-value {
-  font-size: 42px;
-  font-weight: 800;
-  margin: 0;
-  line-height: 1;
-  color: var(--text-dark);
-}
+.stat-value { font-size: 42px; font-weight: 800; margin: 0; line-height: 1; color: var(--text-dark); }
 
 /* ========== TAB NAVIGATION ========== */
 .tab-container {
@@ -241,92 +179,45 @@ header {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
-
-.tab-nav::-webkit-scrollbar {
-  height: 4px;
-}
-
-.tab-nav::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.tab-nav::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 2px;
-}
+.tab-nav::-webkit-scrollbar { height: 4px; }
+.tab-nav::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); }
+.tab-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 2px; }
 
 .tab-btn {
-  flex: 1;
-  min-width: 150px;
+  flex: 1; min-width: 150px;
   padding: 18px 24px;
-  background: transparent;
-  border: none;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  background: transparent; border: none;
+  color: rgba(255,255,255,0.7);
+  font-size: 15px; font-weight: 600;
+  cursor: pointer; transition: all 0.3s ease;
   border-bottom: 3px solid transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  white-space: nowrap;
+  display: flex; align-items: center; justify-content: center;
+  gap: 8px; white-space: nowrap;
 }
-
-.tab-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-}
-
-.tab-btn.active {
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-  border-bottom-color: var(--accent);
-}
-
-.tab-btn i {
-  font-size: 16px;
-}
+.tab-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.tab-btn.active { background: rgba(255,255,255,0.2); color: #fff; border-bottom-color: var(--accent); }
+.tab-btn i { font-size: 16px; }
 
 .tab-content {
   display: none;
   padding: 32px;
   animation: fadeIn 0.4s ease;
 }
-
-.tab-content.active {
-  display: block;
-}
+.tab-content.active { display: block; }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ========== SECTION TITLE ========== */
 .section-title {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--primary);
-  margin: 0 0 24px 0;
-  padding-bottom: 12px;
+  font-size: 22px; font-weight: 700; color: var(--primary);
+  margin: 0 0 24px 0; padding-bottom: 12px;
   border-bottom: 2px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  display: flex; align-items: center; gap: 12px;
 }
-
-.section-title i {
-  font-size: 20px;
-  color: var(--accent);
-}
+.section-title i { font-size: 20px; color: var(--accent); }
 
 /* ========== GRID ========== */
 .grid {
@@ -349,641 +240,490 @@ input, select {
   color: var(--text-dark);
   transition: all 0.3s ease;
 }
-
 input:focus, select:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(26, 35, 126, 0.1);
+  box-shadow: 0 0 0 4px rgba(26,35,126,0.1);
 }
-
-input::placeholder {
-  color: var(--text-light);
-}
+input::placeholder { color: var(--text-light); }
 
 /* ========== BUTTONS ========== */
 .btn {
   padding: 12px 24px;
-  border: none;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  color: #fff;
-  margin-top: 12px;
-  margin-right: 12px;
+  border: none; border-radius: 10px;
+  font-size: 15px; font-weight: 600;
+  cursor: pointer; color: #fff;
+  margin-top: 12px; margin-right: 12px;
   transition: all 0.3s ease;
   box-shadow: var(--shadow-md);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+  display: inline-flex; align-items: center; gap: 8px;
 }
+.btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.btn:active { transform: translateY(0); }
+.btn i { font-size: 16px; }
 
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
-
-.btn:active {
-  transform: translateY(0);
-}
-
-.btn i {
-  font-size: 16px;
-}
-
-.primary { background: linear-gradient(135deg, var(--primary), var(--primary-light)); }
-.success { background: linear-gradient(135deg, var(--success), #00897b); }
-.danger { background: linear-gradient(135deg, var(--danger), #c62828); }
+.primary   { background: linear-gradient(135deg, var(--primary), var(--primary-light)); }
+.success   { background: linear-gradient(135deg, var(--success), #00897b); }
+.danger    { background: linear-gradient(135deg, var(--danger), #c62828); }
 .secondary { background: linear-gradient(135deg, #546e7a, #78909c); }
 
-.btn-sm {
-  padding: 8px 16px;
-  font-size: 13px;
-  margin: 0;
-}
+.btn-sm { padding: 8px 16px; font-size: 13px; margin: 0; }
 
 /* ========== TABLE ========== */
 .table-scroll {
-  width: 100%;
-  overflow-x: auto;
-  margin-top: 20px;
-  border-radius: 12px;
+  width: 100%; overflow-x: auto;
+  margin-top: 20px; border-radius: 12px;
   box-shadow: var(--shadow-sm);
 }
-
-table {
-  width: 100%;
-  min-width: 700px;
-  border-collapse: collapse;
-  background: #fff;
-}
-
-thead {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
-  color: #fff;
-}
-
+table { width: 100%; min-width: 700px; border-collapse: collapse; background: #fff; }
+thead { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: #fff; }
 th {
-  padding: 16px 12px;
-  text-align: center;
-  font-weight: 700;
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  padding: 16px 12px; text-align: center;
+  font-weight: 700; font-size: 14px;
+  text-transform: uppercase; letter-spacing: 0.5px;
 }
-
 td {
-  padding: 14px 12px;
-  text-align: center;
-  font-size: 14px;
-  border-bottom: 1px solid var(--border);
-  font-weight: 500;
+  padding: 14px 12px; text-align: center;
+  font-size: 14px; border-bottom: 1px solid var(--border); font-weight: 500;
 }
-
-tbody tr {
-  transition: all 0.3s ease;
-}
-
-tbody tr:hover {
-  background: rgba(26, 35, 126, 0.05);
-}
-
-tbody tr:last-child td {
-  border-bottom: none;
-}
+tbody tr { transition: all 0.3s ease; }
+tbody tr:hover { background: rgba(26,35,126,0.05); }
+tbody tr:last-child td { border-bottom: none; }
 
 /* ========== FILE INPUT ========== */
 input[type="file"] {
   padding: 12px;
   border: 2px dashed var(--border);
   background: var(--bg-main);
-  cursor: pointer;
-  font-weight: 500;
+  cursor: pointer; font-weight: 500;
 }
+input[type="file"]:hover { border-color: var(--primary); background: rgba(26,35,126,0.05); }
 
-input[type="file"]:hover {
-  border-color: var(--primary);
-  background: rgba(26, 35, 126, 0.05);
-}
-
-/* ========== SEARCH & FILTER BAR ========== */
+/* ========== SEARCH BAR ========== */
 .search-filter-bar {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
+  display: flex; gap: 16px;
+  margin-bottom: 20px; flex-wrap: wrap;
 }
-
-.search-box {
-  flex: 1;
-  min-width: 250px;
-  position: relative;
-}
-
+.search-box { flex: 1; min-width: 250px; position: relative; }
 .search-box i {
-  position: absolute;
-  left: 16px;
-  top: 50%;
+  position: absolute; left: 16px; top: 50%;
   transform: translateY(-50%);
-  color: var(--text-light);
-  font-size: 16px;
+  color: var(--text-light); font-size: 16px;
 }
-
-.search-box input {
-  width: 100%;
-  padding-left: 45px;
-  margin: 0;
-}
+.search-box input { width: 100%; padding-left: 45px; margin: 0; }
 
 /* ========== BADGE ========== */
 .badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 20px;
+  font-size: 12px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.5px;
 }
+.badge.success { background: rgba(0,200,83,0.15);  color: var(--success); }
+.badge.danger  { background: rgba(211,47,47,0.15); color: var(--danger); }
 
-.badge.success {
-  background: rgba(0, 200, 83, 0.15);
-  color: var(--success);
-}
-
-.badge.danger {
-  background: rgba(211, 47, 47, 0.15);
-  color: var(--danger);
-}
-
-/* ========== STUDENT MAPPING INTERFACE ========== */
+/* ========== MAPPING INTERFACE ========== */
 .mapping-interface {
   background: var(--bg-card);
-  border-radius: 16px;
-  padding: 24px;
+  border-radius: 16px; padding: 24px;
   margin-bottom: 24px;
   border: 2px solid var(--border);
 }
-
 .mapping-grid {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 16px;
+  gap: 16px; margin-bottom: 16px;
 }
-
 .student-selection {
   background: var(--bg-main);
-  border-radius: 12px;
-  padding: 16px;
-  max-height: 400px;
-  overflow-y: auto;
+  border-radius: 12px; padding: 16px;
+  max-height: 400px; overflow-y: auto;
 }
-
 .student-checkbox {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  margin-bottom: 8px;
-  background: #fff;
-  border-radius: 8px;
+  display: flex; align-items: center;
+  padding: 10px; margin-bottom: 8px;
+  background: #fff; border-radius: 8px;
   border: 1px solid var(--border);
-  cursor: pointer;
-  transition: all 0.3s ease;
+  cursor: pointer; transition: all 0.3s ease;
 }
+.student-checkbox:hover { border-color: var(--primary); box-shadow: var(--shadow-sm); }
+.student-checkbox input[type="checkbox"] { width: 18px; height: 18px; margin-right: 12px; cursor: pointer; }
+.student-checkbox label { flex: 1; cursor: pointer; font-weight: 500; }
 
-.student-checkbox:hover {
-  border-color: var(--primary);
-  box-shadow: var(--shadow-sm);
+/* ========== DELETE MAPPING INTERFACE ========== */
+.delete-mapping-interface {
+  background: #fff8f8;
+  border-radius: 16px; padding: 24px;
+  margin-top: 24px; margin-bottom: 24px;
+  border: 2px solid #ffcdd2;
 }
-
-.student-checkbox input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  margin-right: 12px;
-  cursor: pointer;
+.delete-mapping-interface h4 {
+  color: var(--danger);
+  margin-bottom: 16px;
+  font-size: 18px; font-weight: 700;
 }
-
-.student-checkbox label {
-  flex: 1;
-  cursor: pointer;
-  font-weight: 500;
+.delete-mapping-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 16px; margin-bottom: 16px;
 }
+.delete-student-selection {
+  background: #fff3f3;
+  border-radius: 12px; padding: 16px;
+  max-height: 350px; overflow-y: auto;
+}
+.delete-student-checkbox {
+  display: flex; align-items: center;
+  padding: 10px; margin-bottom: 8px;
+  background: #fff; border-radius: 8px;
+  border: 1px solid #ffcdd2;
+  cursor: pointer; transition: all 0.3s ease;
+}
+.delete-student-checkbox:hover { border-color: var(--danger); box-shadow: 0 2px 8px rgba(211,47,47,0.1); }
+.delete-student-checkbox input[type="checkbox"] { width: 18px; height: 18px; margin-right: 12px; cursor: pointer; }
+.delete-student-checkbox label { flex: 1; cursor: pointer; font-weight: 500; color: var(--text-dark); }
 
 /* ========== ANALYTICS ========== */
-.analytics-section {
-  margin-bottom: 40px;
-}
+.analytics-section { margin-bottom: 32px; }
 
+/* ── Desktop student lists ── */
 .student-lists {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
   gap: 24px;
-  margin-top: 32px;
+  margin-top: 24px;
 }
 
 .student-list-card {
   background: #fff;
-  border-radius: 16px;
-  padding: 24px;
+  border-radius: 16px; padding: 20px;
   border: 2px solid var(--border);
   box-shadow: var(--shadow-md);
   transition: all 0.3s ease;
 }
-
-.student-list-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-}
-
-.student-list-card.attended-list {
-  border-top: 4px solid var(--success);
-}
-
-.student-list-card.not-attended-list {
-  border-top: 4px solid var(--danger);
-}
+.student-list-card:hover { box-shadow: var(--shadow-lg); }
+.student-list-card.attended-list     { border-top: 4px solid var(--success); }
+.student-list-card.not-attended-list { border-top: 4px solid var(--danger); }
 
 .list-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  padding-bottom: 16px;
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 14px; padding-bottom: 12px;
   border-bottom: 2px solid var(--border);
+  flex-wrap: wrap; gap: 8px;
 }
-
 .list-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--primary);
+  display: flex; align-items: center; gap: 8px;
+  font-size: 16px; font-weight: 700; color: var(--primary);
 }
+.list-title i { font-size: 18px; }
+.attended-list     .list-title i { color: var(--success); }
+.not-attended-list .list-title i { color: var(--danger); }
 
-.list-title i {
-  font-size: 20px;
-}
-
-.attended-list .list-title i {
-  color: var(--success);
-}
-
-.not-attended-list .list-title i {
-  color: var(--danger);
-}
-
-.student-list {
-  max-height: 500px;
-  overflow-y: auto;
-  padding-right: 8px;
-}
+.student-list { max-height: 420px; overflow-y: auto; padding-right: 4px; }
 
 .student-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 16px;
-  margin-bottom: 10px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px; margin-bottom: 8px;
   background: linear-gradient(135deg, #f8fafb, #fff);
-  border-radius: 10px;
-  border: 1px solid var(--border);
+  border-radius: 10px; border: 1px solid var(--border);
   transition: all 0.3s ease;
 }
+.student-item:hover { transform: translateX(4px); box-shadow: var(--shadow-sm); border-color: var(--primary); }
 
-.student-item:hover {
-  transform: translateX(4px);
-  box-shadow: var(--shadow-sm);
-  border-color: var(--primary);
-}
-
-.student-info {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex: 1;
-}
-
+.student-info  { display: flex; align-items: center; gap: 10px; flex: 1; }
 .student-avatar {
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-weight: 700;
-  font-size: 14px;
-}
-
-.attended-list .student-avatar {
-  background: linear-gradient(135deg, var(--success), #00897b);
-}
-
-.not-attended-list .student-avatar {
-  background: linear-gradient(135deg, var(--danger), #c62828);
-}
-
-.student-details {
-  flex: 1;
-}
-
-.student-name {
-  font-weight: 600;
-  color: var(--text-dark);
-  font-size: 15px;
-  margin-bottom: 4px;
-}
-
-.student-roll {
-  font-size: 13px;
-  color: var(--text-light);
-  font-weight: 500;
-}
-
-.student-dept {
-  font-size: 12px;
-  color: var(--text-light);
-  display: flex;
-  gap: 8px;
-  margin-top: 4px;
-}
-
-.student-dept span {
-  background: rgba(26, 35, 126, 0.1);
-  padding: 2px 8px;
+  width: 36px; height: 36px;
   border-radius: 8px;
-  font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 700; font-size: 13px;
+  flex-shrink: 0;
 }
+.attended-list     .student-avatar { background: linear-gradient(135deg, var(--success), #00897b); }
+.not-attended-list .student-avatar { background: linear-gradient(135deg, var(--danger),  #c62828); }
+
+.student-details { flex: 1; min-width: 0; }
+.student-name { font-weight: 600; color: var(--text-dark); font-size: 14px; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.student-roll { font-size: 12px; color: var(--text-light); font-weight: 500; }
+.student-dept { font-size: 11px; color: var(--text-light); display: flex; gap: 4px; margin-top: 2px; flex-wrap: wrap; }
+.student-dept span { background: rgba(26,35,126,0.1); padding: 1px 6px; border-radius: 6px; font-weight: 600; }
 
 .student-status {
-  font-size: 12px;
-  font-weight: 700;
-  padding: 6px 12px;
-  border-radius: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-size: 11px; font-weight: 700;
+  padding: 4px 8px; border-radius: 10px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  white-space: nowrap; flex-shrink: 0;
 }
-
-.attended-list .student-status {
-  background: rgba(0, 200, 83, 0.15);
-  color: var(--success);
-}
-
-.not-attended-list .student-status {
-  background: rgba(211, 47, 47, 0.15);
-  color: var(--danger);
-}
+.attended-list     .student-status { background: rgba(0,200,83,0.15);  color: var(--success); }
+.not-attended-list .student-status { background: rgba(211,47,47,0.15); color: var(--danger); }
 
 .empty-list {
-  text-align: center;
-  padding: 40px 20px;
+  text-align: center; padding: 30px 20px;
   color: var(--text-light);
 }
-
-.empty-list i {
-  font-size: 48px;
-  margin-bottom: 12px;
-  opacity: 0.5;
-}
-
-.empty-list p {
-  font-size: 15px;
-  font-weight: 600;
-}
+.empty-list i { font-size: 36px; margin-bottom: 8px; opacity: 0.5; display: block; }
+.empty-list p { font-size: 14px; font-weight: 600; }
 
 /* ========== EMPTY STATE ========== */
-.empty-state {
-  text-align: center;
-  padding: 60px 20px;
-}
-
+.empty-state { text-align: center; padding: 60px 20px; }
 .empty-icon {
-  width: 100px;
-  height: 100px;
-  background: rgba(26, 35, 126, 0.1);
+  width: 100px; height: 100px;
+  background: rgba(26,35,126,0.1);
   border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 48px;
-  color: var(--text-light);
-  margin-bottom: 20px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 48px; color: var(--text-light); margin-bottom: 20px;
 }
+.empty-title { font-size: 22px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+.empty-text  { font-size: 15px; color: var(--text-medium); }
 
-.empty-title {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--primary);
-  margin-bottom: 8px;
-}
-
-.empty-text {
-  font-size: 15px;
-  color: var(--text-medium);
-}
-
-/* ========== NOTIFICATION TOAST ========== */
+/* ========== TOAST ========== */
 .toast {
-  position: fixed;
-  top: 100px;
-  right: 32px;
-  background: #fff;
-  padding: 16px 24px;
-  border-radius: 12px;
-  box-shadow: var(--shadow-xl);
+  position: fixed; top: 100px; right: 32px;
+  background: #fff; padding: 16px 24px;
+  border-radius: 12px; box-shadow: var(--shadow-xl);
   border-left: 4px solid var(--success);
-  display: none;
-  align-items: center;
-  gap: 12px;
-  z-index: 1000;
-  animation: slideInRight 0.4s ease;
+  display: none; align-items: center; gap: 12px;
+  z-index: 1000; animation: slideInRight 0.4s ease;
+  max-width: calc(100vw - 48px);
 }
-
 @keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(100px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(100px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
-
 .toast.success { border-left-color: var(--success); }
-.toast.error { border-left-color: var(--danger); }
+.toast.error   { border-left-color: var(--danger); }
 .toast.warning { border-left-color: var(--warning); }
-
-.toast i {
-  font-size: 20px;
-}
-
+.toast i { font-size: 20px; flex-shrink: 0; }
 .toast.success i { color: var(--success); }
-.toast.error i { color: var(--danger); }
+.toast.error   i { color: var(--danger); }
 .toast.warning i { color: var(--warning); }
+.toast-message { font-weight: 600; color: var(--text-dark); font-size: 14px; }
 
-.toast-message {
-  font-weight: 600;
-  color: var(--text-dark);
-}
-
-/* ========== LOADING SPINNER ========== */
+/* ========== LOADING ========== */
 .loading-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(4px);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+  display: none; align-items: center; justify-content: center; z-index: 2000;
 }
-
 .loading-spinner {
-  width: 60px;
-  height: 60px;
-  border: 5px solid rgba(255, 255, 255, 0.2);
+  width: 60px; height: 60px;
+  border: 5px solid rgba(255,255,255,0.2);
   border-top: 5px solid #fff;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
+@keyframes spin { to { transform: rotate(360deg); } }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* ========== CONFIRMATION MODAL ========== */
+/* ========== MODAL ========== */
 .modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(8px);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 1500;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
+  display: none; align-items: center; justify-content: center; z-index: 1500;
 }
-
 .modal-content {
-  background: #fff;
-  border-radius: 24px;
-  padding: 36px;
-  max-width: 450px;
-  width: 90%;
-  box-shadow: var(--shadow-xl);
-  border: 2px solid var(--border);
+  background: #fff; border-radius: 24px; padding: 36px;
+  max-width: 450px; width: 90%;
+  box-shadow: var(--shadow-xl); border: 2px solid var(--border);
   animation: modalPop 0.4s ease;
 }
-
 @keyframes modalPop {
-  0% {
-    opacity: 0;
-    transform: scale(0.8) translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
+  0%   { opacity: 0; transform: scale(0.8) translateY(20px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
 }
-
 .modal-icon {
-  width: 80px;
-  height: 80px;
-  background: rgba(211, 47, 47, 0.15);
+  width: 80px; height: 80px;
+  background: rgba(211,47,47,0.15);
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 40px;
-  color: var(--danger);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 40px; color: var(--danger);
   margin: 0 auto 20px;
 }
-
-.modal-title {
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--primary);
-  text-align: center;
-  margin-bottom: 12px;
-}
-
-.modal-text {
-  font-size: 15px;
-  color: var(--text-medium);
-  text-align: center;
-  margin-bottom: 24px;
-}
-
-.modal-actions {
-  display: flex;
-  gap: 12px;
-}
-
-.modal-actions .btn {
-  flex: 1;
-  margin: 0;
-}
+.modal-title { font-size: 24px; font-weight: 700; color: var(--primary); text-align: center; margin-bottom: 12px; }
+.modal-text  { font-size: 15px; color: var(--text-medium); text-align: center; margin-bottom: 24px; }
+.modal-actions { display: flex; gap: 12px; }
+.modal-actions .btn { flex: 1; margin: 0; }
 
 /* ========== FOOTER ========== */
 .footer {
-  text-align: center;
-  padding: 24px 0;
-  font-size: 14px;
-  color: var(--text-light);
-  margin-top: 40px;
-  border-top: 1px solid var(--border);
+  text-align: center; padding: 24px 0;
+  font-size: 14px; color: var(--text-light);
+  margin-top: 40px; border-top: 1px solid var(--border);
 }
 
-/* ========== RESPONSIVE ========== */
+/* =========================================================
+   MOBILE RESPONSIVE — the main focus of this update
+   ========================================================= */
 @media (max-width: 768px) {
-  .container {
-    padding: 24px 20px;
+
+  /* ── Header: compact on mobile ── */
+  .header-content {
+    padding: 12px 16px;
+    flex-direction: row;          /* keep row layout */
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+  }
+  .header-left { gap: 10px; }
+  .header-icon { width: 38px; height: 38px; font-size: 18px; border-radius: 8px; }
+  .header-title h1 { font-size: 16px; }
+  .header-title p  { font-size: 11px; }
+  .logout-btn { padding: 8px 12px; font-size: 13px; }
+  .logout-btn span { display: none; }   /* icon-only on tiny screens */
+
+  /* ── Container ── */
+  .container { padding: 16px 12px; }
+
+  /* ── Top stats cards ── */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .stat-card {
+    padding: 14px 12px;
+    min-height: auto;
+    gap: 10px;
+    border-radius: 12px;
+  }
+  .stat-icon { width: 44px; height: 44px; font-size: 20px; border-radius: 10px; }
+  .stat-label { font-size: 10px; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .stat-value { font-size: 28px; }
+
+  /* ── Tab nav ── */
+  .tab-btn { min-width: 110px; padding: 12px 14px; font-size: 13px; }
+  .tab-btn span { display: none; }   /* icon-only tabs on mobile */
+  .tab-btn i { font-size: 18px; }
+
+  /* ── Tab content ── */
+  .tab-content { padding: 16px 12px; }
+
+  /* ── Buttons ── */
+  .btn { width: 100%; justify-content: center; margin-right: 0; }
+
+  /* ── Mapping grids ── */
+  .mapping-grid,
+  .delete-mapping-grid { grid-template-columns: 1fr 1fr; }
+
+  /* ─────────────────────────────────────────────
+     ANALYTICS TAB — MOBILE OVERHAUL
+     ───────────────────────────────────────────── */
+
+  /* Selector row */
+  #analytics-tab > div:first-child {
+    flex-direction: column !important;
+    gap: 10px !important;
+    margin-bottom: 16px !important;
+  }
+  #analytics-tab > div:first-child select { flex: unset !important; }
+  #analytics-tab > div:first-child .btn   { margin: 0 !important; }
+
+  /* Section titles inside analytics */
+  #analytics-tab .section-title { font-size: 16px; margin-bottom: 12px; padding-bottom: 8px; }
+
+  /* ── Analytics inner stat grids ── */
+  .analytics-section .stats-grid {
+    grid-template-columns: repeat(3, 1fr) !important;   /* 3-col for question dist */
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  /* Participation row: 2 col first row, 2 col second row */
+  .analytics-section:nth-child(2) .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 
-  .header-content {
+  .analytics-section .stat-card {
+    padding: 10px 8px;
+    min-height: auto;
+    gap: 6px;
+    border-radius: 10px;
     flex-direction: column;
-    padding: 20px;
+    align-items: center;
     text-align: center;
   }
+  .analytics-section .stat-card::before { width: 100%; height: 4px; bottom: 0; top: auto; }
+  .analytics-section .stat-icon { width: 32px; height: 32px; font-size: 15px; border-radius: 8px; }
+  .analytics-section .stat-label { font-size: 9px; letter-spacing: 0.3px; margin-bottom: 2px; }
+  .analytics-section .stat-value { font-size: 22px; }
 
-  .header-left {
-    flex-direction: column;
-  }
-
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
-  .btn {
-    width: 100%;
-    justify-content: center;
-  }
-
+  /* ── Student lists: stack vertically ── */
   .student-lists {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+    margin-top: 16px;
   }
 
-  .mapping-grid {
-    grid-template-columns: 1fr;
+  .student-list-card {
+    padding: 14px 12px;
+    border-radius: 12px;
+    /* No hover lift on mobile */
+    transform: none !important;
   }
+
+  .list-header {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+  .list-title { font-size: 14px; }
+  .list-title i { font-size: 15px; }
+
+  /* Search inside list */
+  .student-list-card .search-box {
+    margin-bottom: 10px !important;
+    min-width: unset;
+  }
+  .student-list-card .search-box input { font-size: 13px; padding: 10px 10px 10px 38px; }
+  .student-list-card .search-box i { left: 12px; font-size: 14px; }
+
+  /* ── Student item ── */
+  .student-list { max-height: 320px; padding-right: 2px; }
+
+  .student-item {
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    /* no hover translate on mobile */
+    transform: none !important;
+  }
+  .student-avatar { width: 30px; height: 30px; font-size: 11px; border-radius: 6px; }
+  .student-name  { font-size: 13px; }
+  .student-roll  { font-size: 11px; }
+  .student-dept  { display: none; }   /* hide dept chips on mobile to save space */
+  .student-status { font-size: 10px; padding: 3px 6px; border-radius: 8px; }
+  .student-info  { gap: 8px; }
+
+  /* Export button inside header */
+  .list-header .btn-sm { padding: 6px 10px; font-size: 11px; }
+  .list-header .btn-sm span { display: none; }
+
+  /* ── Analytics section margins ── */
+  .analytics-section { margin-bottom: 20px; }
+
+  /* ── Delete mapping ── */
+  .delete-mapping-interface { padding: 14px 12px; margin-top: 16px; }
+  .delete-mapping-interface h4 { font-size: 15px; margin-bottom: 10px; }
+
+  /* ── Section title ── */
+  .section-title { font-size: 17px; }
+
+  /* Toast */
+  .toast { right: 12px; left: 12px; padding: 12px 16px; }
+}
+
+@media (max-width: 380px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .stat-value { font-size: 24px; }
+  .mapping-grid,
+  .delete-mapping-grid { grid-template-columns: 1fr; }
+  .analytics-section .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- Header -->
 <header>
   <div class="header-content">
     <div class="header-left">
-      <div class="header-icon">
-        <i class="fa-solid fa-user-shield"></i>
-      </div>
+      <div class="header-icon"><i class="fa-solid fa-user-shield"></i></div>
       <div class="header-title">
         <h1>Admin Dashboard</h1>
         <p>KCET - Online Assessment Platform</p>
@@ -998,42 +738,31 @@ input[type="file"]:hover {
 
 <div class="container">
 
-<!-- ================= DASHBOARD STATISTICS ================= -->
+<!-- STATS -->
 <div class="stats-grid">
   <div class="stat-card stat-primary">
-    <div class="stat-icon">
-      <i class="fa-solid fa-file-lines"></i>
-    </div>
+    <div class="stat-icon"><i class="fa-solid fa-file-lines"></i></div>
     <div class="stat-info">
       <p class="stat-label">Total Exams</p>
       <h2 class="stat-value" id="totalExams">0</h2>
     </div>
   </div>
-  
   <div class="stat-card stat-success">
-    <div class="stat-icon">
-      <i class="fa-solid fa-circle-check"></i>
-    </div>
+    <div class="stat-icon"><i class="fa-solid fa-circle-check"></i></div>
     <div class="stat-info">
       <p class="stat-label">Active Exams</p>
       <h2 class="stat-value" id="activeExams">0</h2>
     </div>
   </div>
-  
   <div class="stat-card stat-warning">
-    <div class="stat-icon">
-      <i class="fa-solid fa-circle-question"></i>
-    </div>
+    <div class="stat-icon"><i class="fa-solid fa-circle-question"></i></div>
     <div class="stat-info">
       <p class="stat-label">Total Questions</p>
       <h2 class="stat-value" id="totalQuestions">0</h2>
     </div>
   </div>
-  
   <div class="stat-card stat-info">
-    <div class="stat-icon">
-      <i class="fa-solid fa-user-group"></i>
-    </div>
+    <div class="stat-icon"><i class="fa-solid fa-user-group"></i></div>
     <div class="stat-info">
       <p class="stat-label">Total Students</p>
       <h2 class="stat-value" id="totalStudents">0</h2>
@@ -1041,46 +770,35 @@ input[type="file"]:hover {
   </div>
 </div>
 
-<!-- ================= TAB CONTAINER ================= -->
+<!-- TAB CONTAINER -->
 <div class="tab-container">
   <div class="tab-nav">
-    <button class="tab-btn active" onclick="switchTab('exams')">
-      <i class="fa-solid fa-file-lines"></i>
-      <span>Exams</span>
+    <button class="tab-btn active" onclick="switchTab('exams', this)">
+      <i class="fa-solid fa-file-lines"></i><span>Exams</span>
     </button>
-    <button class="tab-btn" onclick="switchTab('questions')">
-      <i class="fa-solid fa-circle-question"></i>
-      <span>Questions</span>
+    <button class="tab-btn" onclick="switchTab('questions', this)">
+      <i class="fa-solid fa-circle-question"></i><span>Questions</span>
     </button>
-    <button class="tab-btn" onclick="switchTab('students')">
-      <i class="fa-solid fa-user-group"></i>
-      <span>Students</span>
+    <button class="tab-btn" onclick="switchTab('students', this)">
+      <i class="fa-solid fa-user-group"></i><span>Students</span>
     </button>
-    <button class="tab-btn" onclick="switchTab('mapping')">
-      <i class="fa-solid fa-link"></i>
-      <span>Mapping</span>
+    <button class="tab-btn" onclick="switchTab('mapping', this)">
+      <i class="fa-solid fa-link"></i><span>Mapping</span>
     </button>
-    <button class="tab-btn" onclick="switchTab('results')">
-      <i class="fa-solid fa-chart-simple"></i>
-      <span>Results</span>
+    <button class="tab-btn" onclick="switchTab('results', this)">
+      <i class="fa-solid fa-chart-simple"></i><span>Results</span>
     </button>
-    <button class="tab-btn" onclick="switchTab('analytics')">
-      <i class="fa-solid fa-chart-pie"></i>
-      <span>Analytics</span>
+    <button class="tab-btn" onclick="switchTab('analytics', this)">
+      <i class="fa-solid fa-chart-pie"></i><span>Analytics</span>
     </button>
-    <button class="tab-btn" onclick="switchTab('reports')">
-      <i class="fa-solid fa-file-export"></i>
-      <span>Reports</span>
+    <button class="tab-btn" onclick="switchTab('reports', this)">
+      <i class="fa-solid fa-file-export"></i><span>Reports</span>
     </button>
   </div>
 
-  <!-- ================= EXAMS TAB ================= -->
+  <!-- EXAMS TAB -->
   <div id="exams-tab" class="tab-content active">
-    <h3 class="section-title">
-      <i class="fa-solid fa-file-circle-plus"></i>
-      Create / Edit Examination
-    </h3>
-    
+    <h3 class="section-title"><i class="fa-solid fa-file-circle-plus"></i>Create / Edit Examination</h3>
     <div class="grid">
       <input id="exam_id" placeholder="Exam ID *">
       <input id="exam_name" placeholder="Exam Name">
@@ -1088,76 +806,47 @@ input[type="file"]:hover {
       <input id="partB_count" type="number" placeholder="Part B Questions (2 Marks)">
       <input id="duration_min" type="number" placeholder="Duration (minutes)">
       <input id="violation_limit" type="number" placeholder="Violation Limit">
-      
       <select id="calculator">
         <option value="YES">Calculator Enabled</option>
         <option value="NO">Calculator Disabled</option>
       </select>
-      
       <select id="review">
         <option value="YES">Review Enabled</option>
         <option value="NO">Review Disabled</option>
       </select>
-      
-      <input id="start_datetime" type="datetime-local" placeholder="Start Date & Time">
-      <input id="end_datetime" type="datetime-local" placeholder="End Date & Time">
-      
+      <input id="start_datetime" type="datetime-local">
+      <input id="end_datetime" type="datetime-local">
       <select id="exam_status">
         <option value="ENABLED">Enabled</option>
         <option value="DISABLED">Disabled</option>
       </select>
     </div>
-    
-    <button class="btn primary" onclick="createExam()">
-      <i class="fa-solid fa-plus"></i>
-      <span>Create Exam</span>
-    </button>
-    <button class="btn secondary" onclick="updateExam()">
-      <i class="fa-solid fa-pen-to-square"></i>
-      <span>Update Exam</span>
-    </button>
+    <button class="btn primary" onclick="createExam()"><i class="fa-solid fa-plus"></i><span>Create Exam</span></button>
+    <button class="btn secondary" onclick="updateExam()"><i class="fa-solid fa-pen-to-square"></i><span>Update Exam</span></button>
 
-    <h3 class="section-title" style="margin-top: 40px;">
-      <i class="fa-solid fa-list-check"></i>
-      Created Examinations
-    </h3>
-    
+    <h3 class="section-title" style="margin-top:40px;"><i class="fa-solid fa-list-check"></i>Created Examinations</h3>
     <div class="search-filter-bar">
       <div class="search-box">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="text" id="examSearch" placeholder="Search exams..." onkeyup="filterExams()">
       </div>
-      <select id="statusFilter" onchange="filterExams()" style="min-width: 180px; margin: 0;">
+      <select id="statusFilter" onchange="filterExams()" style="min-width:180px;margin:0;">
         <option value="">All Status</option>
         <option value="ENABLED">Enabled Only</option>
         <option value="DISABLED">Disabled Only</option>
       </select>
     </div>
-    
     <div class="table-scroll">
       <table>
-        <thead>
-          <tr>
-            <th>Exam ID</th>
-            <th>Exam Name</th>
-            <th>Status</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Exam ID</th><th>Exam Name</th><th>Status</th><th>Start Time</th><th>End Time</th><th>Actions</th></tr></thead>
         <tbody id="examTable"></tbody>
       </table>
     </div>
   </div>
 
-  <!-- ================= QUESTIONS TAB ================= -->
+  <!-- QUESTIONS TAB -->
   <div id="questions-tab" class="tab-content">
-    <h3 class="section-title">
-      <i class="fa-solid fa-circle-question"></i>
-      Add Question (Single)
-    </h3>
-    
+    <h3 class="section-title"><i class="fa-solid fa-circle-question"></i>Add Question (Single)</h3>
     <div class="grid">
       <input id="q_exam_id" placeholder="Exam ID">
       <select id="q_part">
@@ -1165,316 +854,214 @@ input[type="file"]:hover {
         <option value="PART B">PART B</option>
       </select>
       <input id="q_qid" placeholder="Question ID">
-      <input id="q_question" placeholder="Question Text" style="grid-column: 1 / -1;">
+      <input id="q_question" placeholder="Question Text" style="grid-column:1/-1;">
       <input id="q_A" placeholder="Option A">
       <input id="q_B" placeholder="Option B">
       <input id="q_C" placeholder="Option C">
       <input id="q_D" placeholder="Option D">
       <input id="q_correct" placeholder="Correct Answer (A/B/C/D)">
-      <input id="q_image" placeholder="Image URL (optional)" style="grid-column: 1 / -1;">
+      <input id="q_image" placeholder="Image URL (optional)" style="grid-column:1/-1;">
     </div>
-    
-    <button class="btn success" onclick="addSingleQuestion()">
-      <i class="fa-solid fa-check"></i>
-      <span>Add Question</span>
-    </button>
-
-    <h3 class="section-title" style="margin-top: 40px;">
-      <i class="fa-solid fa-cloud-arrow-up"></i>
-      Bulk Questions Upload
-    </h3>
-    
+    <button class="btn success" onclick="addSingleQuestion()"><i class="fa-solid fa-check"></i><span>Add Question</span></button>
+    <h3 class="section-title" style="margin-top:40px;"><i class="fa-solid fa-cloud-arrow-up"></i>Bulk Questions Upload</h3>
     <input type="file" id="questionFile" accept=".csv">
-    <button class="btn primary" onclick="uploadQuestions()">
-      <i class="fa-solid fa-upload"></i>
-      <span>Upload Questions</span>
-    </button>
-    <button class="btn secondary" onclick="downloadQuestionTemplate()">
-      <i class="fa-solid fa-download"></i>
-      <span>Download Template</span>
-    </button>
+    <button class="btn primary" onclick="uploadQuestions()"><i class="fa-solid fa-upload"></i><span>Upload Questions</span></button>
+    <button class="btn secondary" onclick="downloadQuestionTemplate()"><i class="fa-solid fa-download"></i><span>Download Template</span></button>
   </div>
 
-  <!-- ================= STUDENTS TAB ================= -->
+  <!-- STUDENTS TAB -->
   <div id="students-tab" class="tab-content">
-    <h3 class="section-title">
-      <i class="fa-solid fa-cloud-arrow-up"></i>
-      Bulk Students Upload
-    </h3>
-    
+    <h3 class="section-title"><i class="fa-solid fa-cloud-arrow-up"></i>Bulk Students Upload</h3>
     <input type="file" id="studentFile" accept=".csv">
-    <button class="btn primary" onclick="uploadStudents()">
-      <i class="fa-solid fa-upload"></i>
-      <span>Upload Students</span>
-    </button>
-    <button class="btn secondary" onclick="downloadStudentTemplate()">
-      <i class="fa-solid fa-download"></i>
-      <span>Download Template</span>
-    </button>
+    <button class="btn primary" onclick="uploadStudents()"><i class="fa-solid fa-upload"></i><span>Upload Students</span></button>
+    <button class="btn secondary" onclick="downloadStudentTemplate()"><i class="fa-solid fa-download"></i><span>Download Template</span></button>
   </div>
 
-  <!-- ================= MAPPING TAB ================= -->
+  <!-- MAPPING TAB -->
   <div id="mapping-tab" class="tab-content">
-    <h3 class="section-title">
-      <i class="fa-solid fa-link"></i>
-      Exam - Student Mapping
-    </h3>
-    
-    <!-- Frontend Mapping Interface -->
+    <h3 class="section-title"><i class="fa-solid fa-link"></i>Exam - Student Mapping</h3>
+
+    <!-- ADD MAPPING -->
     <div class="mapping-interface">
-      <h4 style="color: var(--primary); margin-bottom: 16px; font-size: 18px; font-weight: 700;">
+      <h4 style="color:var(--primary);margin-bottom:16px;font-size:18px;font-weight:700;">
         <i class="fa-solid fa-users-gear"></i> Interactive Mapping
       </h4>
-      
       <div class="mapping-grid">
-        <select id="map_exam_select" onchange="updateMappingUI()">
-          <option value="">Select Exam</option>
-        </select>
-        <select id="map_dept_select" onchange="updateMappingUI()">
-          <option value="">Select Department</option>
-        </select>
-        <select id="map_year_select" onchange="updateMappingUI()">
-          <option value="">Select Year</option>
-        </select>
-        <select id="map_section_select" onchange="updateMappingUI()">
-          <option value="">Select Section</option>
-        </select>
+        <select id="map_exam_select" onchange="updateMappingUI()"><option value="">Select Exam</option></select>
+        <select id="map_dept_select" onchange="updateMappingUI()"><option value="">Select Department</option></select>
+        <select id="map_year_select" onchange="updateMappingUI()"><option value="">Select Year</option></select>
+        <select id="map_section_select" onchange="updateMappingUI()"><option value="">Select Section</option></select>
       </div>
-      
-      <div id="student_selection_area" class="student-selection" style="display: none;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-          <span style="font-weight: 700; color: var(--primary);">
-            <span id="selected_count">0</span> Students Selected
-          </span>
-          <button class="btn-sm success" onclick="selectAllStudents()">
-            <i class="fa-solid fa-check-double"></i> Select All
-          </button>
+      <div id="student_selection_area" class="student-selection" style="display:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <span style="font-weight:700;color:var(--primary);"><span id="selected_count">0</span> Students Selected</span>
+          <button class="btn-sm success btn" onclick="selectAllStudents()"><i class="fa-solid fa-check-double"></i> Select All</button>
         </div>
         <div id="student_checkboxes"></div>
       </div>
-      
-      <button class="btn primary" onclick="mapSelectedStudents()" id="map_button" style="display: none;">
-        <i class="fa-solid fa-link"></i>
-        <span>Map Selected Students</span>
+      <button class="btn primary" onclick="mapSelectedStudents()" id="map_button" style="display:none;">
+        <i class="fa-solid fa-link"></i><span>Map Selected Students</span>
       </button>
     </div>
-    
-    <hr style="margin: 32px 0; border: none; border-top: 2px solid var(--border);">
-    
-    <!-- CSV Upload Option -->
-    <h4 style="color: var(--primary); margin-bottom: 16px; font-size: 18px; font-weight: 700;">
+
+    <hr style="margin:24px 0;border:none;border-top:2px solid var(--border);">
+
+    <!-- ============ DELETE MAPPING ============ -->
+    <div class="delete-mapping-interface">
+      <h4><i class="fa-solid fa-trash-can"></i> Delete Student Mapping</h4>
+      <p style="font-size:13px;color:var(--text-medium);margin-bottom:16px;">
+        Select exam, filter students and remove their mapping from the selected exam.
+      </p>
+      <div class="delete-mapping-grid">
+        <select id="del_exam_select" onchange="updateDeleteMappingUI()"><option value="">Select Exam</option></select>
+        <select id="del_dept_select" onchange="updateDeleteMappingUI()"><option value="">All Departments</option></select>
+        <select id="del_year_select" onchange="updateDeleteMappingUI()"><option value="">All Years</option></select>
+        <select id="del_section_select" onchange="updateDeleteMappingUI()"><option value="">All Sections</option></select>
+      </div>
+      <div id="delete_student_area" class="delete-student-selection" style="display:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <span style="font-weight:700;color:var(--danger);"><span id="del_selected_count">0</span> Students Selected</span>
+          <button class="btn-sm danger btn" onclick="selectAllDeleteStudents()"><i class="fa-solid fa-check-double"></i> Select All</button>
+        </div>
+        <div id="delete_student_checkboxes"></div>
+      </div>
+      <button class="btn danger" onclick="deleteSelectedMappings()" id="delete_map_button" style="display:none;">
+        <i class="fa-solid fa-trash"></i><span>Delete Selected Mappings</span>
+      </button>
+    </div>
+
+    <hr style="margin:24px 0;border:none;border-top:2px solid var(--border);">
+
+    <!-- BULK CSV UPLOAD -->
+    <h4 style="color:var(--primary);margin-bottom:16px;font-size:18px;font-weight:700;">
       <i class="fa-solid fa-file-csv"></i> Bulk CSV Upload
     </h4>
     <input type="file" id="mapFile" accept=".csv">
-    <button class="btn primary" onclick="uploadMapping()">
-      <i class="fa-solid fa-upload"></i>
-      <span>Upload Mapping CSV</span>
-    </button>
-    <button class="btn secondary" onclick="downloadMapTemplate()">
-      <i class="fa-solid fa-download"></i>
-      <span>Download Template</span>
-    </button>
+    <button class="btn primary" onclick="uploadMapping()"><i class="fa-solid fa-upload"></i><span>Upload Mapping CSV</span></button>
+    <button class="btn secondary" onclick="downloadMapTemplate()"><i class="fa-solid fa-download"></i><span>Download Template</span></button>
   </div>
 
-  <!-- ================= RESULTS TAB ================= -->
+  <!-- RESULTS TAB -->
   <div id="results-tab" class="tab-content">
-    <h3 class="section-title">
-      <i class="fa-solid fa-chart-simple"></i>
-      Student Results Management
-    </h3>
-    
+    <h3 class="section-title"><i class="fa-solid fa-chart-simple"></i>Student Results Management</h3>
     <div class="grid">
-      <select id="result_exam_id" onchange="loadResults()">
-        <option value="">Select Exam to View Results</option>
-      </select>
-      <button class="btn primary" onclick="loadAllResultsExams()" style="margin: 0;">
-        <i class="fa-solid fa-rotate"></i>
-        <span>Refresh Exam List</span>
-      </button>
+      <select id="result_exam_id" onchange="loadResults()"><option value="">Select Exam to View Results</option></select>
+      <button class="btn primary" onclick="loadAllResultsExams()" style="margin:0;"><i class="fa-solid fa-rotate"></i><span>Refresh Exam List</span></button>
     </div>
-    
     <div class="table-scroll">
       <table>
-        <thead>
-          <tr>
-            <th>Exam ID</th>
-            <th>Roll Number</th>
-            <th>Student Name</th>
-            <th>Marks</th>
-            <th>Violations</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Exam ID</th><th>Roll Number</th><th>Student Name</th><th>Marks</th><th>Violations</th><th>Status</th><th>Actions</th></tr></thead>
         <tbody id="resultTable"></tbody>
       </table>
     </div>
   </div>
 
-  <!-- ================= ANALYTICS TAB ================= -->
+  <!-- ANALYTICS TAB -->
   <div id="analytics-tab" class="tab-content">
-    <h3 class="section-title">
-      <i class="fa-solid fa-chart-pie"></i>
-      Exam Analytics & Insights
-    </h3>
-    
-    <div style="display: flex; gap: 16px; margin-bottom: 32px;">
-      <select id="analytics_exam_id" style="flex: 1; margin: 0;">
-        <option value="">Select Exam for Analytics</option>
-      </select>
-      <button class="btn primary" onclick="loadExamAnalytics()" style="margin: 0;">
-        <i class="fa-solid fa-chart-line"></i>
-        <span>Generate Analytics</span>
+    <h3 class="section-title"><i class="fa-solid fa-chart-pie"></i>Exam Analytics & Insights</h3>
+
+    <div style="display:flex;gap:16px;margin-bottom:32px;">
+      <select id="analytics_exam_id" style="flex:1;margin:0;"><option value="">Select Exam for Analytics</option></select>
+      <button class="btn primary" onclick="loadExamAnalytics()" style="margin:0;">
+        <i class="fa-solid fa-chart-line"></i><span>Generate Analytics</span>
       </button>
     </div>
-    
-    <div id="analyticsContent" style="display: none;">
-      
-      <!-- Question Statistics -->
+
+    <div id="analyticsContent" style="display:none;">
+
+      <!-- Question Distribution -->
       <div class="analytics-section">
-        <h4 class="section-title">
-          <i class="fa-solid fa-circle-question"></i>
-          Question Distribution
-        </h4>
+        <h4 class="section-title"><i class="fa-solid fa-circle-question"></i>Question Distribution</h4>
         <div class="stats-grid">
           <div class="stat-card stat-primary">
-            <div class="stat-icon">
-              <i class="fa-solid fa-a"></i>
-            </div>
-            <div class="stat-info">
-              <p class="stat-label">Part A Questions</p>
-              <h2 class="stat-value" id="ana_partA_count">0</h2>
-            </div>
+            <div class="stat-icon"><i class="fa-solid fa-a"></i></div>
+            <div class="stat-info"><p class="stat-label">Part A</p><h2 class="stat-value" id="ana_partA_count">0</h2></div>
           </div>
-          
           <div class="stat-card stat-info">
-            <div class="stat-icon">
-              <i class="fa-solid fa-b"></i>
-            </div>
-            <div class="stat-info">
-              <p class="stat-label">Part B Questions</p>
-              <h2 class="stat-value" id="ana_partB_count">0</h2>
-            </div>
+            <div class="stat-icon"><i class="fa-solid fa-b"></i></div>
+            <div class="stat-info"><p class="stat-label">Part B</p><h2 class="stat-value" id="ana_partB_count">0</h2></div>
           </div>
-          
           <div class="stat-card stat-warning">
-            <div class="stat-icon">
-              <i class="fa-solid fa-list-ol"></i>
-            </div>
-            <div class="stat-info">
-              <p class="stat-label">Total Questions</p>
-              <h2 class="stat-value" id="ana_total_questions">0</h2>
-            </div>
+            <div class="stat-icon"><i class="fa-solid fa-list-ol"></i></div>
+            <div class="stat-info"><p class="stat-label">Total</p><h2 class="stat-value" id="ana_total_questions">0</h2></div>
           </div>
         </div>
       </div>
-      
-      <!-- Student Statistics -->
+
+      <!-- Student Participation -->
       <div class="analytics-section">
-        <h4 class="section-title">
-          <i class="fa-solid fa-users"></i>
-          Student Participation
-        </h4>
+        <h4 class="section-title"><i class="fa-solid fa-users"></i>Student Participation</h4>
         <div class="stats-grid">
           <div class="stat-card stat-info">
-            <div class="stat-icon">
-              <i class="fa-solid fa-user-group"></i>
-            </div>
-            <div class="stat-info">
-              <p class="stat-label">Mapped Students</p>
-              <h2 class="stat-value" id="ana_mapped_students">0</h2>
-            </div>
+            <div class="stat-icon"><i class="fa-solid fa-user-group"></i></div>
+            <div class="stat-info"><p class="stat-label">Mapped</p><h2 class="stat-value" id="ana_mapped_students">0</h2></div>
           </div>
-          
           <div class="stat-card stat-success">
-            <div class="stat-icon">
-              <i class="fa-solid fa-user-check"></i>
-            </div>
-            <div class="stat-info">
-              <p class="stat-label">Attended</p>
-              <h2 class="stat-value" id="ana_attended_students">0</h2>
-            </div>
+            <div class="stat-icon"><i class="fa-solid fa-user-check"></i></div>
+            <div class="stat-info"><p class="stat-label">Attended</p><h2 class="stat-value" id="ana_attended_students">0</h2></div>
           </div>
-          
           <div class="stat-card stat-danger">
-            <div class="stat-icon">
-              <i class="fa-solid fa-user-xmark"></i>
-            </div>
-            <div class="stat-info">
-              <p class="stat-label">Not Attended</p>
-              <h2 class="stat-value" id="ana_not_attended_students">0</h2>
-            </div>
+            <div class="stat-icon"><i class="fa-solid fa-user-xmark"></i></div>
+            <div class="stat-info"><p class="stat-label">Absent</p><h2 class="stat-value" id="ana_not_attended_students">0</h2></div>
           </div>
-          
           <div class="stat-card stat-warning">
-            <div class="stat-icon">
-              <i class="fa-solid fa-percent"></i>
-            </div>
-            <div class="stat-info">
-              <p class="stat-label">Attendance Rate</p>
-              <h2 class="stat-value" id="ana_attendance_rate">0%</h2>
-            </div>
+            <div class="stat-icon"><i class="fa-solid fa-percent"></i></div>
+            <div class="stat-info"><p class="stat-label">Rate</p><h2 class="stat-value" id="ana_attendance_rate">0%</h2></div>
           </div>
         </div>
       </div>
-      
+
       <!-- Student Lists -->
       <div class="student-lists">
+        <!-- Attended -->
         <div class="student-list-card attended-list">
           <div class="list-header">
             <div class="list-title">
               <i class="fa-solid fa-user-check"></i>
-              <span>Attended Students (<span id="attended_count">0</span>)</span>
+              <span>Attended (<span id="attended_count">0</span>)</span>
             </div>
             <button class="btn success btn-sm" onclick="exportStudentList('attended')">
-              <i class="fa-solid fa-download"></i>
-              <span>Export</span>
+              <i class="fa-solid fa-download"></i><span>Export</span>
             </button>
           </div>
-          <div class="search-box" style="margin-bottom: 16px;">
+          <div class="search-box" style="margin-bottom:12px;">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="attendedSearch" placeholder="Search attended students..." onkeyup="filterStudentList('attended')">
+            <input type="text" id="attendedSearch" placeholder="Search attended..." onkeyup="filterStudentList('attended')">
           </div>
           <div class="student-list" id="attendedList"></div>
         </div>
-        
+
+        <!-- Not Attended -->
         <div class="student-list-card not-attended-list">
           <div class="list-header">
             <div class="list-title">
               <i class="fa-solid fa-user-xmark"></i>
-              <span>Not Attended Students (<span id="not_attended_count">0</span>)</span>
+              <span>Absent (<span id="not_attended_count">0</span>)</span>
             </div>
             <button class="btn danger btn-sm" onclick="exportStudentList('not-attended')">
-              <i class="fa-solid fa-download"></i>
-              <span>Export</span>
+              <i class="fa-solid fa-download"></i><span>Export</span>
             </button>
           </div>
-          <div class="search-box" style="margin-bottom: 16px;">
+          <div class="search-box" style="margin-bottom:12px;">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="notAttendedSearch" placeholder="Search not attended students..." onkeyup="filterStudentList('not-attended')">
+            <input type="text" id="notAttendedSearch" placeholder="Search absent..." onkeyup="filterStudentList('not-attended')">
           </div>
           <div class="student-list" id="notAttendedList"></div>
         </div>
       </div>
-      
+
     </div>
-    
+
     <div id="analyticsEmpty" class="empty-state">
-      <div class="empty-icon">
-        <i class="fa-solid fa-chart-pie"></i>
-      </div>
+      <div class="empty-icon"><i class="fa-solid fa-chart-pie"></i></div>
       <h4 class="empty-title">No Analytics Available</h4>
       <p class="empty-text">Select an exam to view detailed analytics and insights</p>
     </div>
   </div>
 
-  <!-- ================= REPORTS TAB ================= -->
+  <!-- REPORTS TAB -->
   <div id="reports-tab" class="tab-content">
-    <h3 class="section-title">
-      <i class="fa-solid fa-file-export"></i>
-      Generate Exam Report
-    </h3>
-    
+    <h3 class="section-title"><i class="fa-solid fa-file-export"></i>Generate Exam Report</h3>
     <div class="grid">
       <select id="rep_exam_id"></select>
       <input id="rep_exam_name" placeholder="Exam Name" readonly>
@@ -1482,79 +1069,45 @@ input[type="file"]:hover {
       <select id="rep_year"></select>
       <select id="rep_section"></select>
     </div>
-    
-    <button class="btn primary" onclick="generateReport()">
-      <i class="fa-solid fa-rotate"></i>
-      <span>Generate Report</span>
-    </button>
-    <button class="btn success" onclick="downloadExcel()">
-      <i class="fa-solid fa-file-excel"></i>
-      <span>Download Excel</span>
-    </button>
-    <button class="btn secondary" onclick="downloadPDF()">
-      <i class="fa-solid fa-file-pdf"></i>
-      <span>Download PDF</span>
-    </button>
-    
+    <button class="btn primary" onclick="generateReport()"><i class="fa-solid fa-rotate"></i><span>Generate Report</span></button>
+    <button class="btn success" onclick="downloadExcel()"><i class="fa-solid fa-file-excel"></i><span>Download Excel</span></button>
+    <button class="btn secondary" onclick="downloadPDF()"><i class="fa-solid fa-file-pdf"></i><span>Download PDF</span></button>
     <div class="table-scroll">
       <table id="reportTable">
-        <thead>
-          <tr>
-            <th>S.No</th>
-            <th>Roll Number</th>
-            <th>Student Name</th>
-            <th>Total Marks</th>
-            <th>Violations</th>
-          </tr>
-        </thead>
+        <thead><tr><th>S.No</th><th>Roll Number</th><th>Student Name</th><th>Total Marks</th><th>Violations</th></tr></thead>
         <tbody></tbody>
       </table>
     </div>
   </div>
 
-</div>
+</div><!-- /tab-container -->
 
-<!-- Footer -->
-<div class="footer">
-  © 2024 KCET - Department of Electronics and Communication Engineering
-</div>
+<div class="footer">© 2024 KCET - Department of Electronics and Communication Engineering</div>
+</div><!-- /container -->
 
-</div>
-
-<!-- Toast Notification -->
+<!-- Toast -->
 <div class="toast" id="toast">
   <i class="fa-solid fa-circle-check"></i>
   <span class="toast-message" id="toastMessage"></span>
 </div>
 
-<!-- Loading Overlay -->
+<!-- Loading -->
 <div class="loading-overlay" id="loadingOverlay">
   <div class="loading-spinner"></div>
 </div>
 
-<!-- Confirmation Modal -->
+<!-- Modal -->
 <div class="modal" id="confirmModal">
   <div class="modal-content">
-    <div class="modal-icon">
-      <i class="fa-solid fa-triangle-exclamation"></i>
-    </div>
+    <div class="modal-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
     <h3 class="modal-title" id="modalTitle">Confirm Action</h3>
     <p class="modal-text" id="modalText">Are you sure you want to proceed?</p>
     <div class="modal-actions">
-      <button class="btn secondary" onclick="closeModal()">
-        <i class="fa-solid fa-xmark"></i>
-        <span>Cancel</span>
-      </button>
-      <button class="btn danger" id="modalConfirmBtn">
-        <i class="fa-solid fa-check"></i>
-        <span>Confirm</span>
-      </button>
+      <button class="btn secondary" onclick="closeModal()"><i class="fa-solid fa-xmark"></i><span>Cancel</span></button>
+      <button class="btn danger" id="modalConfirmBtn"><i class="fa-solid fa-check"></i><span>Confirm</span></button>
     </div>
   </div>
 </div>
-
-
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -1568,1385 +1121,687 @@ let ALL_EXAMS_DATA = [];
 let attendedStudentsList = [];
 let notAttendedStudentsList = [];
 let filteredStudentsForMapping = [];
+let filteredStudentsForDelete = [];
 
-/* ================= TAB SWITCHING ================= */
-function switchTab(tabName) {
-  document.querySelectorAll('.tab-content').forEach(tab => {
-    tab.classList.remove('active');
-  });
-  
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.classList.remove('active');
-  });
-  
+/* =============== TAB SWITCHING =============== */
+function switchTab(tabName, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById(`${tabName}-tab`).classList.add('active');
-  event.target.closest('.tab-btn').classList.add('active');
+  (btn || event.target.closest('.tab-btn')).classList.add('active');
 }
 
-/* ================= UTILITY FUNCTIONS ================= */
-
+/* =============== UTILITIES =============== */
 function showToast(message, type = 'success') {
   const toast = document.getElementById('toast');
-  const toastMessage = document.getElementById('toastMessage');
-  const icon = toast.querySelector('i');
-  
-  toastMessage.textContent = message;
+  const icon  = toast.querySelector('i');
+  document.getElementById('toastMessage').textContent = message;
   toast.className = `toast ${type}`;
-  
-  if (type === 'success') {
-    icon.className = 'fa-solid fa-circle-check';
-  } else if (type === 'error') {
-    icon.className = 'fa-solid fa-circle-xmark';
-  } else if (type === 'warning') {
-    icon.className = 'fa-solid fa-triangle-exclamation';
-  }
-  
+  icon.className = type === 'success' ? 'fa-solid fa-circle-check'
+                 : type === 'error'   ? 'fa-solid fa-circle-xmark'
+                 :                      'fa-solid fa-triangle-exclamation';
   toast.style.display = 'flex';
-  
-  setTimeout(() => {
-    toast.style.display = 'none';
-  }, 3000);
+  setTimeout(() => { toast.style.display = 'none'; }, 3000);
 }
 
-function showLoading() {
-  document.getElementById('loadingOverlay').style.display = 'flex';
-}
-
-function hideLoading() {
-  document.getElementById('loadingOverlay').style.display = 'none';
-}
+function showLoading() { document.getElementById('loadingOverlay').style.display = 'flex'; }
+function hideLoading() { document.getElementById('loadingOverlay').style.display = 'none'; }
 
 let confirmCallback = null;
-
 function showConfirmModal(title, message, onConfirm) {
   document.getElementById('modalTitle').textContent = title;
-  document.getElementById('modalText').textContent = message;
+  document.getElementById('modalText').textContent  = message;
   document.getElementById('confirmModal').style.display = 'flex';
   confirmCallback = onConfirm;
 }
-
 function closeModal() {
   document.getElementById('confirmModal').style.display = 'none';
   confirmCallback = null;
 }
-
-document.getElementById('modalConfirmBtn').onclick = () => {
-  if (confirmCallback) {
-    confirmCallback();
-  }
-  closeModal();
-};
+document.getElementById('modalConfirmBtn').onclick = () => { if (confirmCallback) confirmCallback(); closeModal(); };
 
 function animateCounter(id, start, end, duration) {
-  const element = document.getElementById(id);
-  if (!element) return;
-  
+  const el = document.getElementById(id);
+  if (!el) return;
   const range = end - start;
-  const increment = range / (duration / 16);
-  let current = start;
-  
+  const inc   = range / (duration / 16);
+  let cur = start;
   const timer = setInterval(() => {
-    current += increment;
-    if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
-      current = end;
-      clearInterval(timer);
-    }
-    element.textContent = Math.round(current);
+    cur += inc;
+    if ((inc > 0 && cur >= end) || (inc < 0 && cur <= end)) { cur = end; clearInterval(timer); }
+    el.textContent = Math.round(cur);
   }, 16);
-}
-
-function updateDashboardStats() {
-  console.log('📊 Updating dashboard stats...');
-  
-  // Count only students (role = "student")
-  const students = USERS.filter(u => u[2] && String(u[2]).toLowerCase().trim() === "student");
-  const totalStudents = students.length;
-  
-  // ❌ DELETE OR COMMENT OUT THESE LINES:
-  // const totalExams = EXAMS.length;
-  // const activeExams = EXAMS.filter(e => e[10] === 'ENABLED').length;
-  
-  console.log('Stats:', {totalStudents});
-  
-  // ❌ DELETE OR COMMENT OUT THESE LINES:
-  // animateCounter('totalExams', 0, totalExams, 1000);
-  // animateCounter('activeExams', 0, activeExams, 1200);
-  
-  // ✅ KEEP ONLY THIS:
-  animateCounter('totalStudents', 0, totalStudents, 1600);
-}
-
-
-function filterExams() {
-  const searchTerm = document.getElementById('examSearch').value.toLowerCase();
-  const statusFilter = document.getElementById('statusFilter').value;
-  
-  const filtered = ALL_EXAMS_DATA.filter(ex => {
-    const matchesSearch = ex[0].toLowerCase().includes(searchTerm) || 
-                         ex[1].toLowerCase().includes(searchTerm);
-    const matchesStatus = !statusFilter || ex[10] === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
-  
-  displayExams(filtered);
-}
-
-function displayExams(exams) {
-  const examTable = document.getElementById('examTable');
-  examTable.innerHTML = "";
-  
-  if (exams.length === 0) {
-    examTable.innerHTML = `
-      <tr>
-        <td colspan="6">
-          <div class="empty-state">
-            <div class="empty-icon">
-              <i class="fa-solid fa-inbox"></i>
-            </div>
-            <h4 class="empty-title">No Exams Found</h4>
-            <p class="empty-text">Try adjusting your search or filter criteria</p>
-          </div>
-        </td>
-      </tr>`;
-    return;
-  }
-  
-  exams.forEach(ex => {
-    const statusBadge = ex[10] === 'ENABLED' 
-      ? `<span class="badge success"><i class="fa-solid fa-circle-check"></i> ${ex[10]}</span>`
-      : `<span class="badge danger"><i class="fa-solid fa-circle-xmark"></i> ${ex[10]}</span>`;
-    
-    examTable.innerHTML += `
-      <tr>
-        <td><strong>${ex[0]}</strong></td>
-        <td>${ex[1]}</td>
-        <td>${statusBadge}</td>
-        <td>${formatDateTime(ex[8])}</td>
-        <td>${formatDateTime(ex[9])}</td>
-        <td>
-          <button class="btn primary" style="margin: 0; padding: 10px 16px;" 
-                  onclick='editExam(${JSON.stringify(ex)})'>
-            <i class="fa-solid fa-pen"></i> Edit
-          </button>
-        </td>
-      </tr>`;
-  });
 }
 
 function formatDateTime(dt) {
   if (!dt) return '-';
-  const date = new Date(dt);
-  return date.toLocaleString('en-IN', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
+  return new Date(dt).toLocaleString('en-IN', {
+    day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'
   });
 }
 
-function validateExamForm() {
-  const required = [
-    {id: 'exam_id', name: 'Exam ID'},
-    {id: 'exam_name', name: 'Exam Name'},
-    {id: 'partA_count', name: 'Part A Count'},
-    {id: 'partB_count', name: 'Part B Count'},
-    {id: 'duration_min', name: 'Duration'},
-    {id: 'violation_limit', name: 'Violation Limit'}
-  ];
-  
-  for (let field of required) {
-    const value = document.getElementById(field.id).value;
-    if (!value || value.trim() === '') {
-      showToast(`${field.name} is required`, 'error');
-      document.getElementById(field.id).focus();
-      return false;
-    }
+function downloadCSV(csv, name) {
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = name; a.click();
+}
+
+/* =============== DASHBOARD STATS =============== */
+function updateDashboardStats() {
+  const students = USERS.filter(u => u[2] && String(u[2]).toLowerCase().trim() === 'student');
+  animateCounter('totalStudents', 0, students.length, 1600);
+}
+
+/* =============== EXAMS =============== */
+function filterExams() {
+  const s = document.getElementById('examSearch').value.toLowerCase();
+  const f = document.getElementById('statusFilter').value;
+  displayExams(ALL_EXAMS_DATA.filter(ex =>
+    (ex[0].toLowerCase().includes(s) || ex[1].toLowerCase().includes(s)) &&
+    (!f || ex[10] === f)
+  ));
+}
+
+function displayExams(exams) {
+  const tb = document.getElementById('examTable');
+  if (!exams.length) {
+    tb.innerHTML = `<tr><td colspan="6"><div class="empty-state">
+      <div class="empty-icon"><i class="fa-solid fa-inbox"></i></div>
+      <h4 class="empty-title">No Exams Found</h4>
+      <p class="empty-text">Try adjusting your search or filter criteria</p>
+    </div></td></tr>`; return;
   }
-  
+  tb.innerHTML = exams.map(ex => `
+    <tr>
+      <td><strong>${ex[0]}</strong></td>
+      <td>${ex[1]}</td>
+      <td>${ex[10]==='ENABLED'
+        ? `<span class="badge success"><i class="fa-solid fa-circle-check"></i> ${ex[10]}</span>`
+        : `<span class="badge danger"><i class="fa-solid fa-circle-xmark"></i> ${ex[10]}</span>`}</td>
+      <td>${formatDateTime(ex[8])}</td>
+      <td>${formatDateTime(ex[9])}</td>
+      <td><button class="btn primary" style="margin:0;padding:10px 16px;" onclick='editExam(${JSON.stringify(ex)})'>
+        <i class="fa-solid fa-pen"></i> Edit</button></td>
+    </tr>`).join('');
+}
+
+function validateExamForm() {
+  const fields = [{id:'exam_id',name:'Exam ID'},{id:'exam_name',name:'Exam Name'},
+    {id:'partA_count',name:'Part A Count'},{id:'partB_count',name:'Part B Count'},
+    {id:'duration_min',name:'Duration'},{id:'violation_limit',name:'Violation Limit'}];
+  for (const f of fields) {
+    const v = document.getElementById(f.id).value;
+    if (!v || !v.trim()) { showToast(`${f.name} is required`,'error'); document.getElementById(f.id).focus(); return false; }
+  }
   return true;
 }
 
 function clearExamForm() {
-  ['exam_id', 'exam_name', 'partA_count', 'partB_count', 
-   'duration_min', 'violation_limit', 'start_datetime', 'end_datetime'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
-  document.getElementById('calculator').value = 'YES';
-  document.getElementById('review').value = 'YES';
-  document.getElementById('exam_status').value = 'ENABLED';
+  ['exam_id','exam_name','partA_count','partB_count','duration_min','violation_limit','start_datetime','end_datetime']
+    .forEach(id => document.getElementById(id).value = '');
+  document.getElementById('calculator').value   = 'YES';
+  document.getElementById('review').value       = 'YES';
+  document.getElementById('exam_status').value  = 'ENABLED';
 }
 
-/* ================= EXAM CRUD ================= */
-function createExam(){
- if (!validateExamForm()) return;
- 
- showLoading();
+function createExam() {
+  if (!validateExamForm()) return;
+  showLoading();
+  fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'getAllExams'})})
+  .then(r=>r.json()).then(exams => {
+    if (exams.some(e=>e[0]===exam_id.value)) { hideLoading(); showToast('Exam ID already exists. Use UPDATE instead.','error'); return; }
+    fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({
+      action:'createExam',exam_id:exam_id.value,exam_name:exam_name.value,
+      partA_count:partA_count.value,partB_count:partB_count.value,duration_min:duration_min.value,
+      violation_limit:violation_limit.value,calculator:calculator.value,review:review.value,
+      start_datetime:start_datetime.value,end_datetime:end_datetime.value
+    })}).then(()=>{ hideLoading(); showToast('Exam created successfully!','success'); clearExamForm(); loadExams(); })
+    .catch(()=>{ hideLoading(); showToast('Failed to create exam.','error'); });
+  }).catch(()=>{ hideLoading(); showToast('Connection error.','error'); });
+}
 
- fetch(WEBAPP_URL,{
-  method:"POST",
-  body:new URLSearchParams({action:"getAllExams"})
- })
- .then(r=>r.json())
- .then(exams=>{
-  const exists = exams.some(e => e[0] === exam_id.value);
+function updateExam() {
+  if (!exam_id.value) { showToast('Please enter Exam ID to update','error'); return; }
+  showLoading();
+  fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({
+    action:'updateExamDetails',exam_id:exam_id.value,exam_name:exam_name.value,
+    partA_count:partA_count.value,partB_count:partB_count.value,duration_min:duration_min.value,
+    violation_limit:violation_limit.value,calculator:calculator.value,review:review.value,
+    start_datetime:start_datetime.value,end_datetime:end_datetime.value,status:exam_status.value
+  })}).then(()=>{ hideLoading(); showToast('Exam updated successfully!','success'); clearExamForm(); loadExams(); })
+  .catch(()=>{ hideLoading(); showToast('Failed to update exam.','error'); });
+}
 
-  if(exists){
+function loadExams() {
+  showLoading();
+  return fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'getAllExams'})})
+  .then(r=>r.json()).then(d=>{
     hideLoading();
-    showToast("Exam ID already exists. Use UPDATE instead.", 'error');
-    return;
+    if (!Array.isArray(d)) return;
+    EXAMS = ALL_EXAMS_DATA = d;
+    rep_exam_id.innerHTML       = '<option value="">Select Exam</option>';
+    analytics_exam_id.innerHTML = '<option value="">Select Exam for Analytics</option>';
+    map_exam_select.innerHTML   = '<option value="">Select Exam</option>';
+    del_exam_select.innerHTML   = '<option value="">Select Exam</option>';
+    d.forEach(ex => {
+      rep_exam_id.innerHTML       += `<option>${ex[0]}</option>`;
+      analytics_exam_id.innerHTML += `<option value="${ex[0]}">${ex[0]} - ${ex[1]}</option>`;
+      map_exam_select.innerHTML   += `<option value="${ex[0]}">${ex[0]} - ${ex[1]}</option>`;
+      del_exam_select.innerHTML   += `<option value="${ex[0]}">${ex[0]} - ${ex[1]}</option>`;
+    });
+    displayExams(d);
+    const totalExams  = d.length;
+    const activeExams = d.filter(e=>e[10]==='ENABLED').length;
+    animateCounter('totalExams',  0, totalExams,  1000);
+    animateCounter('activeExams', 0, activeExams, 1200);
+    setTimeout(()=>{ document.getElementById('totalExams').textContent=totalExams; document.getElementById('activeExams').textContent=activeExams; }, 1500);
+    return d;
+  }).catch(()=>{ hideLoading(); showToast('Failed to load exams','error'); });
+}
+
+function editExam(ex) {
+  exam_id.value=ex[0]; exam_name.value=ex[1]; partA_count.value=ex[2]; partB_count.value=ex[3];
+  duration_min.value=ex[4]; violation_limit.value=ex[5]; calculator.value=ex[6];
+  review.value=ex[7]; start_datetime.value=ex[8]; end_datetime.value=ex[9]; exam_status.value=ex[10];
+  document.querySelectorAll('.tab-btn')[0].click();
+  window.scrollTo({top:0,behavior:'smooth'});
+  showToast('Exam loaded for editing','success');
+}
+
+/* =============== QUESTIONS =============== */
+function addSingleQuestion() {
+  if (!q_exam_id.value || !q_qid.value || !q_question.value) {
+    showToast('Please fill required fields','error'); return;
   }
+  sendBulkQuestions([{exam_id:q_exam_id.value,part:q_part.value,qid:q_qid.value,
+    question:q_question.value,optA:q_A.value,optB:q_B.value,optC:q_C.value,
+    optD:q_D.value,correct:q_correct.value,image_url:q_image.value}]);
+}
+function uploadQuestions() {
+  if (!questionFile.files[0]) { showToast('Please select a CSV file','warning'); return; }
+  showLoading();
+  parseCSV(questionFile.files[0], sendBulkQuestions);
+}
+function sendBulkQuestions(data) {
+  showLoading();
+  fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'bulkQuestions',json:JSON.stringify(data)})})
+  .then(()=>{ hideLoading(); showToast(`${data.length} question(s) added!`,'success');
+    ['q_exam_id','q_qid','q_question','q_A','q_B','q_C','q_D','q_correct','q_image'].forEach(id=>document.getElementById(id).value='');
+    questionFile.value=''; loadTotalQuestions();
+  }).catch(()=>{ hideLoading(); showToast('Failed to add questions.','error'); });
+}
+function downloadQuestionTemplate() { downloadCSV('exam_id,part,qid,question,optA,optB,optC,optD,correct,image_url','question_upload_template.csv'); showToast('Template downloaded','success'); }
 
-  fetch(WEBAPP_URL,{
-    method:"POST",
-    body:new URLSearchParams({
-      action:"createExam",
-      exam_id:exam_id.value,
-      exam_name:exam_name.value,
-      partA_count:partA_count.value,
-      partB_count:partB_count.value,
-      duration_min:duration_min.value,
-      violation_limit:violation_limit.value,
-      calculator:calculator.value,
-      review:review.value,
-      start_datetime:start_datetime.value,
-      end_datetime:end_datetime.value
-    })
-  })
-  .then(() => {
-    hideLoading();
-    showToast("Exam created successfully!", 'success');
-    clearExamForm();
-    loadExams();
-  })
-  .catch(err => {
-    hideLoading();
-    showToast("Failed to create exam. Please try again.", 'error');
-    console.error(err);
+/* =============== STUDENTS =============== */
+function uploadStudents() {
+  if (!studentFile.files[0]) { showToast('Please select a CSV file','warning'); return; }
+  showLoading();
+  parseCSV(studentFile.files[0], data => {
+    fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'bulkStudents',json:JSON.stringify(data)})})
+    .then(()=>{ hideLoading(); showToast(`${data.length} student(s) added!`,'success'); studentFile.value=''; loadUsers(); })
+    .catch(()=>{ hideLoading(); showToast('Failed to add students.','error'); });
   });
- })
- .catch(err => {
-   hideLoading();
-   showToast("Connection error. Please try again.", 'error');
-   console.error(err);
- });
 }
+function downloadStudentTemplate() { downloadCSV('email,password,roll_no,name,dept,year,section','student_upload_template.csv'); showToast('Template downloaded','success'); }
 
-function updateExam(){
- if (!exam_id.value) {
-   showToast("Please enter Exam ID to update", 'error');
-   return;
- }
- 
- showLoading();
- 
- fetch(WEBAPP_URL,{
-  method:"POST",
-  body:new URLSearchParams({
-   action:"updateExamDetails",
-   exam_id:exam_id.value,
-   exam_name:exam_name.value,
-   partA_count:partA_count.value,
-   partB_count:partB_count.value,
-   duration_min:duration_min.value,
-   violation_limit:violation_limit.value,
-   calculator:calculator.value,
-   review:review.value,
-   start_datetime:start_datetime.value,
-   end_datetime:end_datetime.value,
-   status:exam_status.value
-  })
- })
- .then(() => {
-   hideLoading();
-   showToast("Exam updated successfully!", 'success');
-   clearExamForm();
-   loadExams();
- })
- .catch(err => {
-   hideLoading();
-   showToast("Failed to update exam. Please try again.", 'error');
-   console.error(err);
- });
-}
-
-// ✅ COPY THIS ENTIRE FUNCTION - Replace your loadExams()
-function loadExams(){
- console.log('🔵 loadExams() called');
- showLoading();
- 
- return fetch(WEBAPP_URL,{
-   method:"POST",
-   body:new URLSearchParams({action:"getAllExams"})
- })
- .then(r=>r.json())
- .then(d=>{
-   hideLoading();
-   
-   console.log('🔵 getAllExams response:', d);
-   console.log('🔵 Type of response:', typeof d);
-   console.log('🔵 Is array?', Array.isArray(d));
-   console.log('🔵 Length:', d.length);
-   
-   if (!Array.isArray(d)) {
-     console.error('❌ Response is not an array!');
-     return;
-   }
-   
-   // Store exams
-   EXAMS = d;
-   ALL_EXAMS_DATA = d;
-   
-   console.log('🔵 EXAMS stored, length:', EXAMS.length);
-   
-   // Populate dropdowns
-   rep_exam_id.innerHTML='<option value="">Select Exam</option>';
-   analytics_exam_id.innerHTML='<option value="">Select Exam for Analytics</option>';
-   map_exam_select.innerHTML='<option value="">Select Exam</option>';
-   
-   d.forEach(ex => {
-     rep_exam_id.innerHTML+=`<option>${ex[0]}</option>`;
-     analytics_exam_id.innerHTML+=`<option value="${ex[0]}">${ex[0]} - ${ex[1]}</option>`;
-     map_exam_select.innerHTML+=`<option value="${ex[0]}">${ex[0]} - ${ex[1]}</option>`;
-   });
-   
-   displayExams(d);
-   
-   // ✅ CALCULATE EXAM STATS
-   const totalExams = d.length;
-   const activeExams = d.filter(e => {
-     console.log('Checking exam:', e[0], 'Status:', e[10]);
-     return e[10] === 'ENABLED';
-   }).length;
-   
-   console.log('🔵 Total Exams:', totalExams);
-   console.log('🔵 Active Exams:', activeExams);
-   
-   // ✅ GET THE ELEMENTS
-   const totalExamsEl = document.getElementById('totalExams');
-   const activeExamsEl = document.getElementById('activeExams');
-   
-   console.log('🔵 totalExams element:', totalExamsEl);
-   console.log('🔵 activeExams element:', activeExamsEl);
-   
-   if (!totalExamsEl || !activeExamsEl) {
-     console.error('❌ Counter elements not found!');
-     return;
-   }
-   
-   // ✅ UPDATE COUNTERS DIRECTLY
-   console.log('🔵 Animating counters...');
-   animateCounter('totalExams', 0, totalExams, 1000);
-   animateCounter('activeExams', 0, activeExams, 1200);
-   
-   // ✅ ALSO SET DIRECTLY (backup)
-   setTimeout(() => {
-     totalExamsEl.textContent = totalExams;
-     activeExamsEl.textContent = activeExams;
-     console.log('🔵 Counter values set directly');
-   }, 1500);
-   
-   return d;
- })
- .catch(err => {
-   hideLoading();
-   console.error('❌ Error loading exams:', err);
-   showToast("Failed to load exams", 'error');
-   throw err;
- });
-}
-
-
-function editExam(ex){
- exam_id.value=ex[0];
- exam_name.value=ex[1];
- partA_count.value=ex[2];
- partB_count.value=ex[3];
- duration_min.value=ex[4];
- violation_limit.value=ex[5];
- calculator.value=ex[6];
- review.value=ex[7];
- start_datetime.value=ex[8];
- end_datetime.value=ex[9];
- exam_status.value=ex[10];
- 
- switchTab('exams');
- document.querySelectorAll('.tab-btn')[0].classList.add('active');
- 
- window.scrollTo({top: 0, behavior: 'smooth'});
- showToast("Exam loaded for editing", 'success');
-}
-
-/* ================= QUESTIONS ================= */
-function addSingleQuestion(){
- if (!q_exam_id.value || !q_qid.value || !q_question.value) {
-   showToast("Please fill required fields (Exam ID, Question ID, Question)", 'error');
-   return;
- }
- 
- const q=[{
-  exam_id:q_exam_id.value,part:q_part.value,qid:q_qid.value,
-  question:q_question.value,optA:q_A.value,optB:q_B.value,
-  optC:q_C.value,optD:q_D.value,correct:q_correct.value,image_url:q_image.value
- }];
- sendBulkQuestions(q);
-}
-
-function uploadQuestions(){
- if (!questionFile.files[0]) {
-   showToast("Please select a CSV file", 'warning');
-   return;
- }
- showLoading();
- parseCSV(questionFile.files[0], (data) => {
-   sendBulkQuestions(data);
- });
-}
-
-function sendBulkQuestions(data){
- showLoading();
- fetch(WEBAPP_URL,{method:"POST",
-  body:new URLSearchParams({action:"bulkQuestions",json:JSON.stringify(data)})
- })
- .then(() => {
-   hideLoading();
-   showToast(`${data.length} question(s) added successfully!`, 'success');
-   ['q_exam_id', 'q_qid', 'q_question', 'q_A', 'q_B', 'q_C', 'q_D', 'q_correct', 'q_image'].forEach(id => {
-     document.getElementById(id).value = '';
-   });
-   questionFile.value = '';
-   loadTotalQuestions();
- })
- .catch(err => {
-   hideLoading();
-   showToast("Failed to add questions. Please try again.", 'error');
-   console.error(err);
- });
-}
-
-/* ================= STUDENTS ================= */
-function uploadStudents(){
- if (!studentFile.files[0]) {
-   showToast("Please select a CSV file", 'warning');
-   return;
- }
- 
- showLoading();
- parseCSV(studentFile.files[0],data=>{
-  fetch(WEBAPP_URL,{method:"POST",
-   body:new URLSearchParams({action:"bulkStudents",json:JSON.stringify(data)})
-  })
-  .then(() => {
-    hideLoading();
-    showToast(`${data.length} student(s) added successfully!`, 'success');
-    studentFile.value = '';
-    loadUsers();
-  })
-  .catch(err => {
-    hideLoading();
-    showToast("Failed to add students. Please try again.", 'error');
-    console.error(err);
-  });
- });
-}
-
-function downloadStudentTemplate(){
- downloadCSV(
-  "email,password,roll_no,name,dept,year,section",
-  "student_upload_template.csv"
- );
- showToast("Template downloaded", 'success');
-}
-
-/* ================= MAPPING - INTERACTIVE UI ================= */
+/* =============== MAPPING — ADD =============== */
 function updateMappingUI() {
-  const exam = map_exam_select.value;
-  const dept = map_dept_select.value;
-  const year = map_year_select.value;
-  const section = map_section_select.value;
-  
-  if (!exam || !dept || !year || !section) {
-    document.getElementById('student_selection_area').style.display = 'none';
-    document.getElementById('map_button').style.display = 'none';
-    return;
+  const exam=map_exam_select.value, dept=map_dept_select.value,
+        year=map_year_select.value, section=map_section_select.value;
+  if (!exam||!dept||!year||!section) {
+    document.getElementById('student_selection_area').style.display='none';
+    document.getElementById('map_button').style.display='none'; return;
   }
-  
-  filteredStudentsForMapping = USERS.filter(u => 
-    u[5] === dept && u[6] === year && u[7] === section
-  );
-  
-  if (filteredStudentsForMapping.length === 0) {
-    document.getElementById('student_selection_area').style.display = 'block';
-    document.getElementById('student_checkboxes').innerHTML = `
-      <div class="empty-list">
-        <i class="fa-solid fa-user-slash"></i>
-        <p>No students found for this combination</p>
-      </div>
-    `;
-    document.getElementById('map_button').style.display = 'none';
-    return;
+  filteredStudentsForMapping = USERS.filter(u=>u[5]===dept&&u[6]===year&&u[7]===section);
+  if (!filteredStudentsForMapping.length) {
+    document.getElementById('student_checkboxes').innerHTML='<div class="empty-list"><i class="fa-solid fa-user-slash"></i><p>No students found</p></div>';
+    document.getElementById('student_selection_area').style.display='block';
+    document.getElementById('map_button').style.display='none'; return;
   }
-  
-  const checkboxesHTML = filteredStudentsForMapping.map((student, index) => `
+  document.getElementById('student_checkboxes').innerHTML = filteredStudentsForMapping.map((s,i)=>`
     <div class="student-checkbox">
-      <input type="checkbox" id="student_${index}" value="${student[3]}" onchange="updateSelectedCount()">
-      <label for="student_${index}">
-        <strong>${student[4]}</strong> - ${student[3]} (${student[5]}, ${student[6]}, ${student[7]})
-      </label>
-    </div>
-  `).join('');
-  
-  document.getElementById('student_checkboxes').innerHTML = checkboxesHTML;
-  document.getElementById('student_selection_area').style.display = 'block';
-  document.getElementById('map_button').style.display = 'inline-flex';
+      <input type="checkbox" id="st_${i}" value="${s[3]}" onchange="updateSelectedCount()">
+      <label for="st_${i}"><strong>${s[4]}</strong> - ${s[3]} (${s[5]}, ${s[6]}, ${s[7]})</label>
+    </div>`).join('');
+  document.getElementById('student_selection_area').style.display='block';
+  document.getElementById('map_button').style.display='inline-flex';
   updateSelectedCount();
 }
-
 function updateSelectedCount() {
-  const checkboxes = document.querySelectorAll('#student_checkboxes input[type="checkbox"]:checked');
-  document.getElementById('selected_count').textContent = checkboxes.length;
+  document.getElementById('selected_count').textContent =
+    document.querySelectorAll('#student_checkboxes input[type="checkbox"]:checked').length;
 }
-
 function selectAllStudents() {
-  const checkboxes = document.querySelectorAll('#student_checkboxes input[type="checkbox"]');
-  const allChecked = Array.from(checkboxes).every(cb => cb.checked);
-  
-  checkboxes.forEach(cb => {
-    cb.checked = !allChecked;
-  });
-  
-  updateSelectedCount();
+  const cbs = document.querySelectorAll('#student_checkboxes input[type="checkbox"]');
+  const all = Array.from(cbs).every(c=>c.checked);
+  cbs.forEach(c=>c.checked=!all); updateSelectedCount();
 }
-
 async function mapSelectedStudents() {
-  const exam_id = map_exam_select.value;
-  const dept = map_dept_select.value;
-  const year = map_year_select.value;
-  const section = map_section_select.value;
-  
-  const selectedCheckboxes = document.querySelectorAll('#student_checkboxes input[type="checkbox"]:checked');
-  
-  if (selectedCheckboxes.length === 0) {
-    showToast("Please select at least one student", 'warning');
-    return;
-  }
-  
+  const exam_id=map_exam_select.value, dept=map_dept_select.value,
+        year=map_year_select.value, section=map_section_select.value;
+  const sel = document.querySelectorAll('#student_checkboxes input[type="checkbox"]:checked');
+  if (!sel.length) { showToast('Please select at least one student','warning'); return; }
   showLoading();
-  
-  const mappingPromises = Array.from(selectedCheckboxes).map(cb => {
-    return fetch(WEBAPP_URL, {
-      method: "POST",
-      body: new URLSearchParams({
-        action: "mapExam",
-        exam_id: exam_id,
-        roll_no: cb.value,
-        dept: dept,
-        year: year,
-        section: section
-      })
-    });
-  });
-  
   try {
-    await Promise.all(mappingPromises);
-    hideLoading();
-    showToast(`Successfully mapped ${selectedCheckboxes.length} student(s)`, 'success');
-    
-    document.querySelectorAll('#student_checkboxes input[type="checkbox"]').forEach(cb => {
-      cb.checked = false;
-    });
+    await Promise.all(Array.from(sel).map(cb=>fetch(WEBAPP_URL,{method:'POST',
+      body:new URLSearchParams({action:'mapExam',exam_id,roll_no:cb.value,dept,year,section})})));
+    hideLoading(); showToast(`Successfully mapped ${sel.length} student(s)`,'success');
+    document.querySelectorAll('#student_checkboxes input[type="checkbox"]').forEach(c=>c.checked=false);
     updateSelectedCount();
-  } catch (err) {
-    hideLoading();
-    showToast("Some mappings failed. Please try again.", 'error');
-    console.error(err);
-  }
+  } catch { hideLoading(); showToast('Some mappings failed.','error'); }
 }
 
-/* ================= MAPPING - CSV UPLOAD ================= */
-function uploadMapping(){
- if (!mapFile.files[0]) {
-   showToast("Please select a CSV file", 'warning');
-   return;
- }
- 
- showLoading();
- parseCSV(mapFile.files[0],data=>{
-    Promise.all(
-      data.map(m =>
-        fetch(WEBAPP_URL,{
-          method:"POST",
-          body:new URLSearchParams({
-            action:"mapExam",
-            exam_id:m.exam_id,
-            roll_no:m.roll_no||"",
-            dept:m.dept||"",
-            year:m.year||"",
-            section:m.section||""
+/* =============== MAPPING — DELETE =============== */
+function updateDeleteMappingUI() {
+  const exam    = del_exam_select.value;
+  const dept    = del_dept_select.value;
+  const year    = del_year_select.value;
+  const section = del_section_select.value;
+
+  if (!exam) {
+    document.getElementById('delete_student_area').style.display='none';
+    document.getElementById('delete_map_button').style.display='none'; return;
+  }
+
+  // Filter mapped students for this exam
+  filteredStudentsForDelete = USERS.filter(u =>
+    (!dept    || u[5] === dept) &&
+    (!year    || u[6] === year) &&
+    (!section || u[7] === section)
+  );
+
+  if (!filteredStudentsForDelete.length) {
+    document.getElementById('delete_student_checkboxes').innerHTML =
+      '<div class="empty-list"><i class="fa-solid fa-user-slash"></i><p>No students found</p></div>';
+    document.getElementById('delete_student_area').style.display='block';
+    document.getElementById('delete_map_button').style.display='none'; return;
+  }
+
+  document.getElementById('delete_student_checkboxes').innerHTML =
+    filteredStudentsForDelete.map((s,i) => `
+      <div class="delete-student-checkbox">
+        <input type="checkbox" id="dst_${i}" value="${s[3]}" onchange="updateDelSelectedCount()">
+        <label for="dst_${i}"><strong>${s[4]}</strong> — ${s[3]} (${s[5]}, ${s[6]}, ${s[7]})</label>
+      </div>`).join('');
+
+  document.getElementById('delete_student_area').style.display='block';
+  document.getElementById('delete_map_button').style.display='inline-flex';
+  updateDelSelectedCount();
+}
+
+function updateDelSelectedCount() {
+  document.getElementById('del_selected_count').textContent =
+    document.querySelectorAll('#delete_student_checkboxes input[type="checkbox"]:checked').length;
+}
+
+function selectAllDeleteStudents() {
+  const cbs = document.querySelectorAll('#delete_student_checkboxes input[type="checkbox"]');
+  const all = Array.from(cbs).every(c=>c.checked);
+  cbs.forEach(c=>c.checked=!all); updateDelSelectedCount();
+}
+
+async function deleteSelectedMappings() {
+  const exam_id = del_exam_select.value;
+  const sel = document.querySelectorAll('#delete_student_checkboxes input[type="checkbox"]:checked');
+
+  if (!sel.length) { showToast('Please select at least one student','warning'); return; }
+
+  showConfirmModal(
+    'Delete Mappings?',
+    `This will remove ${sel.length} student(s) from exam "${exam_id}". This cannot be undone.`,
+    async () => {
+      showLoading();
+      try {
+        await Promise.all(Array.from(sel).map(cb =>
+          fetch(WEBAPP_URL, {
+            method: 'POST',
+            body: new URLSearchParams({
+              action: 'deleteMapping',
+              exam_id: exam_id,
+              roll_no: cb.value
+            })
           })
-        })
-      )
-    )
-    .then(() => {
-      hideLoading();
-      showToast(`${data.length} mapping(s) completed successfully!`, 'success');
-      mapFile.value = '';
-    })
-    .catch(err => {
-      hideLoading();
-      showToast("Some mappings failed. Please check and try again.", 'error');
-      console.error(err);
-    });
-  });
-}
-
-/* ================= CSV PARSING ================= */
-function parseCSV(file,cb){
- if(!file){
-   showToast("Please select a CSV file", 'warning');
-   return;
- }
- const r=new FileReader();
- r.onload=e=>{
-  const rows=e.target.result.trim().split("\n");
-  const h=rows.shift().split(",");
-  const d=rows.map(r=>{
-   const o={};
-   r.split(",").forEach((v,i)=>o[h[i]]=v.trim());
-   return o;
-  });
-  cb(d);
- };
- r.onerror = () => {
-   hideLoading();
-   showToast("Failed to read file. Please try again.", 'error');
- };
- r.readAsText(file);
-}
-
-/* ================= TEMPLATES ================= */
-function downloadQuestionTemplate(){
- downloadCSV("exam_id,part,qid,question,optA,optB,optC,optD,correct,image_url","question_upload_template.csv");
- showToast("Question template downloaded", 'success');
-}
-
-function downloadMapTemplate(){
- downloadCSV("exam_id,roll_no,dept,year,section","mapping_upload_template.csv");
- showToast("Mapping template downloaded", 'success');
-}
-
-function downloadCSV(csv,name){
- const a=document.createElement("a");
- a.href="data:text/csv;charset=utf-8,"+encodeURIComponent(csv);
- a.download=name;
- a.click();
-}
-
-/* ================= RESULTS ================= */
-function loadAllResultsExams(){
-  showLoading();
-  
-  fetch(WEBAPP_URL + "?action=getResults", { method:"POST" })
-  .then(r=>r.json())
-  .then(allResults=>{
-    hideLoading();
-    
-    const uniqueExamIds = [...new Set(allResults.map(r => r[0]))];
-    
-    const resultExamSelect = document.getElementById('result_exam_id');
-    resultExamSelect.innerHTML = '<option value="">Select Exam to View Results</option>';
-    
-    uniqueExamIds.forEach(examId => {
-      const exam = EXAMS.find(e => e[0] === examId);
-      const examName = exam ? exam[1] : examId;
-      resultExamSelect.innerHTML += `<option value="${examId}">${examId} - ${examName}</option>`;
-    });
-    
-    if (uniqueExamIds.length === 0) {
-      showToast("No exam results found yet", 'warning');
-    } else {
-      showToast(`Found ${uniqueExamIds.length} exam(s) with results`, 'success');
+        ));
+        hideLoading();
+        showToast(`${sel.length} mapping(s) deleted successfully`, 'success');
+        // Reset UI
+        document.getElementById('del_exam_select').value = '';
+        document.getElementById('delete_student_area').style.display = 'none';
+        document.getElementById('delete_map_button').style.display = 'none';
+        document.getElementById('delete_student_checkboxes').innerHTML = '';
+        document.getElementById('del_selected_count').textContent = '0';
+      } catch (err) {
+        hideLoading();
+        showToast('Some deletions failed. Please try again.', 'error');
+        console.error(err);
+      }
     }
-  })
-  .catch(err=>{
+  );
+}
+
+/* =============== MAPPING — CSV UPLOAD =============== */
+function uploadMapping() {
+  if (!mapFile.files[0]) { showToast('Please select a CSV file','warning'); return; }
+  showLoading();
+  parseCSV(mapFile.files[0], data => {
+    Promise.all(data.map(m=>fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({
+      action:'mapExam',exam_id:m.exam_id,roll_no:m.roll_no||'',dept:m.dept||'',year:m.year||'',section:m.section||''
+    })})))
+    .then(()=>{ hideLoading(); showToast(`${data.length} mapping(s) completed!`,'success'); mapFile.value=''; })
+    .catch(()=>{ hideLoading(); showToast('Some mappings failed.','error'); });
+  });
+}
+function downloadMapTemplate() { downloadCSV('exam_id,roll_no,dept,year,section','mapping_upload_template.csv'); showToast('Template downloaded','success'); }
+
+/* =============== CSV PARSE =============== */
+function parseCSV(file, cb) {
+  const r = new FileReader();
+  r.onload = e => {
+    const rows = e.target.result.trim().split('\n');
+    const h = rows.shift().split(',');
+    cb(rows.map(row => { const o={}; row.split(',').forEach((v,i)=>o[h[i]]=v.trim()); return o; }));
+  };
+  r.onerror = () => { hideLoading(); showToast('Failed to read file.','error'); };
+  r.readAsText(file);
+}
+
+/* =============== RESULTS =============== */
+function loadAllResultsExams() {
+  showLoading();
+  fetch(WEBAPP_URL+'?action=getResults',{method:'POST'}).then(r=>r.json()).then(all=>{
     hideLoading();
-    showToast("Failed to load exam list. Please try again.", 'error');
-    console.error(err);
+    const ids = [...new Set(all.map(r=>r[0]))];
+    result_exam_id.innerHTML = '<option value="">Select Exam to View Results</option>';
+    ids.forEach(id => {
+      const ex = EXAMS.find(e=>e[0]===id);
+      result_exam_id.innerHTML += `<option value="${id}">${id}${ex?' - '+ex[1]:''}</option>`;
+    });
+    showToast(ids.length ? `Found ${ids.length} exam(s) with results` : 'No exam results found yet', ids.length?'success':'warning');
+  }).catch(()=>{ hideLoading(); showToast('Failed to load exam list.','error'); });
+}
+
+function loadResults() {
+  const exam_id = document.getElementById('result_exam_id').value;
+  if (!exam_id) { showToast('Please select an exam','warning'); return; }
+  showLoading();
+  fetch(WEBAPP_URL+'?action=getResults&exam_id='+encodeURIComponent(exam_id),{method:'POST'})
+  .then(r=>r.json()).then(d=>{
+    hideLoading();
+    const tb = document.getElementById('resultTable');
+    if (!d||!d.length) {
+      tb.innerHTML=`<tr><td colspan='7'><div class="empty-state"><div class="empty-icon"><i class="fa-solid fa-inbox"></i></div>
+        <h4 class="empty-title">No Results Found</h4><p class="empty-text">No submissions yet</p></div></td></tr>`; return;
+    }
+    tb.innerHTML = d.map(r=>{
+      const student = USERS.find(u=>u[3]===r[1]);
+      const badge = r[4]==='SUBMITTED'
+        ? `<span class="badge success"><i class="fa-solid fa-circle-check"></i> ${r[4]}</span>`
+        : `<span class="badge danger"><i class="fa-solid fa-triangle-exclamation"></i> ${r[4]}</span>`;
+      return `<tr>
+        <td><strong>${r[0]}</strong></td><td>${r[1]}</td>
+        <td>${student?student[4]:'Unknown'}</td>
+        <td><strong>${r[2]}</strong></td>
+        <td><strong style="color:var(--danger);">${r[3]}</strong></td>
+        <td>${badge}</td>
+        <td>${r[4]==='SUBMITTED'?`<button class="btn success" style="margin:0;padding:10px 16px;"
+          onclick="reenable('${r[0]}','${r[1]}')"><i class="fa-solid fa-rotate-right"></i> Re-Enable</button>`:'-'}</td>
+      </tr>`;
+    }).join('');
+    showToast(`${d.length} result(s) loaded`,'success');
+  }).catch(()=>{ hideLoading(); showToast('Failed to load results.','error'); });
+}
+
+function reenable(exam_id, roll_no) {
+  showConfirmModal('Re-enable Student?',`Re-enable ${roll_no} for this exam?`,()=>{
+    showLoading();
+    fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'unblockStudent',exam_id,roll_no})})
+    .then(()=>{ hideLoading(); showToast('Student re-enabled!','success'); loadResults(); })
+    .catch(()=>{ hideLoading(); showToast('Failed to re-enable student.','error'); });
   });
 }
 
-function loadResults(){
- const exam_id = document.getElementById('result_exam_id').value;
-
- if(!exam_id){
-   showToast("Please select an exam", 'warning');
-   return;
- }
- 
- showLoading();
-
- fetch(
-  WEBAPP_URL + "?action=getResults&exam_id=" + encodeURIComponent(exam_id),
-  { method:"POST" }
- )
- .then(r=>r.json())
- .then(d=>{
-  hideLoading();
-  const resultTable = document.getElementById('resultTable');
-  resultTable.innerHTML="";
-
-  if(!d || d.length===0){
-    resultTable.innerHTML = `
-      <tr>
-        <td colspan='7'>
-          <div class="empty-state">
-            <div class="empty-icon">
-              <i class="fa-solid fa-inbox"></i>
-            </div>
-            <h4 class="empty-title">No Results Found</h4>
-            <p class="empty-text">No submissions for this exam yet</p>
-          </div>
-        </td>
-      </tr>`;
-    return;
-  }
-
-  d.forEach(r=>{
-    const exam   = r[0];
-    const roll   = r[1];
-    const marks  = r[2];
-    const vio    = r[3];
-    const status = r[4];
-    
-    const student = USERS.find(u => u[3] === roll);
-    const studentName = student ? student[4] : 'Unknown';
-    
-    const statusBadge = status === 'SUBMITTED'
-      ? `<span class="badge success"><i class="fa-solid fa-circle-check"></i> ${status}</span>`
-      : `<span class="badge danger"><i class="fa-solid fa-triangle-exclamation"></i> ${status}</span>`;
-
-    resultTable.innerHTML += `
-      <tr>
-        <td><strong>${exam}</strong></td>
-        <td>${roll}</td>
-        <td>${studentName}</td>
-        <td><strong>${marks}</strong></td>
-        <td><strong style="color: var(--danger);">${vio}</strong></td>
-        <td>${statusBadge}</td>
-        <td>
-          ${
-            status==="SUBMITTED"
-            ? `<button class="btn success" style="margin: 0; padding: 10px 16px;"
-                 onclick="reenable('${exam}','${roll}')">
-                 <i class="fa-solid fa-rotate-right"></i> Re-Enable</button>`
-            : "-"
-          }
-        </td>
-      </tr>`;
-  });
-  
-  showToast(`${d.length} result(s) loaded`, 'success');
- })
- .catch(err=>{
-   hideLoading();
-   showToast("Failed to load results. Please try again.", 'error');
-   console.error(err);
- });
-}
-
-function reenable(exam_id, roll_no){
- showConfirmModal(
-   'Re-enable Student?',
-   `Are you sure you want to re-enable ${roll_no} for this exam?`,
-   () => {
-     showLoading();
-     fetch(WEBAPP_URL,{
-      method:"POST",
-      body:new URLSearchParams({
-        action:"unblockStudent",
-        exam_id,
-        roll_no
-      })
-     })
-     .then(() => {
-       hideLoading();
-       showToast("Student re-enabled successfully!", 'success');
-       loadResults();
-     })
-     .catch(err => {
-       hideLoading();
-       showToast("Failed to re-enable student. Please try again.", 'error');
-       console.error(err);
-     });
-   }
- );
-}
-
-// ✅ FIX 4: Complete Analytics Function with Mapped and Not Attended
+/* =============== ANALYTICS =============== */
 async function loadExamAnalytics() {
   const exam_id = document.getElementById('analytics_exam_id').value;
-
-  if (!exam_id) {
-    showToast("Please select an exam", 'warning');
-    return;
-  }
-
+  if (!exam_id) { showToast('Please select an exam','warning'); return; }
   showLoading();
-
   try {
-    console.log('📊 Loading analytics for exam:', exam_id);
+    const exam = EXAMS.find(e=>e[0]===exam_id);
+    if (!exam) { hideLoading(); showToast('Exam not found','error'); return; }
 
-    const exam = EXAMS.find(e => e[0] === exam_id);
-    if (!exam) {
-      hideLoading();
-      showToast("Exam not found", 'error');
-      return;
-    }
-
-    // Fetch questions, results, and mappings in parallel
-    const [questionsRes, resultsRes] = await Promise.all([
-      fetch(WEBAPP_URL, {
-        method: "POST",
-        body: new URLSearchParams({ action: "getQuestions", exam_id })
-      }),
-      fetch(WEBAPP_URL + "?action=getResults&exam_id=" + encodeURIComponent(exam_id), { method: "POST" })
+    const [qRes, rRes] = await Promise.all([
+      fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'getQuestions',exam_id})}),
+      fetch(WEBAPP_URL+'?action=getResults&exam_id='+encodeURIComponent(exam_id),{method:'POST'})
     ]);
+    const questions = await qRes.json();
+    const results   = await rRes.json();
+    const mapped    = await getExamMappings(exam_id);
 
-    const questions = await questionsRes.json();
-    const results   = await resultsRes.json();
+    const attendedSet  = new Set(results.map(r=>String(r[1]).trim()));
+    const attended     = mapped.filter(u=>attendedSet.has(String(u[3]).trim()));
+    const notAttended  = mapped.filter(u=>!attendedSet.has(String(u[3]).trim()));
+    attendedStudentsList    = attended;
+    notAttendedStudentsList = notAttended;
 
-    console.log('✅ Questions:', questions.length, '| Results:', results.length);
+    const partA = questions.filter(q=>q[1]==='PART A').length;
+    const partB = questions.filter(q=>q[1]==='PART B').length;
+    const rate  = mapped.length > 0 ? ((attended.length/mapped.length)*100).toFixed(1) : 0;
 
-    const mappedStudents = await getExamMappings(exam_id);
-    console.log('✅ Mapped students:', mappedStudents.length);
+    document.getElementById('ana_partA_count').textContent        = partA;
+    document.getElementById('ana_partB_count').textContent        = partB;
+    document.getElementById('ana_total_questions').textContent    = questions.length;
+    document.getElementById('ana_mapped_students').textContent    = mapped.length;
+    document.getElementById('ana_attended_students').textContent  = attended.length;
+    document.getElementById('ana_not_attended_students').textContent = notAttended.length;
+    document.getElementById('ana_attendance_rate').textContent    = rate + '%';
+    document.getElementById('attended_count').textContent         = attended.length;
+    document.getElementById('not_attended_count').textContent     = notAttended.length;
 
-    const attendedRollNumbers = new Set(results.map(r => String(r[1]).trim()));
-    const attendedStudents    = mappedStudents.filter(u => attendedRollNumbers.has(String(u[3]).trim()));
-    const notAttendedStudents = mappedStudents.filter(u => !attendedRollNumbers.has(String(u[3]).trim()));
-
-    console.log('✅ Attended:', attendedStudents.length, '| Not attended:', notAttendedStudents.length);
-
-    attendedStudentsList    = attendedStudents;
-    notAttendedStudentsList = notAttendedStudents;
-
-    const partAQuestions = questions.filter(q => q[1] === "PART A").length;
-    const partBQuestions = questions.filter(q => q[1] === "PART B").length;
-    const totalQuestions = questions.length;
-
-    const attendanceRate = mappedStudents.length > 0
-      ? ((attendedStudents.length / mappedStudents.length) * 100).toFixed(1)
-      : 0;
-
-    // ✅ SET VALUES DIRECTLY — no animate-from-zero reset
-    document.getElementById('ana_partA_count').textContent        = partAQuestions;
-    document.getElementById('ana_partB_count').textContent        = partBQuestions;
-    document.getElementById('ana_total_questions').textContent    = totalQuestions;
-    document.getElementById('ana_mapped_students').textContent    = mappedStudents.length;
-    document.getElementById('ana_attended_students').textContent  = attendedStudents.length;
-    document.getElementById('ana_not_attended_students').textContent = notAttendedStudents.length;
-    document.getElementById('ana_attendance_rate').textContent    = attendanceRate + '%';
-
-    document.getElementById('attended_count').textContent     = attendedStudents.length;
-    document.getElementById('not_attended_count').textContent = notAttendedStudents.length;
-
-    displayStudentList('attended', attendedStudents);
-    displayStudentList('not-attended', notAttendedStudents);
+    displayStudentList('attended',     attended);
+    displayStudentList('not-attended', notAttended);
 
     document.getElementById('analyticsContent').style.display = 'block';
     document.getElementById('analyticsEmpty').style.display   = 'none';
-
     hideLoading();
-    showToast(`Analytics generated for ${exam_id}`, 'success');
-
+    showToast(`Analytics generated for ${exam_id}`,'success');
   } catch (err) {
-    console.error('❌ Analytics error:', err);
-    hideLoading();
-    showToast("Failed to load analytics: " + err.message, 'error');
+    hideLoading(); showToast('Failed to load analytics: '+err.message,'error');
   }
 }
+
 function displayStudentList(type, students) {
-  const listId = type === 'attended' ? 'attendedList' : 'notAttendedList';
-  const countId = type === 'attended' ? 'attended_count' : 'not_attended_count';
-  const list = document.getElementById(listId);
-  
+  const listId  = type==='attended' ? 'attendedList' : 'notAttendedList';
+  const countId = type==='attended' ? 'attended_count' : 'not_attended_count';
   document.getElementById(countId).textContent = students.length;
-  
-  if (students.length === 0) {
-    list.innerHTML = `
-      <div class="empty-list">
-        <i class="fa-solid fa-inbox"></i>
-        <p>No students in this category</p>
-      </div>
-    `;
-    return;
+  const list = document.getElementById(listId);
+  if (!students.length) {
+    list.innerHTML='<div class="empty-list"><i class="fa-solid fa-inbox"></i><p>No students in this category</p></div>'; return;
   }
-  
-  list.innerHTML = students.map(student => {
-    const name = student[4] || 'Unknown';
-    const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-    const statusText = type === 'attended' ? 'Submitted' : 'Absent';
-    
-    return `
-      <div class="student-item">
-        <div class="student-info">
-          <div class="student-avatar">${initials}</div>
-          <div class="student-details">
-            <div class="student-name">${name}</div>
-            <div class="student-roll">${student[3] || 'N/A'}</div>
-            ${student[5] || student[6] || student[7] ? `
-              <div class="student-dept">
-                ${student[5] ? `<span>${student[5]}</span>` : ''}
-                ${student[6] ? `<span>${student[6]}</span>` : ''}
-                ${student[7] ? `<span>${student[7]}</span>` : ''}
-              </div>
-            ` : ''}
-          </div>
+  list.innerHTML = students.map(s=>{
+    const name = s[4]||'Unknown';
+    const init = name.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+    return `<div class="student-item">
+      <div class="student-info">
+        <div class="student-avatar">${init}</div>
+        <div class="student-details">
+          <div class="student-name">${name}</div>
+          <div class="student-roll">${s[3]||'N/A'}</div>
+          ${s[5]||s[6]||s[7]?`<div class="student-dept">
+            ${s[5]?`<span>${s[5]}</span>`:''}
+            ${s[6]?`<span>${s[6]}</span>`:''}
+            ${s[7]?`<span>${s[7]}</span>`:''}
+          </div>`:''}
         </div>
-        <div class="student-status">${statusText}</div>
       </div>
-    `;
+      <div class="student-status">${type==='attended'?'Submitted':'Absent'}</div>
+    </div>`;
   }).join('');
 }
 
 function filterStudentList(type) {
-  const searchId = type === 'attended' ? 'attendedSearch' : 'notAttendedSearch';
-  const searchTerm = document.getElementById(searchId).value.toLowerCase();
-  const students = type === 'attended' ? attendedStudentsList : notAttendedStudentsList;
-  
-  if (!students) {
-    console.warn('No students list available for filtering');
-    return;
-  }
-  
-  const filtered = students.filter(student => {
-    const name = (student[4] || '').toLowerCase();
-    const roll = (student[3] || '').toLowerCase();
-    const dept = (student[5] || '').toLowerCase();
-    const year = (student[6] || '').toLowerCase();
-    const section = (student[7] || '').toLowerCase();
-    
-    return name.includes(searchTerm) || 
-           roll.includes(searchTerm) || 
-           dept.includes(searchTerm) ||
-           year.includes(searchTerm) ||
-           section.includes(searchTerm);
-  });
-  
-  displayStudentList(type, filtered);
+  const id = type==='attended'?'attendedSearch':'notAttendedSearch';
+  const q  = document.getElementById(id).value.toLowerCase();
+  const src= type==='attended'?attendedStudentsList:notAttendedStudentsList;
+  displayStudentList(type, src.filter(s=>
+    (s[4]||'').toLowerCase().includes(q)||(s[3]||'').toLowerCase().includes(q)||
+    (s[5]||'').toLowerCase().includes(q)||(s[6]||'').toLowerCase().includes(q)||(s[7]||'').toLowerCase().includes(q)
+  ));
 }
 
 function exportStudentList(type) {
-  const students = type === 'attended' ? attendedStudentsList : notAttendedStudentsList;
-  const exam_id = document.getElementById('analytics_exam_id').value;
-  
-  if (students.length === 0) {
-    showToast("No students to export", 'warning');
-    return;
-  }
-  
-  let csv = "Roll No,Name,Department,Year,Section\n";
-  
-  students.forEach(student => {
-    csv += `${student[3] || ''},${student[4] || ''},${student[5] || ''},${student[6] || ''},${student[7] || ''}\n`;
-  });
-  
-  const filename = `${exam_id}_${type}_students_${new Date().toISOString().split('T')[0]}.csv`;
-  downloadCSV(csv, filename);
-  
-  showToast(`${type === 'attended' ? 'Attended' : 'Not Attended'} students list exported`, 'success');
+  const students = type==='attended'?attendedStudentsList:notAttendedStudentsList;
+  const exam_id  = document.getElementById('analytics_exam_id').value;
+  if (!students.length) { showToast('No students to export','warning'); return; }
+  let csv = 'Roll No,Name,Department,Year,Section\n';
+  students.forEach(s=>{ csv+=`${s[3]||''},${s[4]||''},${s[5]||''},${s[6]||''},${s[7]||''}\n`; });
+  downloadCSV(csv,`${exam_id}_${type}_students_${new Date().toISOString().split('T')[0]}.csv`);
+  showToast(`${type==='attended'?'Attended':'Absent'} list exported`,'success');
 }
 
-/* ================= REPORTS ================= */
-rep_exam_id.onchange=()=>{
- const ex=EXAMS.find(e=>e[0]===rep_exam_id.value);
- rep_exam_name.value=ex?ex[1]:"";
+/* =============== REPORTS =============== */
+rep_exam_id.onchange = () => {
+  const ex = EXAMS.find(e=>e[0]===rep_exam_id.value);
+  rep_exam_name.value = ex?ex[1]:'';
 };
 
-function generateReport(){
- if(!rep_exam_id.value){
-   showToast("Please select an exam", 'warning');
-   return;
- }
- 
- showLoading();
-
- fetch(
-  WEBAPP_URL + "?action=getResults&exam_id=" + rep_exam_id.value,
-  { method:"POST" }
- )
- .then(r=>r.json())
- .then(res=>{
-   hideLoading();
-   REPORT_DATA=[];
-   const tbody = reportTable.querySelector("tbody");
-   tbody.innerHTML="";
-
-   let i = 1;
-
-   res.forEach(r=>{
-     const u = USERS.find(x => x[3] === r[1]);
-     if(!u) return;
-
-     if(rep_dept.value && u[5] !== rep_dept.value) return;
-     if(rep_year.value && u[6] !== rep_year.value) return;
-     if(rep_section.value && u[7] !== rep_section.value) return;
-
-     REPORT_DATA.push([
-       i,
-       r[1],
-       u[4],
-       r[2],
-       r[3]
-     ]);
-
-     tbody.innerHTML += `
-       <tr>
-         <td>${i++}</td>
-         <td><strong>${r[1]}</strong></td>
-         <td>${u[4]}</td>
-         <td><strong>${r[2]}</strong></td>
-         <td><strong style="color: var(--danger);">${r[3]}</strong></td>
-       </tr>`;
-   });
-
-   if(!REPORT_DATA.length){
-     tbody.innerHTML = `
-       <tr>
-         <td colspan='5'>
-           <div class="empty-state">
-             <div class="empty-icon">
-               <i class="fa-solid fa-inbox"></i>
-             </div>
-             <h4 class="empty-title">No Records Found</h4>
-             <p class="empty-text">Try adjusting your filter criteria</p>
-          </div>
-         </td>
-       </tr>`;
-     showToast("No records match the selected filters", 'warning');
-   } else {
-     showToast(`Report generated with ${REPORT_DATA.length} record(s)`, 'success');
-   }
- })
- .catch(err => {
-   hideLoading();
-   showToast("Failed to generate report. Please try again.", 'error');
-   console.error(err);
- });
-}
-
-function downloadExcel(){
- if(!REPORT_DATA.length){
-   showToast("Please generate report first", 'warning');
-   return;
- }
-
- const header = [
-   ["KAMARAJ COLLEGE OF ENGINEERING AND TECHNOLOGY"],
-   [],
-   ["Exam ID", rep_exam_id.value],
-   ["Exam Name", rep_exam_name.value],
-   ["Department", rep_dept.value || "ALL"],
-   ["Year", rep_year.value || "ALL"],
-   ["Section", rep_section.value || "ALL"],
-   [],
-   ["S.No","Roll No","Student Name","Marks","Violations"]
- ];
-
- const ws = XLSX.utils.aoa_to_sheet([
-   ...header,
-   ...REPORT_DATA
- ]);
-
- const wb = XLSX.utils.book_new();
- XLSX.utils.book_append_sheet(wb, ws, "Exam Report");
-
- XLSX.writeFile(wb, "Exam_Report.xlsx");
- showToast("Excel report downloaded successfully!", 'success');
-}
-
-function downloadPDF(){
- if(!REPORT_DATA.length){
-   showToast("Please generate report first", 'warning');
-   return;
- }
-
- const { jsPDF } = window.jspdf;
- const doc = new jsPDF();
-
- doc.setFont("Times","bold");
- let y = 15;
-
- doc.setFontSize(14);
- doc.text("Kamaraj College of Engineering and Technology",105,y,{align:"center"});
- y+=8;
-
- doc.setFont("Times", "bold");
- doc.setFontSize(12);
-
- doc.text(
-   `Exam ID: ${rep_exam_id.value} - Exam Name: ${rep_exam_name.value}`,
-   doc.internal.pageSize.getWidth() / 2,
-   y,
-   { align: "center" }
- );
-
- y += 8;
-
- const infoText = 
-   `Department: ${rep_dept.value || "ALL"}   ` +
-   `Section: ${rep_section.value || "ALL"}   ` +
-   `Year: ${rep_year.value || "ALL"}`;
-
- doc.text(
-   infoText,
-   doc.internal.pageSize.getWidth() / 2,
-   y,
-   { align: "center" }
- );
-
- doc.setFont("Times", "normal");
- y += 8;
-
- REPORT_DATA.sort((a, b) =>
-   a[1].localeCompare(b[1], undefined, {
-     numeric: true,
-     sensitivity: "base"
-   })
- );
-
- REPORT_DATA.forEach((row, index) => {
-   row[0] = index + 1;
- });
-
- doc.autoTable({
-   startY: y,
-   head: [["S.No","Roll No","Student Name","Marks","Violations"]],
-   body: REPORT_DATA,
-   styles:{
-     font: "Times",
-     fontSize: 10,
-     halign: "center"
-   },
-   columnStyles: {
-     2: { halign: "left" }
-   },
-   headStyles:{
-     fillColor: [26, 35, 126]
-   },
-   theme: "grid"
- });
-
- doc.save("Exam_Report.pdf");
- showToast("PDF report downloaded successfully!", 'success');
-}
-
-/* ================= LOAD USERS ================= */
-function loadUsers() {
-  return fetch(WEBAPP_URL,{
-    method:"POST",
-    body:new URLSearchParams({action:"getAllUsers"})
-  })
-  .then(r=>r.json())
-  .then(d=>{
-    console.log('👥 All users received:', d.length);
-    
-    // ✅ FILTER TO GET ONLY STUDENTS
-    const students = d.filter(u => u[2] && String(u[2]).toLowerCase().trim() === "student");
-    console.log('✅ Filtered students only:', students.length);
-    
-    USERS = students; // Store only students
-
-    const DEPTS = new Set();
-    const YEARS = new Set();
-    const SECTIONS = new Set();
-
-    students.forEach(u=>{
-      if(u[5]) DEPTS.add(u[5]);
-      if(u[6]) YEARS.add(u[6]);
-      if(u[7]) SECTIONS.add(u[7]);
-    });
-
-    rep_dept.innerHTML =
-      '<option value="">All Departments</option>' +
-      [...DEPTS].map(v=>`<option>${v}</option>`).join("");
-
-    rep_year.innerHTML =
-      '<option value="">All Years</option>' +
-      [...YEARS].map(v=>`<option>${v}</option>`).join("");
-
-    rep_section.innerHTML =
-      '<option value="">All Sections</option>' +
-      [...SECTIONS].map(v=>`<option>${v}</option>`).join("");
-    
-    map_dept_select.innerHTML =
-      '<option value="">Select Department</option>' +
-      [...DEPTS].map(v=>`<option>${v}</option>`).join("");
-
-    map_year_select.innerHTML =
-      '<option value="">Select Year</option>' +
-      [...YEARS].map(v=>`<option>${v}</option>`).join("");
-
-    map_section_select.innerHTML =
-      '<option value="">Select Section</option>' +
-      [...SECTIONS].map(v=>`<option>${v}</option>`).join("");
-    
-    updateDashboardStats();
-    
-    console.log('Users loaded:', students.length);
-    return students;
-  })
-  .catch(err => {
-    console.error('Failed to load users:', err);
-    throw err;
-  });
-}
-
-/* ================= LOAD TOTAL QUESTIONS ================= */
-function loadTotalQuestions() {
-  // Count questions from all exams
-  fetch(WEBAPP_URL, {
-    method: "POST",
-    body: new URLSearchParams({action: "getAllExams"})
-  })
-  .then(r => r.json())
-  .then(exams => {
-    // For each exam, count questions
-    const promises = exams.map(exam =>
-      fetch(WEBAPP_URL, {
-        method: "POST",
-        body: new URLSearchParams({
-          action: "getQuestions",
-          exam_id: exam[0]
-        })
-      }).then(r => r.json())
-    );
-    
-    return Promise.all(promises);
-  })
-  .then(allQuestions => {
-    const totalQuestions = allQuestions.reduce((sum, questions) => sum + questions.length, 0);
-    console.log('Total questions:', totalQuestions);
-    animateCounter('totalQuestions', 0, totalQuestions, 1400);
-  })
-  .catch(err => {
-    console.error('Failed to load questions count:', err);
-    document.getElementById('totalQuestions').textContent = '0';
-  });
-}
-
-/* ================= LOGOUT ================= */
-function logout(){
- showConfirmModal(
-   'Confirm Logout',
-   'Are you sure you want to logout?',
-   () => {
-     sessionStorage.clear();
-     location.href="index.html";
-   }
- );
-}
-
-// ✅ FIXED Initialize - Load all data
-// ✅ FIX 5: Initialize Dashboard
-// ✅ FIX 2: Updated initializeDashboard function
-async function initializeDashboard() {
-  console.log('🚀 Initializing dashboard...');
+function generateReport() {
+  if (!rep_exam_id.value) { showToast('Please select an exam','warning'); return; }
   showLoading();
-  
-  try {
-    // STEP 1: Load users first
-    console.log('👥 Loading users...');
-    await loadUsers();
-    
-    // STEP 2: Load exams (this will update Total Exams and Active Exams)
-    console.log('📝 Loading exams...');
-    await loadExams();
-    
-    // STEP 3: Load questions count
-    console.log('❓ Loading questions...');
-    loadTotalQuestions();
-    
-    // STEP 4: Load results exams
-    console.log('📈 Loading results...');
-    loadAllResultsExams();
-    
-    hideLoading();
-    console.log('✅ Dashboard initialized successfully');
-    console.log('Final counts - Exams:', EXAMS.length, 'Users:', USERS.length);
-    showToast('Dashboard loaded successfully', 'success');
-    
-  } catch (err) {
-    console.error('❌ Initialization error:', err);
-    hideLoading();
-    showToast('Error loading dashboard data', 'error');
-  }
+  fetch(WEBAPP_URL+'?action=getResults&exam_id='+rep_exam_id.value,{method:'POST'})
+  .then(r=>r.json()).then(res=>{
+    hideLoading(); REPORT_DATA=[];
+    const tbody=reportTable.querySelector('tbody'); tbody.innerHTML='';
+    let i=1;
+    res.forEach(r=>{
+      const u=USERS.find(x=>x[3]===r[1]); if(!u) return;
+      if(rep_dept.value&&u[5]!==rep_dept.value) return;
+      if(rep_year.value&&u[6]!==rep_year.value) return;
+      if(rep_section.value&&u[7]!==rep_section.value) return;
+      REPORT_DATA.push([i,r[1],u[4],r[2],r[3]]);
+      tbody.innerHTML+=`<tr><td>${i++}</td><td><strong>${r[1]}</strong></td><td>${u[4]}</td>
+        <td><strong>${r[2]}</strong></td><td><strong style="color:var(--danger);">${r[3]}</strong></td></tr>`;
+    });
+    if(!REPORT_DATA.length){
+      tbody.innerHTML=`<tr><td colspan='5'><div class="empty-state">
+        <div class="empty-icon"><i class="fa-solid fa-inbox"></i></div>
+        <h4 class="empty-title">No Records Found</h4>
+        <p class="empty-text">Try adjusting your filter criteria</p></div></td></tr>`;
+      showToast('No records match the selected filters','warning');
+    } else showToast(`Report generated with ${REPORT_DATA.length} record(s)`,'success');
+  }).catch(()=>{ hideLoading(); showToast('Failed to generate report.','error'); });
 }
-// ✅ FIX 3: Get Exam Mappings from STUDENT_EXAM_MAP sheet
+
+function downloadExcel() {
+  if (!REPORT_DATA.length) { showToast('Please generate report first','warning'); return; }
+  const header=[['KAMARAJ COLLEGE OF ENGINEERING AND TECHNOLOGY'],[],
+    ['Exam ID',rep_exam_id.value],['Exam Name',rep_exam_name.value],
+    ['Department',rep_dept.value||'ALL'],['Year',rep_year.value||'ALL'],['Section',rep_section.value||'ALL'],[],
+    ['S.No','Roll No','Student Name','Marks','Violations']];
+  const ws=XLSX.utils.aoa_to_sheet([...header,...REPORT_DATA]);
+  const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Exam Report');
+  XLSX.writeFile(wb,'Exam_Report.xlsx'); showToast('Excel report downloaded!','success');
+}
+
+function downloadPDF() {
+  if (!REPORT_DATA.length) { showToast('Please generate report first','warning'); return; }
+  const {jsPDF}=window.jspdf; const doc=new jsPDF();
+  let y=15;
+  doc.setFont('Times','bold'); doc.setFontSize(14);
+  doc.text('Kamaraj College of Engineering and Technology',105,y,{align:'center'}); y+=8;
+  doc.setFontSize(12);
+  doc.text(`Exam ID: ${rep_exam_id.value} - Exam Name: ${rep_exam_name.value}`,doc.internal.pageSize.getWidth()/2,y,{align:'center'}); y+=8;
+  doc.text(`Department: ${rep_dept.value||'ALL'}   Section: ${rep_section.value||'ALL'}   Year: ${rep_year.value||'ALL'}`,doc.internal.pageSize.getWidth()/2,y,{align:'center'});
+  doc.setFont('Times','normal'); y+=8;
+  REPORT_DATA.sort((a,b)=>a[1].localeCompare(b[1],undefined,{numeric:true,sensitivity:'base'}));
+  REPORT_DATA.forEach((row,idx)=>row[0]=idx+1);
+  doc.autoTable({startY:y,head:[['S.No','Roll No','Student Name','Marks','Violations']],body:REPORT_DATA,
+    styles:{font:'Times',fontSize:10,halign:'center'},columnStyles:{2:{halign:'left'}},
+    headStyles:{fillColor:[26,35,126]},theme:'grid'});
+  doc.save('Exam_Report.pdf'); showToast('PDF report downloaded!','success');
+}
+
+/* =============== LOAD USERS =============== */
+function loadUsers() {
+  return fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'getAllUsers'})})
+  .then(r=>r.json()).then(d=>{
+    const students = d.filter(u=>u[2]&&String(u[2]).toLowerCase().trim()==='student');
+    USERS = students;
+    const DEPTS=[...new Set(students.map(u=>u[5]).filter(Boolean))];
+    const YEARS=[...new Set(students.map(u=>u[6]).filter(Boolean))];
+    const SECTS=[...new Set(students.map(u=>u[7]).filter(Boolean))];
+
+    const deptOpts    = '<option value="">All Departments</option>'+DEPTS.map(v=>`<option>${v}</option>`).join('');
+    const yearOpts    = '<option value="">All Years</option>'+YEARS.map(v=>`<option>${v}</option>`).join('');
+    const sectOpts    = '<option value="">All Sections</option>'+SECTS.map(v=>`<option>${v}</option>`).join('');
+    const deptOptsNone= '<option value="">Select Department</option>'+DEPTS.map(v=>`<option>${v}</option>`).join('');
+    const yearOptsNone= '<option value="">Select Year</option>'+YEARS.map(v=>`<option>${v}</option>`).join('');
+    const sectOptsNone= '<option value="">Select Section</option>'+SECTS.map(v=>`<option>${v}</option>`).join('');
+
+    rep_dept.innerHTML=deptOpts; rep_year.innerHTML=yearOpts; rep_section.innerHTML=sectOpts;
+    map_dept_select.innerHTML=deptOptsNone; map_year_select.innerHTML=yearOptsNone; map_section_select.innerHTML=sectOptsNone;
+    del_dept_select.innerHTML=deptOpts; del_year_select.innerHTML=yearOpts; del_section_select.innerHTML=sectOpts;
+
+    updateDashboardStats();
+    return students;
+  }).catch(err=>{ console.error('Failed to load users:',err); throw err; });
+}
+
+/* =============== LOAD TOTAL QUESTIONS =============== */
+function loadTotalQuestions() {
+  fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'getAllExams'})})
+  .then(r=>r.json()).then(exams=>
+    Promise.all(exams.map(ex=>
+      fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'getQuestions',exam_id:ex[0]})}).then(r=>r.json())
+    ))
+  ).then(all=>{
+    const total=all.reduce((s,q)=>s+q.length,0);
+    animateCounter('totalQuestions',0,total,1400);
+  }).catch(()=>{ document.getElementById('totalQuestions').textContent='0'; });
+}
+
+/* =============== GET EXAM MAPPINGS =============== */
 async function getExamMappings(exam_id) {
   try {
-    console.log('🔗 Fetching mappings for:', exam_id);
-
-    // Fetch mapped students directly from the backend
-    const mappingResponse = await fetch(WEBAPP_URL, {
-      method: "POST",
-      body: new URLSearchParams({
-        action: "getMappedStudents",
-        exam_id: exam_id
-      })
-    });
-    const mappedRolls = await mappingResponse.json();
-    console.log('📋 Mapped rolls from sheet:', mappedRolls);
-
-    // If backend returns mapped roll numbers, match against USERS
-    if (Array.isArray(mappedRolls) && mappedRolls.length > 0) {
-      const rollSet = new Set(mappedRolls.map(r => String(r[0] || r).trim()));
-      const mappedStudents = USERS.filter(u => rollSet.has(String(u[3]).trim()));
-      console.log('✅ Mapped students matched:', mappedStudents.length);
-      return mappedStudents;
+    const res  = await fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'getMappedStudents',exam_id})});
+    const rolls= await res.json();
+    if (Array.isArray(rolls)&&rolls.length) {
+      const set = new Set(rolls.map(r=>String(r[0]||r).trim()));
+      return USERS.filter(u=>set.has(String(u[3]).trim()));
     }
+    // fallback
+    const rRes   = await fetch(WEBAPP_URL+'?action=getResults&exam_id='+encodeURIComponent(exam_id),{method:'POST'});
+    const results= await rRes.json();
+    const attSet = new Set(results.map(r=>String(r[1]).trim()));
+    const combos = new Set();
+    USERS.filter(u=>attSet.has(String(u[3]).trim())).forEach(s=>{ if(s[5]&&s[6]&&s[7]) combos.add(`${s[5]}|${s[6]}|${s[7]}`); });
+    const out=[]; const seen=new Set();
+    combos.forEach(c=>{ const [d,y,sc]=c.split('|');
+      USERS.filter(u=>u[5]===d&&u[6]===y&&u[7]===sc).forEach(s=>{ if(!seen.has(s[3])){ out.push(s); seen.add(s[3]); }}); });
+    return out;
+  } catch { return []; }
+}
 
-    // FALLBACK: use all students from same dept/year/section as attendees
-    console.warn('⚠️ getMappedStudents returned empty, using fallback...');
-    const resultsResponse = await fetch(
-      WEBAPP_URL + "?action=getResults&exam_id=" + encodeURIComponent(exam_id),
-      { method: "POST" }
-    );
-    const results = await resultsResponse.json();
-    const attendedRolls = new Set(results.map(r => String(r[1]).trim()));
+/* =============== LOGOUT =============== */
+function logout() {
+  showConfirmModal('Confirm Logout','Are you sure you want to logout?',()=>{ sessionStorage.clear(); location.href='index.html'; });
+}
 
-    const attendedStudents = USERS.filter(u => attendedRolls.has(String(u[3]).trim()));
-    const combinations = new Set();
-    attendedStudents.forEach(s => {
-      if (s[5] && s[6] && s[7]) combinations.add(`${s[5]}|${s[6]}|${s[7]}`);
-    });
-
-    const mappedStudents = [];
-    const processedRolls = new Set();
-    combinations.forEach(combo => {
-      const [dept, year, section] = combo.split('|');
-      USERS.filter(u => u[5] === dept && u[6] === year && u[7] === section).forEach(s => {
-        if (!processedRolls.has(s[3])) {
-          mappedStudents.push(s);
-          processedRolls.add(s[3]);
-        }
-      });
-    });
-
-    console.log('✅ Fallback mapped students:', mappedStudents.length);
-    return mappedStudents;
-
+/* =============== INIT =============== */
+async function initializeDashboard() {
+  showLoading();
+  try {
+    await loadUsers();
+    await loadExams();
+    loadTotalQuestions();
+    loadAllResultsExams();
+    hideLoading();
+    showToast('Dashboard loaded successfully','success');
   } catch (err) {
-    console.error('❌ Error fetching mappings:', err);
-    return [];
+    hideLoading(); showToast('Error loading dashboard data','error');
   }
 }
 
-
-// Start initialization when page loads
 initializeDashboard();
 </script>
-
-
-
 </body>
 </html>
