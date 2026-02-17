@@ -1114,7 +1114,7 @@ input[type="file"]:hover { border-color: var(--primary); background: rgba(26,35,
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
 
 <script>
-const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzHSWbRF5TbrRYn2FkKOz55r60h0gxLl02KMo0drZNVtOGSBzFEwPJfu3j65YUeyNPP/exec";
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxPjgyvQgjwJTIHwy8aeiLTly8vFE_2c-qj5rcHAVDp9A-5MwjuuuLKk7877GJkCGhN/exec";
 
 let USERS = [], EXAMS = [], REPORT_DATA = [];
 let ALL_EXAMS_DATA = [];
@@ -1396,11 +1396,10 @@ async function mapSelectedStudents() {
 // Holds ALL mapped students for the selected exam (fetched from backend)
 let allMappedForDelete = [];
 
-// Called when exam dropdown changes — fetches mapped students from backend
+// Called when exam dropdown changes - fetches mapped students from backend
 async function updateDeleteMappingUI() {
-  const exam = del_exam_select.value;
+  const exam = document.getElementById('del_exam_select').value;
 
-  // Hide everything when no exam selected
   if (!exam) {
     document.getElementById('delete_student_area').style.display = 'none';
     document.getElementById('delete_map_button').style.display   = 'none';
@@ -1412,48 +1411,62 @@ async function updateDeleteMappingUI() {
     return;
   }
 
-  // Show loading state inside the area
+  // Show loading spinner
   document.getElementById('delete_student_checkboxes').innerHTML =
-    '<div class="empty-list"><i class="fa-solid fa-spinner fa-spin"></i><p>Loading mapped students...</p></div>';
+    '<div class="empty-list"><i class="fa-solid fa-spinner fa-spin" style="font-size:28px;display:block;margin-bottom:8px;opacity:0.6;"></i><p>Loading mapped students...</p></div>';
   document.getElementById('delete_student_area').style.display = 'block';
   document.getElementById('delete_map_button').style.display   = 'none';
   document.getElementById('del_selected_count').textContent    = '0';
 
   try {
-    // ✅ Fetch ONLY students actually mapped to this exam
-    const res      = await fetch(WEBAPP_URL, {
+    // Uses getExamMappings — already exists in your Code.gs doPost switch
+    const res  = await fetch(WEBAPP_URL, {
       method: 'POST',
-      body: new URLSearchParams({ action: 'getMappedStudents', exam_id: exam })
+      body: new URLSearchParams({ action: 'getExamMappings', exam_id: exam })
     });
-    const mappedRolls = await res.json();
+    const data = await res.json();
 
-    if (!Array.isArray(mappedRolls) || !mappedRolls.length) {
+    console.log('getExamMappings response:', data);
+
+    // data is array of [exam_id, roll_no, dept, year, section]
+    if (!Array.isArray(data) || !data.length) {
       document.getElementById('delete_student_checkboxes').innerHTML =
-        '<div class="empty-list"><i class="fa-solid fa-user-slash"></i><p>No students mapped to this exam</p></div>';
+        '<div class="empty-list"><i class="fa-solid fa-user-slash" style="font-size:28px;display:block;margin-bottom:8px;opacity:0.5;"></i><p>No students mapped to this exam</p></div>';
       allMappedForDelete = [];
       return;
     }
 
-    // Match roll numbers against USERS to get full student details
-    const rollSet = new Set(mappedRolls.map(r => String(r[0] || r).trim()));
-    allMappedForDelete = USERS.filter(u => rollSet.has(String(u[3]).trim()));
+    // Extract roll numbers from response [exam_id, roll_no, dept, year, section]
+    const rollSet = new Set(data.map(r => String(r[1] || '').trim()).filter(Boolean));
+    console.log('Mapped roll numbers:', [...rollSet]);
 
-    // Apply current dept/year/section filters and render
+    // Match against USERS array (index 3 = roll_no)
+    allMappedForDelete = USERS.filter(u => rollSet.has(String(u[3]).trim()));
+    console.log('Matched students from USERS:', allMappedForDelete.length);
+
+    // Fallback: if USERS match fails, build from mapping data directly
+    if (allMappedForDelete.length === 0 && data.length > 0) {
+      // [exam_id, roll_no, dept, year, section] -> synthetic user array
+      // user array: [email, pass, role, roll_no, name, dept, year, section]
+      allMappedForDelete = data.map(r => ['', '', 'student', String(r[1]).trim(), String(r[1]).trim(), String(r[2]).trim(), String(r[3]).trim(), String(r[4]).trim()]);
+      console.log('Using synthetic students from mapping data:', allMappedForDelete.length);
+    }
+
     applyDeleteFilters();
 
   } catch (err) {
     console.error('Failed to load mapped students:', err);
     document.getElementById('delete_student_checkboxes').innerHTML =
-      '<div class="empty-list"><i class="fa-solid fa-circle-xmark"></i><p>Failed to load students. Try again.</p></div>';
+      '<div class="empty-list"><i class="fa-solid fa-circle-xmark" style="font-size:28px;display:block;margin-bottom:8px;color:var(--danger);opacity:0.6;"></i><p>Failed to load. Please try again.</p></div>';
     allMappedForDelete = [];
   }
 }
 
-// Called when dept/year/section filters change — re-filters already loaded mapped students
+// Called when dept/year/section filters change - re-filters already loaded mapped students
 function applyDeleteFilters() {
-  const dept    = del_dept_select.value;
-  const year    = del_year_select.value;
-  const section = del_section_select.value;
+  const dept    = document.getElementById('del_dept_select').value;
+  const year    = document.getElementById('del_year_select').value;
+  const section = document.getElementById('del_section_select').value;
 
   filteredStudentsForDelete = allMappedForDelete.filter(u =>
     (!dept    || u[5] === dept) &&
@@ -1463,23 +1476,28 @@ function applyDeleteFilters() {
 
   if (!filteredStudentsForDelete.length) {
     document.getElementById('delete_student_checkboxes').innerHTML =
-      '<div class="empty-list"><i class="fa-solid fa-filter-circle-xmark"></i><p>No mapped students match this filter</p></div>';
+      '<div class="empty-list"><i class="fa-solid fa-filter-circle-xmark" style="font-size:28px;display:block;margin-bottom:8px;opacity:0.5;"></i><p>No mapped students match this filter</p></div>';
     document.getElementById('delete_map_button').style.display = 'none';
     document.getElementById('del_selected_count').textContent  = '0';
     return;
   }
 
-  // Render checkboxes — show mapped badge
+  // Render checkboxes with MAPPED badge
   document.getElementById('delete_student_checkboxes').innerHTML =
-    filteredStudentsForDelete.map((s, i) => `
-      <div class="delete-student-checkbox">
-        <input type="checkbox" id="dst_${i}" value="${s[3]}" onchange="updateDelSelectedCount()">
-        <label for="dst_${i}">
-          <strong>${s[4]}</strong> — ${s[3]}
-          <span style="font-size:11px;color:var(--text-light);">(${[s[5],s[6],s[7]].filter(Boolean).join(', ')})</span>
-          <span style="font-size:10px;background:rgba(0,200,83,0.15);color:var(--success);padding:2px 7px;border-radius:8px;font-weight:700;margin-left:6px;">MAPPED</span>
+    filteredStudentsForDelete.map((s, i) => {
+      const name = s[4] && s[4] !== s[3] ? s[4] : s[3]; // fallback to roll if name missing
+      const dept = s[5] || '', year = s[6] || '', sec = s[7] || '';
+      const meta = [dept, year, sec].filter(Boolean).join(', ');
+      return \`<div class="delete-student-checkbox">
+        <input type="checkbox" id="dst_\${i}" value="\${s[3]}" onchange="updateDelSelectedCount()">
+        <label for="dst_\${i}">
+          <strong>\${name}</strong>
+          \${name !== s[3] ? '<span style="font-size:12px;color:var(--text-light);"> — ' + s[3] + '</span>' : ''}
+          \${meta ? '<span style="font-size:11px;color:var(--text-light);"> (' + meta + ')</span>' : ''}
+          <span style="font-size:10px;background:rgba(0,200,83,0.15);color:var(--success);padding:2px 7px;border-radius:8px;font-weight:700;margin-left:6px;vertical-align:middle;">MAPPED</span>
         </label>
-      </div>`).join('');
+      </div>\`;
+    }).join('');
 
   document.getElementById('delete_student_area').style.display = 'block';
   document.getElementById('delete_map_button').style.display   = 'inline-flex';
@@ -1498,7 +1516,7 @@ function selectAllDeleteStudents() {
 }
 
 async function deleteSelectedMappings() {
-  const exam_id = del_exam_select.value;
+  const exam_id = document.getElementById('del_exam_select').value;
   const sel = document.querySelectorAll('#delete_student_checkboxes input[type="checkbox"]:checked');
 
   if (!sel.length) { showToast('Please select at least one student','warning'); return; }
@@ -1867,4 +1885,3 @@ initializeDashboard();
 </script>
 </body>
 </html>
-
