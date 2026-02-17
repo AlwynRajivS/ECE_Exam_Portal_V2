@@ -1068,7 +1068,7 @@ input[type="file"]:hover { border-color: var(--primary); background: rgba(26,35,
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
 
 <script>
-const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxU0AXfoKRzc1y_KGIk2IpGhuRNYmZ6wHkxaiiF8mY-mIEkac1XcUxCW-tEPExCkzIy/exec";
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxDLnFV_XxvDeY6IxdMkO7lhziLQWAoo9CnoHdtOusDlfKEF-Kk1VreMXBiBNiRKYsy/exec";
 
 let USERS = [], EXAMS = [], REPORT_DATA = [];
 let ALL_EXAMS_DATA = [];
@@ -1202,7 +1202,7 @@ function clearExamForm() {
 function createExam() {
   if (!validateExamForm()) return;
   showLoading();
-  fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'getAllExams'})})
+  fetch(WEBAPP_URL+'?action=getAllExams',{method:'POST',body:new URLSearchParams({})})
   .then(r=>r.json()).then(exams => {
     if (exams.some(e=>e[0]===exam_id.value)) { hideLoading(); showToast('Exam ID already exists. Use UPDATE instead.','error'); return; }
     fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({
@@ -1229,7 +1229,7 @@ function updateExam() {
 
 function loadExams() {
   showLoading();
-  return fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'getAllExams'})})
+  return fetch(WEBAPP_URL+'?action=getAllExams',{method:'POST',body:new URLSearchParams({})})
   .then(r=>r.json()).then(d=>{
     hideLoading();
     if (!Array.isArray(d)) return;
@@ -1283,7 +1283,7 @@ function uploadQuestions() {
 }
 function sendBulkQuestions(data) {
   showLoading();
-  fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'bulkQuestions',json:JSON.stringify(data)})})
+  fetch(WEBAPP_URL+'?action=bulkQuestions',{method:'POST',body:new URLSearchParams({json:JSON.stringify(data)})})
   .then(()=>{ hideLoading(); showToast(`${data.length} question(s) added!`,'success');
     ['q_exam_id','q_qid','q_question','q_A','q_B','q_C','q_D','q_correct','q_image'].forEach(id=>document.getElementById(id).value='');
     questionFile.value=''; loadTotalQuestions();
@@ -1296,7 +1296,7 @@ function uploadStudents() {
   if (!studentFile.files[0]) { showToast('Please select a CSV file','warning'); return; }
   showLoading();
   parseCSV(studentFile.files[0], data => {
-    fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'bulkStudents',json:JSON.stringify(data)})})
+    fetch(WEBAPP_URL+'?action=bulkStudents',{method:'POST',body:new URLSearchParams({json:JSON.stringify(data)})})
     .then(()=>{ hideLoading(); showToast(`${data.length} student(s) added!`,'success'); studentFile.value=''; loadUsers(); })
     .catch(()=>{ hideLoading(); showToast('Failed to add students.','error'); });
   });
@@ -1342,8 +1342,8 @@ async function mapSelectedStudents() {
   if (!sel.length) { showToast('Please select at least one student','warning'); return; }
   showLoading();
   try {
-    await Promise.all(Array.from(sel).map(cb=>fetch(WEBAPP_URL,{method:'POST',
-      body:new URLSearchParams({action:'mapExam',exam_id,roll_no:cb.value,dept,year,section})})));
+    await Promise.all(Array.from(sel).map(cb=>fetch(WEBAPP_URL+'?action=mapExam',{method:'POST',
+      body:new URLSearchParams({exam_id,roll_no:cb.value,dept,year,section})})));
     hideLoading(); showToast(`Successfully mapped ${sel.length} student(s)`,'success');
     document.querySelectorAll('#student_checkboxes input[type="checkbox"]').forEach(c=>c.checked=false);
     updateSelectedCount();
@@ -1373,9 +1373,9 @@ async function updateDeleteMappingUI() {
 
   try {
     // ✅ Uses getExamMappings which returns [exam_id, roll_no, dept, year, section]
-    const res  = await fetch(WEBAPP_URL, {
+    const res  = await fetch(WEBAPP_URL+'?action=getExamMappings', {
       method: 'POST',
-      body: new URLSearchParams({ action: 'getExamMappings', exam_id: exam })
+      body: new URLSearchParams({ exam_id: exam })
     });
     const data = await res.json();
 
@@ -1481,10 +1481,9 @@ async function deleteSelectedMappings() {
 
         const results = await Promise.allSettled(
           rollNumbers.map(roll_no =>
-            fetch(WEBAPP_URL, {
+            fetch(WEBAPP_URL+'?action=deleteMapping', {
               method: 'POST',
               body: new URLSearchParams({
-                action: 'deleteMapping',
                 exam_id: exam_id,
                 roll_no: roll_no
               })
@@ -1539,8 +1538,8 @@ function uploadMapping() {
   if (!mapFile.files[0]) { showToast('Please select a CSV file','warning'); return; }
   showLoading();
   parseCSV(mapFile.files[0], data => {
-    Promise.all(data.map(m=>fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({
-      action:'mapExam',exam_id:m.exam_id,roll_no:m.roll_no||'',dept:m.dept||'',year:m.year||'',section:m.section||''
+    Promise.all(data.map(m=>fetch(WEBAPP_URL+'?action=mapExam',{method:'POST',body:new URLSearchParams({
+      exam_id:m.exam_id,roll_no:m.roll_no||'',dept:m.dept||'',year:m.year||'',section:m.section||''
     })})))
     .then(()=>{ hideLoading(); showToast(`${data.length} mapping(s) completed!`,'success'); mapFile.value=''; })
     .catch(()=>{ hideLoading(); showToast('Some mappings failed.','error'); });
@@ -1609,7 +1608,7 @@ function loadResults() {
 function reenable(exam_id, roll_no) {
   showConfirmModal('Re-enable Student?',`Re-enable ${roll_no} for this exam?`,()=>{
     showLoading();
-    fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'unblockStudent',exam_id,roll_no})})
+    fetch(WEBAPP_URL+'?action=unblockStudent',{method:'POST',body:new URLSearchParams({exam_id,roll_no})})
     .then(()=>{ hideLoading(); showToast('Student re-enabled!','success'); loadResults(); })
     .catch(()=>{ hideLoading(); showToast('Failed to re-enable student.','error'); });
   });
@@ -1639,7 +1638,7 @@ async function loadExamAnalytics() {
     if (!exam) { hideLoading(); showToast('Exam not found','error'); return; }
 
     const [qRes, rRes] = await Promise.all([
-      fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'getQuestions',exam_id})}),
+      fetch(WEBAPP_URL+'?action=getQuestions',{method:'POST',body:new URLSearchParams({exam_id})}),
       fetch(WEBAPP_URL+'?action=getResults&exam_id='+encodeURIComponent(exam_id),{method:'POST'})
     ]);
     const questions = await qRes.json();
@@ -1791,7 +1790,7 @@ function downloadPDF() {
 
 /* =============== LOAD USERS =============== */
 function loadUsers() {
-  return fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'getAllUsers'})})
+  return fetch(WEBAPP_URL+'?action=getAllUsers',{method:'POST',body:new URLSearchParams({})})
   .then(r=>r.json()).then(d=>{
     const students = d.filter(u=>u[2]&&String(u[2]).toLowerCase().trim()==='student');
     USERS = students;
@@ -1817,10 +1816,10 @@ function loadUsers() {
 
 /* =============== LOAD TOTAL QUESTIONS =============== */
 function loadTotalQuestions() {
-  fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'getAllExams'})})
+  fetch(WEBAPP_URL+'?action=getAllExams',{method:'POST',body:new URLSearchParams({})})
   .then(r=>r.json()).then(exams=>
     Promise.all(exams.map(ex=>
-      fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'getQuestions',exam_id:ex[0]})}).then(r=>r.json())
+      fetch(WEBAPP_URL+'?action=getQuestions',{method:'POST',body:new URLSearchParams({exam_id:ex[0]})}).then(r=>r.json())
     ))
   ).then(all=>{
     const total=all.reduce((s,q)=>s+q.length,0);
@@ -1831,7 +1830,7 @@ function loadTotalQuestions() {
 /* =============== GET EXAM MAPPINGS (for analytics) =============== */
 async function getExamMappings(exam_id) {
   try {
-    const res  = await fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'getMappedStudents',exam_id})});
+    const res  = await fetch(WEBAPP_URL+'?action=getMappedStudents',{method:'POST',body:new URLSearchParams({exam_id})});
     const rolls= await res.json();
     if (Array.isArray(rolls)&&rolls.length) {
       const set = new Set(rolls.map(r=>String(r[0]||r).trim()));
@@ -1866,14 +1865,15 @@ async function testDeleteDirect() {
   out.textContent = `Sending: action=deleteMapping, exam_id=${exam_id}, roll_no=${roll_no}\n\nWaiting...`;
 
   try {
-    const body = new URLSearchParams({ action: 'deleteMapping', exam_id, roll_no });
-    console.log('[DEBUG TEST] POST body:', body.toString());
+    const body    = new URLSearchParams({ exam_id, roll_no });
+    const fullUrl = WEBAPP_URL + '?action=deleteMapping';
+    console.log('[DEBUG TEST] POST URL:', fullUrl, '| body:', body.toString());
 
-    const raw = await fetch(WEBAPP_URL, { method: 'POST', body });
+    const raw  = await fetch(fullUrl, { method: 'POST', body });
     const text = await raw.text();
 
     console.log('[DEBUG TEST] Raw response:', text);
-    out.textContent = `REQUEST:\nPOST ${WEBAPP_URL}\nbody: ${body.toString()}\n\nRESPONSE (${raw.status}):\n${text}`;
+    out.textContent = `REQUEST:\nPOST ${fullUrl}\nbody: ${body.toString()}\n\nRESPONSE (${raw.status}):\n${text}`;
     out.style.color = text.includes('"deleted":true') ? '#00c853' : '#ff5252';
   } catch (err) {
     out.textContent = 'FETCH ERROR: ' + err.message;
@@ -1906,4 +1906,3 @@ initializeDashboard();
 </script>
 </body>
 </html>
-
