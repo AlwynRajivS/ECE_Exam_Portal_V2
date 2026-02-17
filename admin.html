@@ -1068,7 +1068,7 @@ input[type="file"]:hover { border-color: var(--primary); background: rgba(26,35,
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
 
 <script>
-const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxDLnFV_XxvDeY6IxdMkO7lhziLQWAoo9CnoHdtOusDlfKEF-Kk1VreMXBiBNiRKYsy/exec";
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbyZ3dnK6EFNC-b8Mnkmr6OEPzgG8MkioTx3uMRk0MwwaQhC8UTru6IiG7oFv-z5VG3u/exec";
 
 let USERS = [], EXAMS = [], REPORT_DATA = [];
 let ALL_EXAMS_DATA = [];
@@ -1077,6 +1077,17 @@ let notAttendedStudentsList = [];
 let filteredStudentsForMapping = [];
 let filteredStudentsForDelete = [];
 let allMappedForDelete = [];
+
+  function gasPost(action, params) {
+  const body = new URLSearchParams({ action: action });
+  if (params) {
+    Object.keys(params).forEach(function (k) {
+      body.append(k, params[k] == null ? '' : params[k]);
+    });
+  }
+  return fetch(WEBAPP_URL, { method: 'POST', body: body })
+    .then(function (r) { return r.json(); });
+}
 
 /* =============== TAB SWITCHING =============== */
 function switchTab(tabName, btn) {
@@ -1372,12 +1383,8 @@ async function updateDeleteMappingUI() {
   document.getElementById('del_selected_count').textContent    = '0';
 
   try {
-    // ✅ Uses getExamMappings which returns [exam_id, roll_no, dept, year, section]
-    const res  = await fetch(WEBAPP_URL+'?action=getExamMappings', {
-      method: 'POST',
-      body: new URLSearchParams({ exam_id: exam })
-    });
-    const data = await res.json();
+    // ✅ FIX: use gasPost so action goes in POST body, not URL
+    const data = await gasPost('getExamMappings', { exam_id: exam });
 
     if (!Array.isArray(data) || !data.length) {
       document.getElementById('delete_student_checkboxes').innerHTML =
@@ -1387,22 +1394,21 @@ async function updateDeleteMappingUI() {
     }
 
     // data = [[exam_id, roll_no, dept, year, section], ...]
-    const rollSet = new Set(data.map(r => String(r[1] || '').trim()).filter(Boolean));
+    const rollSet = new Set(data.map(function (r) { return String(r[1] || '').trim(); }).filter(Boolean));
 
-    // Try matching against USERS for full name info
-    allMappedForDelete = USERS.filter(u => rollSet.has(String(u[3]).trim()));
+    allMappedForDelete = USERS.filter(function (u) { return rollSet.has(String(u[3]).trim()); });
 
     // Fallback: if USERS match gives nothing, build from mapping data directly
     if (allMappedForDelete.length === 0 && data.length > 0) {
-      // Synthetic user array: [email, pass, role, roll_no, name, dept, year, section]
-      allMappedForDelete = data.map(r => [
-        '', '', 'student',
-        String(r[1]).trim(),  // roll_no as name too
-        String(r[1]).trim(),  // use roll as display name
-        String(r[2]).trim(),  // dept
-        String(r[3]).trim(),  // year
-        String(r[4]).trim()   // section
-      ]);
+      allMappedForDelete = data.map(function (r) {
+        return ['', '', 'student',
+          String(r[1]).trim(),
+          String(r[1]).trim(),
+          String(r[2]).trim(),
+          String(r[3]).trim(),
+          String(r[4]).trim()
+        ];
+      });
     }
 
     applyDeleteFilters();
@@ -1412,6 +1418,7 @@ async function updateDeleteMappingUI() {
     allMappedForDelete = [];
   }
 }
+
 
 function applyDeleteFilters() {
   const dept    = document.getElementById('del_dept_select').value;
@@ -1457,66 +1464,54 @@ function updateDelSelectedCount() {
     document.querySelectorAll('#delete_student_checkboxes input[type="checkbox"]:checked').length;
 }
 
-function selectAllDeleteStudents() {
-  const cbs = document.querySelectorAll('#delete_student_checkboxes input[type="checkbox"]');
-  const all = Array.from(cbs).every(c=>c.checked);
-  cbs.forEach(c=>c.checked=!all); updateDelSelectedCount();
-}
-
 async function deleteSelectedMappings() {
   const exam_id = document.getElementById('del_exam_select').value;
   const sel = document.querySelectorAll('#delete_student_checkboxes input[type="checkbox"]:checked');
 
-  if (!sel.length) { showToast('Please select at least one student','warning'); return; }
+  if (!sel.length) { showToast('Please select at least one student', 'warning'); return; }
 
   showConfirmModal(
     'Delete Mappings?',
-    `This will remove ${sel.length} student(s) from exam "${exam_id}". Their other exam mappings will remain untouched.`,
-    async () => {
+    'This will remove ' + sel.length + ' student(s) from exam "' + exam_id + '". Their other exam mappings will remain untouched.',
+    async function () {
       showLoading();
       try {
-        // Delete each selected student one by one with full debug logging
-        const rollNumbers = Array.from(sel).map(cb => cb.value);
+        const rollNumbers = Array.from(sel).map(function (cb) { return cb.value; });
         console.log('[DELETE] exam_id:', exam_id, '| rolls:', rollNumbers);
 
         const results = await Promise.allSettled(
-          rollNumbers.map(roll_no =>
-            fetch(WEBAPP_URL+'?action=deleteMapping', {
-              method: 'POST',
-              body: new URLSearchParams({
-                exam_id: exam_id,
-                roll_no: roll_no
+          rollNumbers.map(function (roll_no) {
+            // ✅ FIX: use gasPost — action in POST body, never in URL
+            return gasPost('deleteMapping', { exam_id: exam_id, roll_no: roll_no })
+              .then(function (json) {
+                console.log('[DELETE RESULT] roll:', roll_no, '| response:', JSON.stringify(json));
+                return Object.assign({ roll_no: roll_no }, json);
               })
-            })
-            .then(r => r.json())
-            .then(json => {
-              console.log('[DELETE RESULT] roll:', roll_no, '| response:', JSON.stringify(json));
-              return { roll_no, ...json };
-            })
-            .catch(err => {
-              console.error('[DELETE ERROR] roll:', roll_no, '| error:', err);
-              return { roll_no, error: err.message };
-            })
-          )
+              .catch(function (err) {
+                console.error('[DELETE ERROR] roll:', roll_no, '| error:', err);
+                return { roll_no: roll_no, error: err.message };
+              });
+          })
         );
 
-        const succeeded = results.filter(r => r.status === 'fulfilled' && r.value && r.value.deleted === true).length;
-        const failed    = results.length - succeeded;
+        const succeeded = results.filter(function (r) {
+          return r.status === 'fulfilled' && r.value && r.value.deleted === true;
+        }).length;
+        const failed = results.length - succeeded;
         const failReasons = results
-          .filter(r => r.status === 'fulfilled' && (!r.value || !r.value.deleted))
-          .map(r => r.value ? (r.value.error || 'unknown') : 'fetch failed');
+          .filter(function (r) { return r.status === 'fulfilled' && (!r.value || !r.value.deleted); })
+          .map(function (r) { return r.value ? (r.value.error || 'unknown') : 'fetch failed'; });
 
         console.log('[DELETE SUMMARY] succeeded:', succeeded, '| failed:', failed, '| reasons:', failReasons);
 
         hideLoading();
 
         if (succeeded > 0) {
-          const msg = `${succeeded} mapping(s) deleted successfully.` +
-            (failed > 0 ? ` ${failed} failed: ${failReasons.join(', ')}` : '');
+          const msg = succeeded + ' mapping(s) deleted successfully.' +
+            (failed > 0 ? ' ' + failed + ' failed: ' + failReasons.join(', ') : '');
           showToast(msg, succeeded === results.length ? 'success' : 'warning');
         } else {
-          const errMsg = failReasons.length ? failReasons.join('; ') : 'No matches found in sheet';
-          showToast('Delete failed: ' + errMsg, 'error');
+          showToast('Delete failed: ' + (failReasons.join('; ') || 'No matches found in sheet'), 'error');
         }
 
         // Reload the mapping list to confirm changes
@@ -1862,19 +1857,18 @@ async function testDeleteDirect() {
   }
 
   out.style.color = '#00bfa5';
-  out.textContent = `Sending: action=deleteMapping, exam_id=${exam_id}, roll_no=${roll_no}\n\nWaiting...`;
+  out.textContent = 'Sending: action=deleteMapping, exam_id=' + exam_id + ', roll_no=' + roll_no + '\n\nWaiting...';
 
   try {
-    const body    = new URLSearchParams({ exam_id, roll_no });
-    const fullUrl = WEBAPP_URL + '?action=deleteMapping';
-    console.log('[DEBUG TEST] POST URL:', fullUrl, '| body:', body.toString());
+    // ✅ FIX: use gasPost — action in POST body, not in URL
+    const json = await gasPost('deleteMapping', { exam_id: exam_id, roll_no: roll_no });
+    const text = JSON.stringify(json, null, 2);
 
-    const raw  = await fetch(fullUrl, { method: 'POST', body });
-    const text = await raw.text();
-
-    console.log('[DEBUG TEST] Raw response:', text);
-    out.textContent = `REQUEST:\nPOST ${fullUrl}\nbody: ${body.toString()}\n\nRESPONSE (${raw.status}):\n${text}`;
-    out.style.color = text.includes('"deleted":true') ? '#00c853' : '#ff5252';
+    out.textContent =
+      'REQUEST:\nPOST ' + WEBAPP_URL +
+      '\nbody: action=deleteMapping&exam_id=' + exam_id + '&roll_no=' + roll_no +
+      '\n\nRESPONSE:\n' + text;
+    out.style.color = json.deleted === true ? '#00c853' : '#ff5252';
   } catch (err) {
     out.textContent = 'FETCH ERROR: ' + err.message;
     out.style.color = '#ff5252';
@@ -1906,3 +1900,4 @@ initializeDashboard();
 </script>
 </body>
 </html>
+
