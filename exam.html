@@ -1375,7 +1375,7 @@ async function violate(type, auto = false) {
   // Check if max violations reached
   if (violations >= limit) {
     // Save all current answers before auto-submit
-    //autoSubmitFromViolation();
+    submitExam();
     
     // Show warning
     proctorMsg.innerText = "Maximum violations reached. Auto-submitting exam...";
@@ -1383,7 +1383,7 @@ async function violate(type, auto = false) {
     
     // Wait 2 seconds then submit
     setTimeout(() => {
-      autoSubmitFromViolation();
+      submitExam();
     }, 2000);
   }
 }
