@@ -67,13 +67,10 @@ header {
 }
 
 .header-icon {
-  width: 50px;
-  height: 50px;
+  width: 50px; height: 50px;
   background: rgba(255,255,255,0.2);
   border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   font-size: 24px;
 }
 
@@ -84,14 +81,10 @@ header {
   padding: 10px 20px;
   background: rgba(255,255,255,0.2);
   border: 2px solid rgba(255,255,255,0.3);
-  color: #fff;
-  border-radius: 10px;
-  font-weight: 600;
-  cursor: pointer;
+  color: #fff; border-radius: 10px;
+  font-weight: 600; cursor: pointer;
   transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  display: flex; align-items: center; gap: 8px;
 }
 .logout-btn:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); }
 
@@ -112,23 +105,17 @@ header {
 
 .stat-card {
   background: linear-gradient(135deg, #ffffff 0%, #f8fafb 100%);
-  border-radius: 16px;
-  padding: 32px 24px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
+  border-radius: 16px; padding: 32px 24px;
+  display: flex; align-items: center; gap: 20px;
   box-shadow: var(--shadow-lg);
   border: 2px solid transparent;
-  position: relative;
-  overflow: hidden;
+  position: relative; overflow: hidden;
   transition: all 0.4s ease;
   min-height: 140px;
 }
 
 .stat-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
+  content: ''; position: absolute; top: 0; left: 0;
   width: 4px; height: 100%;
   transition: width 0.3s ease;
 }
@@ -142,12 +129,9 @@ header {
 .stat-card:hover::before { width: 100%; opacity: 0.05; }
 
 .stat-icon {
-  width: 70px; height: 70px;
-  border-radius: 14px;
+  width: 70px; height: 70px; border-radius: 14px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 32px;
-  transition: transform 0.3s ease;
-  flex-shrink: 0;
+  font-size: 32px; transition: transform 0.3s ease; flex-shrink: 0;
 }
 .stat-card:hover .stat-icon { transform: scale(1.1) rotate(5deg); }
 .stat-card.stat-primary .stat-icon { background: rgba(26,35,126,0.15); color: var(--primary); }
@@ -175,8 +159,7 @@ header {
 .tab-nav {
   display: flex;
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-  padding: 0;
-  overflow-x: auto;
+  padding: 0; overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
 .tab-nav::-webkit-scrollbar { height: 4px; }
@@ -185,10 +168,8 @@ header {
 
 .tab-btn {
   flex: 1; min-width: 150px;
-  padding: 18px 24px;
-  background: transparent; border: none;
-  color: rgba(255,255,255,0.7);
-  font-size: 15px; font-weight: 600;
+  padding: 18px 24px; background: transparent; border: none;
+  color: rgba(255,255,255,0.7); font-size: 15px; font-weight: 600;
   cursor: pointer; transition: all 0.3s ease;
   border-bottom: 3px solid transparent;
   display: flex; align-items: center; justify-content: center;
@@ -198,11 +179,7 @@ header {
 .tab-btn.active { background: rgba(255,255,255,0.2); color: #fff; border-bottom-color: var(--accent); }
 .tab-btn i { font-size: 16px; }
 
-.tab-content {
-  display: none;
-  padding: 32px;
-  animation: fadeIn 0.4s ease;
-}
+.tab-content { display: none; padding: 32px; animation: fadeIn 0.4s ease; }
 .tab-content.active { display: block; }
 
 @keyframes fadeIn {
@@ -223,39 +200,28 @@ header {
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: 16px; margin-bottom: 24px;
 }
 
 /* ========== FORM ELEMENTS ========== */
 input, select {
-  width: 100%;
-  padding: 14px 16px;
-  border: 2px solid var(--border);
-  border-radius: 10px;
-  font-size: 15px;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
-  background: #fff;
-  color: var(--text-dark);
-  transition: all 0.3s ease;
+  width: 100%; padding: 14px 16px;
+  border: 2px solid var(--border); border-radius: 10px;
+  font-size: 15px; font-family: 'Poppins', sans-serif; font-weight: 500;
+  background: #fff; color: var(--text-dark); transition: all 0.3s ease;
 }
 input:focus, select:focus {
-  outline: none;
-  border-color: var(--primary);
+  outline: none; border-color: var(--primary);
   box-shadow: 0 0 0 4px rgba(26,35,126,0.1);
 }
 input::placeholder { color: var(--text-light); }
 
 /* ========== BUTTONS ========== */
 .btn {
-  padding: 12px 24px;
-  border: none; border-radius: 10px;
-  font-size: 15px; font-weight: 600;
-  cursor: pointer; color: #fff;
+  padding: 12px 24px; border: none; border-radius: 10px;
+  font-size: 15px; font-weight: 600; cursor: pointer; color: #fff;
   margin-top: 12px; margin-right: 12px;
-  transition: all 0.3s ease;
-  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease; box-shadow: var(--shadow-md);
   display: inline-flex; align-items: center; gap: 8px;
 }
 .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
@@ -271,9 +237,8 @@ input::placeholder { color: var(--text-light); }
 
 /* ========== TABLE ========== */
 .table-scroll {
-  width: 100%; overflow-x: auto;
-  margin-top: 20px; border-radius: 12px;
-  box-shadow: var(--shadow-sm);
+  width: 100%; overflow-x: auto; margin-top: 20px;
+  border-radius: 12px; box-shadow: var(--shadow-sm);
 }
 table { width: 100%; min-width: 700px; border-collapse: collapse; background: #fff; }
 thead { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: #fff; }
@@ -292,23 +257,17 @@ tbody tr:last-child td { border-bottom: none; }
 
 /* ========== FILE INPUT ========== */
 input[type="file"] {
-  padding: 12px;
-  border: 2px dashed var(--border);
-  background: var(--bg-main);
-  cursor: pointer; font-weight: 500;
+  padding: 12px; border: 2px dashed var(--border);
+  background: var(--bg-main); cursor: pointer; font-weight: 500;
 }
 input[type="file"]:hover { border-color: var(--primary); background: rgba(26,35,126,0.05); }
 
 /* ========== SEARCH BAR ========== */
-.search-filter-bar {
-  display: flex; gap: 16px;
-  margin-bottom: 20px; flex-wrap: wrap;
-}
+.search-filter-bar { display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
 .search-box { flex: 1; min-width: 250px; position: relative; }
 .search-box i {
   position: absolute; left: 16px; top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-light); font-size: 16px;
+  transform: translateY(-50%); color: var(--text-light); font-size: 16px;
 }
 .search-box input { width: 100%; padding-left: 45px; margin: 0; }
 
@@ -324,27 +283,21 @@ input[type="file"]:hover { border-color: var(--primary); background: rgba(26,35,
 
 /* ========== MAPPING INTERFACE ========== */
 .mapping-interface {
-  background: var(--bg-card);
-  border-radius: 16px; padding: 24px;
-  margin-bottom: 24px;
-  border: 2px solid var(--border);
+  background: var(--bg-card); border-radius: 16px; padding: 24px;
+  margin-bottom: 24px; border: 2px solid var(--border);
 }
 .mapping-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: 16px; margin-bottom: 16px;
 }
 .student-selection {
-  background: var(--bg-main);
-  border-radius: 12px; padding: 16px;
+  background: var(--bg-main); border-radius: 12px; padding: 16px;
   max-height: 400px; overflow-y: auto;
 }
 .student-checkbox {
   display: flex; align-items: center;
-  padding: 10px; margin-bottom: 8px;
-  background: #fff; border-radius: 8px;
-  border: 1px solid var(--border);
-  cursor: pointer; transition: all 0.3s ease;
+  padding: 10px; margin-bottom: 8px; background: #fff; border-radius: 8px;
+  border: 1px solid var(--border); cursor: pointer; transition: all 0.3s ease;
 }
 .student-checkbox:hover { border-color: var(--primary); box-shadow: var(--shadow-sm); }
 .student-checkbox input[type="checkbox"] { width: 18px; height: 18px; margin-right: 12px; cursor: pointer; }
@@ -352,53 +305,109 @@ input[type="file"]:hover { border-color: var(--primary); background: rgba(26,35,
 
 /* ========== DELETE MAPPING INTERFACE ========== */
 .delete-mapping-interface {
-  background: #fff8f8;
-  border-radius: 16px; padding: 24px;
-  margin-top: 24px; margin-bottom: 24px;
-  border: 2px solid #ffcdd2;
+  background: #fff8f8; border-radius: 16px; padding: 24px;
+  margin-top: 24px; margin-bottom: 24px; border: 2px solid #ffcdd2;
 }
-.delete-mapping-interface h4 {
-  color: var(--danger);
-  margin-bottom: 16px;
-  font-size: 18px; font-weight: 700;
-}
+.delete-mapping-interface h4 { color: var(--danger); margin-bottom: 16px; font-size: 18px; font-weight: 700; }
 .delete-mapping-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: 16px; margin-bottom: 16px;
 }
 .delete-student-selection {
-  background: #fff3f3;
-  border-radius: 12px; padding: 16px;
+  background: #fff3f3; border-radius: 12px; padding: 16px;
   max-height: 350px; overflow-y: auto;
 }
 .delete-student-checkbox {
   display: flex; align-items: center;
-  padding: 10px; margin-bottom: 8px;
-  background: #fff; border-radius: 8px;
-  border: 1px solid #ffcdd2;
-  cursor: pointer; transition: all 0.3s ease;
+  padding: 10px; margin-bottom: 8px; background: #fff; border-radius: 8px;
+  border: 1px solid #ffcdd2; cursor: pointer; transition: all 0.3s ease;
 }
 .delete-student-checkbox:hover { border-color: var(--danger); box-shadow: 0 2px 8px rgba(211,47,47,0.1); }
 .delete-student-checkbox input[type="checkbox"] { width: 18px; height: 18px; margin-right: 12px; cursor: pointer; }
 .delete-student-checkbox label { flex: 1; cursor: pointer; font-weight: 500; color: var(--text-dark); }
 
+/* ========== ANALYTICS SELECTOR — IMPROVED ========== */
+.analytics-selector-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 28px;
+  align-items: stretch;
+}
+
+.analytics-select-wrapper {
+  flex: 1;
+  position: relative;
+}
+
+.analytics-select-wrapper::after {
+  content: '\f078';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  position: absolute;
+  right: 16px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary); font-size: 13px;
+  pointer-events: none;
+}
+
+.analytics-select-wrapper select {
+  width: 100%; margin: 0;
+  padding: 14px 44px 14px 16px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--text-dark);
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.analytics-select-wrapper select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(26,35,126,0.1);
+  outline: none;
+}
+
+.analytics-generate-btn {
+  padding: 14px 28px; border: none; border-radius: 12px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: #fff; font-size: 15px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; gap: 10px;
+  box-shadow: var(--shadow-md); transition: all 0.3s ease;
+  white-space: nowrap; margin: 0;
+}
+.analytics-generate-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.analytics-generate-btn i { font-size: 16px; }
+
+/* Selected exam badge */
+.analytics-selected-badge {
+  display: none;
+  align-items: center; gap: 8px;
+  padding: 8px 16px; border-radius: 20px;
+  background: rgba(26,35,126,0.1); color: var(--primary);
+  font-size: 13px; font-weight: 700;
+  margin-bottom: 16px;
+}
+.analytics-selected-badge.visible { display: inline-flex; }
+.analytics-selected-badge i { font-size: 14px; color: var(--accent); }
+
 /* ========== ANALYTICS ========== */
 .analytics-section { margin-bottom: 32px; }
 
-/* ── Desktop student lists ── */
+/* Student lists */
 .student-lists {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-  gap: 24px;
-  margin-top: 24px;
+  gap: 24px; margin-top: 24px;
 }
 
 .student-list-card {
-  background: #fff;
-  border-radius: 16px; padding: 20px;
-  border: 2px solid var(--border);
-  box-shadow: var(--shadow-md);
+  background: #fff; border-radius: 16px; padding: 20px;
+  border: 2px solid var(--border); box-shadow: var(--shadow-md);
   transition: all 0.3s ease;
 }
 .student-list-card:hover { box-shadow: var(--shadow-lg); }
@@ -432,11 +441,9 @@ input[type="file"]:hover { border-color: var(--primary); background: rgba(26,35,
 
 .student-info  { display: flex; align-items: center; gap: 10px; flex: 1; }
 .student-avatar {
-  width: 36px; height: 36px;
-  border-radius: 8px;
+  width: 36px; height: 36px; border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
-  color: #fff; font-weight: 700; font-size: 13px;
-  flex-shrink: 0;
+  color: #fff; font-weight: 700; font-size: 13px; flex-shrink: 0;
 }
 .attended-list     .student-avatar { background: linear-gradient(135deg, var(--success), #00897b); }
 .not-attended-list .student-avatar { background: linear-gradient(135deg, var(--danger),  #c62828); }
@@ -448,27 +455,21 @@ input[type="file"]:hover { border-color: var(--primary); background: rgba(26,35,
 .student-dept span { background: rgba(26,35,126,0.1); padding: 1px 6px; border-radius: 6px; font-weight: 600; }
 
 .student-status {
-  font-size: 11px; font-weight: 700;
-  padding: 4px 8px; border-radius: 10px;
-  text-transform: uppercase; letter-spacing: 0.5px;
+  font-size: 11px; font-weight: 700; padding: 4px 8px;
+  border-radius: 10px; text-transform: uppercase; letter-spacing: 0.5px;
   white-space: nowrap; flex-shrink: 0;
 }
 .attended-list     .student-status { background: rgba(0,200,83,0.15);  color: var(--success); }
 .not-attended-list .student-status { background: rgba(211,47,47,0.15); color: var(--danger); }
 
-.empty-list {
-  text-align: center; padding: 30px 20px;
-  color: var(--text-light);
-}
+.empty-list { text-align: center; padding: 30px 20px; color: var(--text-light); }
 .empty-list i { font-size: 36px; margin-bottom: 8px; opacity: 0.5; display: block; }
 .empty-list p { font-size: 14px; font-weight: 600; }
 
 /* ========== EMPTY STATE ========== */
 .empty-state { text-align: center; padding: 60px 20px; }
 .empty-icon {
-  width: 100px; height: 100px;
-  background: rgba(26,35,126,0.1);
-  border-radius: 50%;
+  width: 100px; height: 100px; background: rgba(26,35,126,0.1); border-radius: 50%;
   display: inline-flex; align-items: center; justify-content: center;
   font-size: 48px; color: var(--text-light); margin-bottom: 20px;
 }
@@ -478,9 +479,8 @@ input[type="file"]:hover { border-color: var(--primary); background: rgba(26,35,
 /* ========== TOAST ========== */
 .toast {
   position: fixed; top: 100px; right: 32px;
-  background: #fff; padding: 16px 24px;
-  border-radius: 12px; box-shadow: var(--shadow-xl);
-  border-left: 4px solid var(--success);
+  background: #fff; padding: 16px 24px; border-radius: 12px;
+  box-shadow: var(--shadow-xl); border-left: 4px solid var(--success);
   display: none; align-items: center; gap: 12px;
   z-index: 1000; animation: slideInRight 0.4s ease;
   max-width: calc(100vw - 48px);
@@ -508,8 +508,7 @@ input[type="file"]:hover { border-color: var(--primary); background: rgba(26,35,
   width: 60px; height: 60px;
   border: 5px solid rgba(255,255,255,0.2);
   border-top: 5px solid #fff;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+  border-radius: 50%; animation: spin 1s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -530,12 +529,9 @@ input[type="file"]:hover { border-color: var(--primary); background: rgba(26,35,
   100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 .modal-icon {
-  width: 80px; height: 80px;
-  background: rgba(211,47,47,0.15);
-  border-radius: 50%;
+  width: 80px; height: 80px; background: rgba(211,47,47,0.15); border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 40px; color: var(--danger);
-  margin: 0 auto 20px;
+  font-size: 40px; color: var(--danger); margin: 0 auto 20px;
 }
 .modal-title { font-size: 24px; font-weight: 700; color: var(--primary); text-align: center; margin-bottom: 12px; }
 .modal-text  { font-size: 15px; color: var(--text-medium); text-align: center; margin-bottom: 24px; }
@@ -550,169 +546,100 @@ input[type="file"]:hover { border-color: var(--primary); background: rgba(26,35,
 }
 
 /* =========================================================
-   MOBILE RESPONSIVE — the main focus of this update
+   MOBILE RESPONSIVE
    ========================================================= */
 @media (max-width: 768px) {
 
-  /* ── Header: compact on mobile ── */
-  .header-content {
-    padding: 12px 16px;
-    flex-direction: row;          /* keep row layout */
-    align-items: center;
-    gap: 10px;
-    flex-wrap: nowrap;
-  }
+  .header-content { padding: 12px 16px; flex-direction: row; align-items: center; gap: 10px; flex-wrap: nowrap; }
   .header-left { gap: 10px; }
   .header-icon { width: 38px; height: 38px; font-size: 18px; border-radius: 8px; }
   .header-title h1 { font-size: 16px; }
   .header-title p  { font-size: 11px; }
   .logout-btn { padding: 8px 12px; font-size: 13px; }
-  .logout-btn span { display: none; }   /* icon-only on tiny screens */
+  .logout-btn span { display: none; }
 
-  /* ── Container ── */
   .container { padding: 16px 12px; }
 
-  /* ── Top stats cards ── */
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-bottom: 16px;
-  }
-  .stat-card {
-    padding: 14px 12px;
-    min-height: auto;
-    gap: 10px;
-    border-radius: 12px;
-  }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .stat-card { padding: 14px 12px; min-height: auto; gap: 10px; border-radius: 12px; }
   .stat-icon { width: 44px; height: 44px; font-size: 20px; border-radius: 10px; }
   .stat-label { font-size: 10px; letter-spacing: 0.5px; margin-bottom: 4px; }
   .stat-value { font-size: 28px; }
 
-  /* ── Tab nav ── */
   .tab-btn { min-width: 110px; padding: 12px 14px; font-size: 13px; }
-  .tab-btn span { display: none; }   /* icon-only tabs on mobile */
+  .tab-btn span { display: none; }
   .tab-btn i { font-size: 18px; }
 
-  /* ── Tab content ── */
   .tab-content { padding: 16px 12px; }
 
-  /* ── Buttons ── */
   .btn { width: 100%; justify-content: center; margin-right: 0; }
 
-  /* ── Mapping grids ── */
   .mapping-grid,
   .delete-mapping-grid { grid-template-columns: 1fr 1fr; }
 
-  /* ─────────────────────────────────────────────
-     ANALYTICS TAB — MOBILE OVERHAUL
-     ───────────────────────────────────────────── */
-
-  /* Selector row */
-  #analytics-tab > div:first-child {
-    flex-direction: column !important;
-    gap: 10px !important;
-    margin-bottom: 16px !important;
+  /* ── Analytics selector — mobile ── */
+  .analytics-selector-bar {
+    flex-direction: column;
+    gap: 10px;
   }
-  #analytics-tab > div:first-child select { flex: unset !important; }
-  #analytics-tab > div:first-child .btn   { margin: 0 !important; }
-
-  /* Section titles inside analytics */
-  #analytics-tab .section-title { font-size: 16px; margin-bottom: 12px; padding-bottom: 8px; }
+  .analytics-select-wrapper select { font-size: 14px; }
+  .analytics-generate-btn { width: 100%; justify-content: center; }
 
   /* ── Analytics inner stat grids ── */
   .analytics-section .stats-grid {
-    grid-template-columns: repeat(3, 1fr) !important;   /* 3-col for question dist */
-    gap: 8px;
-    margin-bottom: 12px;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px; margin-bottom: 12px;
   }
-  /* Participation row: 2 col first row, 2 col second row */
   .analytics-section:nth-child(2) .stats-grid {
     grid-template-columns: repeat(2, 1fr) !important;
   }
 
   .analytics-section .stat-card {
-    padding: 10px 8px;
-    min-height: auto;
-    gap: 6px;
-    border-radius: 10px;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+    padding: 10px 8px; min-height: auto; gap: 6px;
+    border-radius: 10px; flex-direction: column;
+    align-items: center; text-align: center;
   }
   .analytics-section .stat-card::before { width: 100%; height: 4px; bottom: 0; top: auto; }
   .analytics-section .stat-icon { width: 32px; height: 32px; font-size: 15px; border-radius: 8px; }
   .analytics-section .stat-label { font-size: 9px; letter-spacing: 0.3px; margin-bottom: 2px; }
   .analytics-section .stat-value { font-size: 22px; }
 
-  /* ── Student lists: stack vertically ── */
-  .student-lists {
-    grid-template-columns: 1fr !important;
-    gap: 16px;
-    margin-top: 16px;
-  }
-
-  .student-list-card {
-    padding: 14px 12px;
-    border-radius: 12px;
-    /* No hover lift on mobile */
-    transform: none !important;
-  }
-
-  .list-header {
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-  }
+  .student-lists { grid-template-columns: 1fr !important; gap: 16px; margin-top: 16px; }
+  .student-list-card { padding: 14px 12px; border-radius: 12px; transform: none !important; }
+  .list-header { margin-bottom: 10px; padding-bottom: 10px; }
   .list-title { font-size: 14px; }
   .list-title i { font-size: 15px; }
 
-  /* Search inside list */
-  .student-list-card .search-box {
-    margin-bottom: 10px !important;
-    min-width: unset;
-  }
+  .student-list-card .search-box { margin-bottom: 10px !important; min-width: unset; }
   .student-list-card .search-box input { font-size: 13px; padding: 10px 10px 10px 38px; }
   .student-list-card .search-box i { left: 12px; font-size: 14px; }
 
-  /* ── Student item ── */
   .student-list { max-height: 320px; padding-right: 2px; }
-
-  .student-item {
-    padding: 8px 10px;
-    margin-bottom: 6px;
-    border-radius: 8px;
-    /* no hover translate on mobile */
-    transform: none !important;
-  }
+  .student-item { padding: 8px 10px; margin-bottom: 6px; border-radius: 8px; transform: none !important; }
   .student-avatar { width: 30px; height: 30px; font-size: 11px; border-radius: 6px; }
   .student-name  { font-size: 13px; }
   .student-roll  { font-size: 11px; }
-  .student-dept  { display: none; }   /* hide dept chips on mobile to save space */
+  .student-dept  { display: none; }
   .student-status { font-size: 10px; padding: 3px 6px; border-radius: 8px; }
   .student-info  { gap: 8px; }
 
-  /* Export button inside header */
   .list-header .btn-sm { padding: 6px 10px; font-size: 11px; }
   .list-header .btn-sm span { display: none; }
 
-  /* ── Analytics section margins ── */
   .analytics-section { margin-bottom: 20px; }
 
-  /* ── Delete mapping ── */
   .delete-mapping-interface { padding: 14px 12px; margin-top: 16px; }
   .delete-mapping-interface h4 { font-size: 15px; margin-bottom: 10px; }
 
-  /* ── Section title ── */
   .section-title { font-size: 17px; }
 
-  /* Toast */
   .toast { right: 12px; left: 12px; padding: 12px 16px; }
 }
 
 @media (max-width: 380px) {
   .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
   .stat-value { font-size: 24px; }
-  .mapping-grid,
-  .delete-mapping-grid { grid-template-columns: 1fr; }
+  .mapping-grid, .delete-mapping-grid { grid-template-columns: 1fr; }
   .analytics-section .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
 }
 </style>
@@ -906,7 +833,7 @@ input[type="file"]:hover { border-color: var(--primary); background: rgba(26,35,
 
     <hr style="margin:24px 0;border:none;border-top:2px solid var(--border);">
 
-    <!-- ============ DELETE MAPPING ============ -->
+    <!-- DELETE MAPPING -->
     <div class="delete-mapping-interface">
       <h4><i class="fa-solid fa-trash-can"></i> Delete Student Mapping</h4>
       <p style="font-size:13px;color:var(--text-medium);margin-bottom:16px;">
@@ -956,15 +883,26 @@ input[type="file"]:hover { border-color: var(--primary); background: rgba(26,35,
     </div>
   </div>
 
-  <!-- ANALYTICS TAB -->
+  <!-- ANALYTICS TAB — IMPROVED SELECTOR -->
   <div id="analytics-tab" class="tab-content">
-    <h3 class="section-title"><i class="fa-solid fa-chart-pie"></i>Exam Analytics & Insights</h3>
+    <h3 class="section-title"><i class="fa-solid fa-chart-pie"></i>Exam Analytics &amp; Insights</h3>
 
-    <div style="display:flex;gap:16px;margin-bottom:32px;">
-      <select id="analytics_exam_id" style="flex:1;margin:0;"><option value="">Select Exam for Analytics</option></select>
-      <button class="btn primary" onclick="loadExamAnalytics()" style="margin:0;">
+    <!-- ✅ IMPROVED: Custom styled selector bar -->
+    <div class="analytics-selector-bar">
+      <div class="analytics-select-wrapper">
+        <select id="analytics_exam_id" onchange="onAnalyticsExamChange()">
+          <option value="">— Select an Exam to View Analytics —</option>
+        </select>
+      </div>
+      <button class="analytics-generate-btn" onclick="loadExamAnalytics()">
         <i class="fa-solid fa-chart-line"></i><span>Generate Analytics</span>
       </button>
+    </div>
+
+    <!-- Selected exam indicator -->
+    <div class="analytics-selected-badge" id="analyticsSelectedBadge">
+      <i class="fa-solid fa-circle-check"></i>
+      <span id="analyticsSelectedLabel">No exam selected</span>
     </div>
 
     <div id="analyticsContent" style="display:none;">
@@ -1055,7 +993,7 @@ input[type="file"]:hover { border-color: var(--primary); background: rgba(26,35,
     <div id="analyticsEmpty" class="empty-state">
       <div class="empty-icon"><i class="fa-solid fa-chart-pie"></i></div>
       <h4 class="empty-title">No Analytics Available</h4>
-      <p class="empty-text">Select an exam to view detailed analytics and insights</p>
+      <p class="empty-text">Select an exam above to view detailed analytics and insights</p>
     </div>
   </div>
 
@@ -1122,6 +1060,7 @@ let attendedStudentsList = [];
 let notAttendedStudentsList = [];
 let filteredStudentsForMapping = [];
 let filteredStudentsForDelete = [];
+let allMappedForDelete = [];
 
 /* =============== TAB SWITCHING =============== */
 function switchTab(tabName, btn) {
@@ -1280,21 +1219,25 @@ function loadExams() {
     if (!Array.isArray(d)) return;
     EXAMS = ALL_EXAMS_DATA = d;
     rep_exam_id.innerHTML       = '<option value="">Select Exam</option>';
-    analytics_exam_id.innerHTML = '<option value="">Select Exam for Analytics</option>';
+    analytics_exam_id.innerHTML = '<option value="">— Select an Exam to View Analytics —</option>';
     map_exam_select.innerHTML   = '<option value="">Select Exam</option>';
     del_exam_select.innerHTML   = '<option value="">Select Exam</option>';
     d.forEach(ex => {
-      rep_exam_id.innerHTML       += `<option>${ex[0]}</option>`;
-      analytics_exam_id.innerHTML += `<option value="${ex[0]}">${ex[0]} - ${ex[1]}</option>`;
-      map_exam_select.innerHTML   += `<option value="${ex[0]}">${ex[0]} - ${ex[1]}</option>`;
-      del_exam_select.innerHTML   += `<option value="${ex[0]}">${ex[0]} - ${ex[1]}</option>`;
+      const label = `${ex[0]} — ${ex[1]}`;
+      rep_exam_id.innerHTML       += `<option value="${ex[0]}">${label}</option>`;
+      analytics_exam_id.innerHTML += `<option value="${ex[0]}">${label}</option>`;
+      map_exam_select.innerHTML   += `<option value="${ex[0]}">${label}</option>`;
+      del_exam_select.innerHTML   += `<option value="${ex[0]}">${label}</option>`;
     });
     displayExams(d);
     const totalExams  = d.length;
     const activeExams = d.filter(e=>e[10]==='ENABLED').length;
     animateCounter('totalExams',  0, totalExams,  1000);
     animateCounter('activeExams', 0, activeExams, 1200);
-    setTimeout(()=>{ document.getElementById('totalExams').textContent=totalExams; document.getElementById('activeExams').textContent=activeExams; }, 1500);
+    setTimeout(()=>{
+      document.getElementById('totalExams').textContent  = totalExams;
+      document.getElementById('activeExams').textContent = activeExams;
+    }, 1500);
     return d;
   }).catch(()=>{ hideLoading(); showToast('Failed to load exams','error'); });
 }
@@ -1392,11 +1335,6 @@ async function mapSelectedStudents() {
 }
 
 /* =============== MAPPING — DELETE =============== */
-
-// Holds ALL mapped students for the selected exam (fetched from backend)
-let allMappedForDelete = [];
-
-// Called when exam dropdown changes - fetches mapped students from backend
 async function updateDeleteMappingUI() {
   const exam = document.getElementById('del_exam_select').value;
 
@@ -1411,7 +1349,6 @@ async function updateDeleteMappingUI() {
     return;
   }
 
-  // Show loading spinner
   document.getElementById('delete_student_checkboxes').innerHTML =
     '<div class="empty-list"><i class="fa-solid fa-spinner fa-spin" style="font-size:28px;display:block;margin-bottom:8px;opacity:0.6;"></i><p>Loading mapped students...</p></div>';
   document.getElementById('delete_student_area').style.display = 'block';
@@ -1419,16 +1356,13 @@ async function updateDeleteMappingUI() {
   document.getElementById('del_selected_count').textContent    = '0';
 
   try {
-    // Uses getExamMappings — already exists in your Code.gs doPost switch
+    // ✅ Uses getExamMappings which returns [exam_id, roll_no, dept, year, section]
     const res  = await fetch(WEBAPP_URL, {
       method: 'POST',
       body: new URLSearchParams({ action: 'getExamMappings', exam_id: exam })
     });
     const data = await res.json();
 
-    console.log('getExamMappings response:', data);
-
-    // data is array of [exam_id, roll_no, dept, year, section]
     if (!Array.isArray(data) || !data.length) {
       document.getElementById('delete_student_checkboxes').innerHTML =
         '<div class="empty-list"><i class="fa-solid fa-user-slash" style="font-size:28px;display:block;margin-bottom:8px;opacity:0.5;"></i><p>No students mapped to this exam</p></div>';
@@ -1436,33 +1370,33 @@ async function updateDeleteMappingUI() {
       return;
     }
 
-    // Extract roll numbers from response [exam_id, roll_no, dept, year, section]
+    // data = [[exam_id, roll_no, dept, year, section], ...]
     const rollSet = new Set(data.map(r => String(r[1] || '').trim()).filter(Boolean));
-    console.log('Mapped roll numbers:', [...rollSet]);
 
-    // Match against USERS array (index 3 = roll_no)
+    // Try matching against USERS for full name info
     allMappedForDelete = USERS.filter(u => rollSet.has(String(u[3]).trim()));
-    console.log('Matched students from USERS:', allMappedForDelete.length);
 
-    // Fallback: if USERS match fails, build from mapping data directly
+    // Fallback: if USERS match gives nothing, build from mapping data directly
     if (allMappedForDelete.length === 0 && data.length > 0) {
-      // [exam_id, roll_no, dept, year, section] -> synthetic user array
-      // user array: [email, pass, role, roll_no, name, dept, year, section]
-      allMappedForDelete = data.map(r => ['', '', 'student', String(r[1]).trim(), String(r[1]).trim(), String(r[2]).trim(), String(r[3]).trim(), String(r[4]).trim()]);
-      console.log('Using synthetic students from mapping data:', allMappedForDelete.length);
+      // Synthetic user array: [email, pass, role, roll_no, name, dept, year, section]
+      allMappedForDelete = data.map(r => [
+        '', '', 'student',
+        String(r[1]).trim(),  // roll_no as name too
+        String(r[1]).trim(),  // use roll as display name
+        String(r[2]).trim(),  // dept
+        String(r[3]).trim(),  // year
+        String(r[4]).trim()   // section
+      ]);
     }
 
     applyDeleteFilters();
-
   } catch (err) {
-    console.error('Failed to load mapped students:', err);
     document.getElementById('delete_student_checkboxes').innerHTML =
       '<div class="empty-list"><i class="fa-solid fa-circle-xmark" style="font-size:28px;display:block;margin-bottom:8px;color:var(--danger);opacity:0.6;"></i><p>Failed to load. Please try again.</p></div>';
     allMappedForDelete = [];
   }
 }
 
-// Called when dept/year/section filters change - re-filters already loaded mapped students
 function applyDeleteFilters() {
   const dept    = document.getElementById('del_dept_select').value;
   const year    = document.getElementById('del_year_select').value;
@@ -1482,7 +1416,6 @@ function applyDeleteFilters() {
     return;
   }
 
-  // Render checkboxes with MAPPED badge
   document.getElementById('delete_student_checkboxes').innerHTML =
     filteredStudentsForDelete.map(function(s, i) {
       var name = (s[4] && s[4] !== s[3]) ? s[4] : s[3];
@@ -1522,37 +1455,44 @@ async function deleteSelectedMappings() {
 
   showConfirmModal(
     'Delete Mappings?',
-    `This will remove ${sel.length} student(s) from exam "${exam_id}". This cannot be undone.`,
+    `This will remove ${sel.length} student(s) from exam "${exam_id}". Their other exam mappings will remain untouched.`,
     async () => {
       showLoading();
       try {
-        await Promise.all(Array.from(sel).map(cb =>
-          fetch(WEBAPP_URL, {
-            method: 'POST',
-            body: new URLSearchParams({
-              action: 'deleteMapping',
-              exam_id: exam_id,
-              roll_no: cb.value
-            })
-          })
-        ));
+        // ✅ Calls deleteMapping action — now exists in doPost switch
+        const results = await Promise.allSettled(
+          Array.from(sel).map(cb =>
+            fetch(WEBAPP_URL, {
+              method: 'POST',
+              body: new URLSearchParams({
+                action: 'deleteMapping',
+                exam_id: exam_id,
+                roll_no: cb.value
+              })
+            }).then(r => r.json())
+          )
+        );
+
+        const succeeded = results.filter(r => r.status === 'fulfilled' && r.value && r.value.deleted).length;
+        const failed    = results.length - succeeded;
+
         hideLoading();
-        showToast(`${sel.length} mapping(s) deleted successfully`, 'success');
-        // Reset and reload after deletion
+
+        if (succeeded > 0) {
+          showToast(`${succeeded} mapping(s) deleted. Other exam mappings retained.${failed>0?' '+failed+' failed.':''}`, succeeded === results.length ? 'success' : 'warning');
+        } else {
+          showToast('Deletion failed. Check backend and try again.', 'error');
+        }
+
+        // Reset UI but keep exam selection so admin can verify
         allMappedForDelete = [];
         filteredStudentsForDelete = [];
-        document.getElementById('del_exam_select').value = '';
-        document.getElementById('del_dept_select').value = '';
-        document.getElementById('del_year_select').value = '';
-        document.getElementById('del_section_select').value = '';
-        document.getElementById('delete_student_area').style.display = 'none';
-        document.getElementById('delete_map_button').style.display = 'none';
-        document.getElementById('delete_student_checkboxes').innerHTML = '';
-        document.getElementById('del_selected_count').textContent = '0';
+        // Reload the mappings for this exam to verify
+        await updateDeleteMappingUI();
+
       } catch (err) {
         hideLoading();
         showToast('Some deletions failed. Please try again.', 'error');
-        console.error(err);
       }
     }
   );
@@ -1593,7 +1533,7 @@ function loadAllResultsExams() {
     result_exam_id.innerHTML = '<option value="">Select Exam to View Results</option>';
     ids.forEach(id => {
       const ex = EXAMS.find(e=>e[0]===id);
-      result_exam_id.innerHTML += `<option value="${id}">${id}${ex?' - '+ex[1]:''}</option>`;
+      result_exam_id.innerHTML += `<option value="${id}">${id}${ex?' — '+ex[1]:''}</option>`;
     });
     showToast(ids.length ? `Found ${ids.length} exam(s) with results` : 'No exam results found yet', ids.length?'success':'warning');
   }).catch(()=>{ hideLoading(); showToast('Failed to load exam list.','error'); });
@@ -1639,10 +1579,24 @@ function reenable(exam_id, roll_no) {
   });
 }
 
-/* =============== ANALYTICS =============== */
+/* =============== ANALYTICS — IMPROVED =============== */
+function onAnalyticsExamChange() {
+  const sel   = document.getElementById('analytics_exam_id');
+  const badge = document.getElementById('analyticsSelectedBadge');
+  const label = document.getElementById('analyticsSelectedLabel');
+
+  if (sel.value) {
+    const exam = EXAMS.find(e => e[0] === sel.value);
+    label.textContent = exam ? `${exam[0]} — ${exam[1]}` : sel.value;
+    badge.classList.add('visible');
+  } else {
+    badge.classList.remove('visible');
+  }
+}
+
 async function loadExamAnalytics() {
   const exam_id = document.getElementById('analytics_exam_id').value;
-  if (!exam_id) { showToast('Please select an exam','warning'); return; }
+  if (!exam_id) { showToast('Please select an exam first','warning'); return; }
   showLoading();
   try {
     const exam = EXAMS.find(e=>e[0]===exam_id);
@@ -1682,7 +1636,7 @@ async function loadExamAnalytics() {
     document.getElementById('analyticsContent').style.display = 'block';
     document.getElementById('analyticsEmpty').style.display   = 'none';
     hideLoading();
-    showToast(`Analytics generated for ${exam_id}`,'success');
+    showToast(`Analytics generated for ${exam[0]} — ${exam[1]}`,'success');
   } catch (err) {
     hideLoading(); showToast('Failed to load analytics: '+err.message,'error');
   }
@@ -1838,7 +1792,7 @@ function loadTotalQuestions() {
   }).catch(()=>{ document.getElementById('totalQuestions').textContent='0'; });
 }
 
-/* =============== GET EXAM MAPPINGS =============== */
+/* =============== GET EXAM MAPPINGS (for analytics) =============== */
 async function getExamMappings(exam_id) {
   try {
     const res  = await fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'getMappedStudents',exam_id})});
@@ -1884,5 +1838,3 @@ initializeDashboard();
 </script>
 </body>
 </html>
-
-
