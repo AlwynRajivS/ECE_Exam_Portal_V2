@@ -834,7 +834,7 @@ input[type="file"]:hover { border-color: var(--primary); background: rgba(26,35,
     <hr style="margin:24px 0;border:none;border-top:2px solid var(--border);">
 
     <!-- DELETE MAPPING -->
-    <!--<div class="delete-mapping-interface">
+   <!-- <div class="delete-mapping-interface">
       <h4><i class="fa-solid fa-trash-can"></i> Delete Student Mapping</h4>
       <p style="font-size:13px;color:var(--text-medium);margin-bottom:16px;">
         Select exam, filter students and remove their mapping from the selected exam.
@@ -857,23 +857,9 @@ input[type="file"]:hover { border-color: var(--primary); background: rgba(26,35,
       </button>
     </div>
 
-    <hr style="margin:24px 0;border:none;border-top:2px solid var(--border);">-->
+    -->
 
-    <!-- DEBUG PANEL — remove after confirming delete works -->
-    <div id="debugPanel" style="background:#1a1a2e;border-radius:12px;padding:16px;margin-bottom:20px;border:2px solid #3949ab;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-        <span style="color:#00bfa5;font-weight:700;font-size:14px;"><i class="fa-solid fa-bug"></i> Delete Debug Tester</span>
-        <button onclick="document.getElementById('debugPanel').style.display='none'" style="background:transparent;border:none;color:#718096;cursor:pointer;font-size:18px;">✕</button>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
-        <input id="debug_exam_id" placeholder="Exam ID to test" style="background:#0d1642;border-color:#3949ab;color:#fff;font-size:13px;padding:10px;">
-        <input id="debug_roll_no" placeholder="Roll No to test" style="background:#0d1642;border-color:#3949ab;color:#fff;font-size:13px;padding:10px;">
-      </div>
-      <button onclick="testDeleteDirect()" style="background:linear-gradient(135deg,#d32f2f,#c62828);border:none;border-radius:8px;color:#fff;padding:10px 20px;font-weight:700;cursor:pointer;width:100%;margin-bottom:10px;">
-        <i class="fa-solid fa-vial"></i> Test Delete Now
-      </button>
-      <pre id="debugOutput" style="background:#0d1642;color:#00bfa5;padding:12px;border-radius:8px;font-size:12px;min-height:60px;overflow-x:auto;white-space:pre-wrap;word-break:break-all;">Response will appear here...</pre>
-    </div>
+    <hr style="margin:24px 0;border:none;border-top:2px solid var(--border);">
 
     <!-- BULK CSV UPLOAD -->
     <h4 style="color:var(--primary);margin-bottom:16px;font-size:18px;font-weight:700;">
@@ -1068,7 +1054,7 @@ input[type="file"]:hover { border-color: var(--primary); background: rgba(26,35,
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
 
 <script>
-const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbyZ3dnK6EFNC-b8Mnkmr6OEPzgG8MkioTx3uMRk0MwwaQhC8UTru6IiG7oFv-z5VG3u/exec";
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbylv9I7RT2dmx6UHMh5CDqYcoW-Sa46yNIldCMkCoKJhLjSk-Ga5B-MO6h6wz4x-WpW/exec";
 
 let USERS = [], EXAMS = [], REPORT_DATA = [];
 let ALL_EXAMS_DATA = [];
@@ -1077,17 +1063,6 @@ let notAttendedStudentsList = [];
 let filteredStudentsForMapping = [];
 let filteredStudentsForDelete = [];
 let allMappedForDelete = [];
-
-  function gasPost(action, params) {
-  const body = new URLSearchParams({ action: action });
-  if (params) {
-    Object.keys(params).forEach(function (k) {
-      body.append(k, params[k] == null ? '' : params[k]);
-    });
-  }
-  return fetch(WEBAPP_URL, { method: 'POST', body: body })
-    .then(function (r) { return r.json(); });
-}
 
 /* =============== TAB SWITCHING =============== */
 function switchTab(tabName, btn) {
@@ -1213,7 +1188,7 @@ function clearExamForm() {
 function createExam() {
   if (!validateExamForm()) return;
   showLoading();
-  fetch(WEBAPP_URL+'?action=getAllExams',{method:'POST',body:new URLSearchParams({})})
+  fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'getAllExams'})})
   .then(r=>r.json()).then(exams => {
     if (exams.some(e=>e[0]===exam_id.value)) { hideLoading(); showToast('Exam ID already exists. Use UPDATE instead.','error'); return; }
     fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({
@@ -1240,7 +1215,7 @@ function updateExam() {
 
 function loadExams() {
   showLoading();
-  return fetch(WEBAPP_URL+'?action=getAllExams',{method:'POST',body:new URLSearchParams({})})
+  return fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'getAllExams'})})
   .then(r=>r.json()).then(d=>{
     hideLoading();
     if (!Array.isArray(d)) return;
@@ -1294,7 +1269,7 @@ function uploadQuestions() {
 }
 function sendBulkQuestions(data) {
   showLoading();
-  fetch(WEBAPP_URL+'?action=bulkQuestions',{method:'POST',body:new URLSearchParams({json:JSON.stringify(data)})})
+  fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'bulkQuestions',json:JSON.stringify(data)})})
   .then(()=>{ hideLoading(); showToast(`${data.length} question(s) added!`,'success');
     ['q_exam_id','q_qid','q_question','q_A','q_B','q_C','q_D','q_correct','q_image'].forEach(id=>document.getElementById(id).value='');
     questionFile.value=''; loadTotalQuestions();
@@ -1307,7 +1282,7 @@ function uploadStudents() {
   if (!studentFile.files[0]) { showToast('Please select a CSV file','warning'); return; }
   showLoading();
   parseCSV(studentFile.files[0], data => {
-    fetch(WEBAPP_URL+'?action=bulkStudents',{method:'POST',body:new URLSearchParams({json:JSON.stringify(data)})})
+    fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'bulkStudents',json:JSON.stringify(data)})})
     .then(()=>{ hideLoading(); showToast(`${data.length} student(s) added!`,'success'); studentFile.value=''; loadUsers(); })
     .catch(()=>{ hideLoading(); showToast('Failed to add students.','error'); });
   });
@@ -1353,8 +1328,8 @@ async function mapSelectedStudents() {
   if (!sel.length) { showToast('Please select at least one student','warning'); return; }
   showLoading();
   try {
-    await Promise.all(Array.from(sel).map(cb=>fetch(WEBAPP_URL+'?action=mapExam',{method:'POST',
-      body:new URLSearchParams({exam_id,roll_no:cb.value,dept,year,section})})));
+    await Promise.all(Array.from(sel).map(cb=>fetch(WEBAPP_URL,{method:'POST',
+      body:new URLSearchParams({action:'mapExam',exam_id,roll_no:cb.value,dept,year,section})})));
     hideLoading(); showToast(`Successfully mapped ${sel.length} student(s)`,'success');
     document.querySelectorAll('#student_checkboxes input[type="checkbox"]').forEach(c=>c.checked=false);
     updateSelectedCount();
@@ -1383,8 +1358,12 @@ async function updateDeleteMappingUI() {
   document.getElementById('del_selected_count').textContent    = '0';
 
   try {
-    // ✅ FIX: use gasPost so action goes in POST body, not URL
-    const data = await gasPost('getExamMappings', { exam_id: exam });
+    // ✅ Uses getExamMappings which returns [exam_id, roll_no, dept, year, section]
+    const res  = await fetch(WEBAPP_URL, {
+      method: 'POST',
+      body: new URLSearchParams({ action: 'getExamMappings', exam_id: exam })
+    });
+    const data = await res.json();
 
     if (!Array.isArray(data) || !data.length) {
       document.getElementById('delete_student_checkboxes').innerHTML =
@@ -1394,21 +1373,22 @@ async function updateDeleteMappingUI() {
     }
 
     // data = [[exam_id, roll_no, dept, year, section], ...]
-    const rollSet = new Set(data.map(function (r) { return String(r[1] || '').trim(); }).filter(Boolean));
+    const rollSet = new Set(data.map(r => String(r[1] || '').trim()).filter(Boolean));
 
-    allMappedForDelete = USERS.filter(function (u) { return rollSet.has(String(u[3]).trim()); });
+    // Try matching against USERS for full name info
+    allMappedForDelete = USERS.filter(u => rollSet.has(String(u[3]).trim()));
 
     // Fallback: if USERS match gives nothing, build from mapping data directly
     if (allMappedForDelete.length === 0 && data.length > 0) {
-      allMappedForDelete = data.map(function (r) {
-        return ['', '', 'student',
-          String(r[1]).trim(),
-          String(r[1]).trim(),
-          String(r[2]).trim(),
-          String(r[3]).trim(),
-          String(r[4]).trim()
-        ];
-      });
+      // Synthetic user array: [email, pass, role, roll_no, name, dept, year, section]
+      allMappedForDelete = data.map(r => [
+        '', '', 'student',
+        String(r[1]).trim(),  // roll_no as name too
+        String(r[1]).trim(),  // use roll as display name
+        String(r[2]).trim(),  // dept
+        String(r[3]).trim(),  // year
+        String(r[4]).trim()   // section
+      ]);
     }
 
     applyDeleteFilters();
@@ -1418,7 +1398,6 @@ async function updateDeleteMappingUI() {
     allMappedForDelete = [];
   }
 }
-
 
 function applyDeleteFilters() {
   const dept    = document.getElementById('del_dept_select').value;
@@ -1464,65 +1443,58 @@ function updateDelSelectedCount() {
     document.querySelectorAll('#delete_student_checkboxes input[type="checkbox"]:checked').length;
 }
 
+function selectAllDeleteStudents() {
+  const cbs = document.querySelectorAll('#delete_student_checkboxes input[type="checkbox"]');
+  const all = Array.from(cbs).every(c=>c.checked);
+  cbs.forEach(c=>c.checked=!all); updateDelSelectedCount();
+}
+
 async function deleteSelectedMappings() {
   const exam_id = document.getElementById('del_exam_select').value;
   const sel = document.querySelectorAll('#delete_student_checkboxes input[type="checkbox"]:checked');
 
-  if (!sel.length) { showToast('Please select at least one student', 'warning'); return; }
+  if (!sel.length) { showToast('Please select at least one student','warning'); return; }
 
   showConfirmModal(
     'Delete Mappings?',
-    'This will remove ' + sel.length + ' student(s) from exam "' + exam_id + '". Their other exam mappings will remain untouched.',
-    async function () {
+    `This will remove ${sel.length} student(s) from exam "${exam_id}". Their other exam mappings will remain untouched.`,
+    async () => {
       showLoading();
       try {
-        const rollNumbers = Array.from(sel).map(function (cb) { return cb.value; });
-        console.log('[DELETE] exam_id:', exam_id, '| rolls:', rollNumbers);
-
+        // ✅ Calls deleteMapping action — now exists in doPost switch
         const results = await Promise.allSettled(
-          rollNumbers.map(function (roll_no) {
-            // ✅ FIX: use gasPost — action in POST body, never in URL
-            return gasPost('deleteMapping', { exam_id: exam_id, roll_no: roll_no })
-              .then(function (json) {
-                console.log('[DELETE RESULT] roll:', roll_no, '| response:', JSON.stringify(json));
-                return Object.assign({ roll_no: roll_no }, json);
+          Array.from(sel).map(cb =>
+            fetch(WEBAPP_URL, {
+              method: 'POST',
+              body: new URLSearchParams({
+                action: 'deleteMapping',
+                exam_id: exam_id,
+                roll_no: cb.value
               })
-              .catch(function (err) {
-                console.error('[DELETE ERROR] roll:', roll_no, '| error:', err);
-                return { roll_no: roll_no, error: err.message };
-              });
-          })
+            }).then(r => r.json())
+          )
         );
 
-        const succeeded = results.filter(function (r) {
-          return r.status === 'fulfilled' && r.value && r.value.deleted === true;
-        }).length;
-        const failed = results.length - succeeded;
-        const failReasons = results
-          .filter(function (r) { return r.status === 'fulfilled' && (!r.value || !r.value.deleted); })
-          .map(function (r) { return r.value ? (r.value.error || 'unknown') : 'fetch failed'; });
-
-        console.log('[DELETE SUMMARY] succeeded:', succeeded, '| failed:', failed, '| reasons:', failReasons);
+        const succeeded = results.filter(r => r.status === 'fulfilled' && r.value && r.value.deleted).length;
+        const failed    = results.length - succeeded;
 
         hideLoading();
 
         if (succeeded > 0) {
-          const msg = succeeded + ' mapping(s) deleted successfully.' +
-            (failed > 0 ? ' ' + failed + ' failed: ' + failReasons.join(', ') : '');
-          showToast(msg, succeeded === results.length ? 'success' : 'warning');
+          showToast(`${succeeded} mapping(s) deleted. Other exam mappings retained.${failed>0?' '+failed+' failed.':''}`, succeeded === results.length ? 'success' : 'warning');
         } else {
-          showToast('Delete failed: ' + (failReasons.join('; ') || 'No matches found in sheet'), 'error');
+          showToast('Deletion failed. Check backend and try again.', 'error');
         }
 
-        // Reload the mapping list to confirm changes
+        // Reset UI but keep exam selection so admin can verify
         allMappedForDelete = [];
         filteredStudentsForDelete = [];
+        // Reload the mappings for this exam to verify
         await updateDeleteMappingUI();
 
       } catch (err) {
-        console.error('[DELETE EXCEPTION]', err);
         hideLoading();
-        showToast('Delete error: ' + err.message, 'error');
+        showToast('Some deletions failed. Please try again.', 'error');
       }
     }
   );
@@ -1533,8 +1505,8 @@ function uploadMapping() {
   if (!mapFile.files[0]) { showToast('Please select a CSV file','warning'); return; }
   showLoading();
   parseCSV(mapFile.files[0], data => {
-    Promise.all(data.map(m=>fetch(WEBAPP_URL+'?action=mapExam',{method:'POST',body:new URLSearchParams({
-      exam_id:m.exam_id,roll_no:m.roll_no||'',dept:m.dept||'',year:m.year||'',section:m.section||''
+    Promise.all(data.map(m=>fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({
+      action:'mapExam',exam_id:m.exam_id,roll_no:m.roll_no||'',dept:m.dept||'',year:m.year||'',section:m.section||''
     })})))
     .then(()=>{ hideLoading(); showToast(`${data.length} mapping(s) completed!`,'success'); mapFile.value=''; })
     .catch(()=>{ hideLoading(); showToast('Some mappings failed.','error'); });
@@ -1603,7 +1575,7 @@ function loadResults() {
 function reenable(exam_id, roll_no) {
   showConfirmModal('Re-enable Student?',`Re-enable ${roll_no} for this exam?`,()=>{
     showLoading();
-    fetch(WEBAPP_URL+'?action=unblockStudent',{method:'POST',body:new URLSearchParams({exam_id,roll_no})})
+    fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'unblockStudent',exam_id,roll_no})})
     .then(()=>{ hideLoading(); showToast('Student re-enabled!','success'); loadResults(); })
     .catch(()=>{ hideLoading(); showToast('Failed to re-enable student.','error'); });
   });
@@ -1633,7 +1605,7 @@ async function loadExamAnalytics() {
     if (!exam) { hideLoading(); showToast('Exam not found','error'); return; }
 
     const [qRes, rRes] = await Promise.all([
-      fetch(WEBAPP_URL+'?action=getQuestions',{method:'POST',body:new URLSearchParams({exam_id})}),
+      fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'getQuestions',exam_id})}),
       fetch(WEBAPP_URL+'?action=getResults&exam_id='+encodeURIComponent(exam_id),{method:'POST'})
     ]);
     const questions = await qRes.json();
@@ -1785,7 +1757,7 @@ function downloadPDF() {
 
 /* =============== LOAD USERS =============== */
 function loadUsers() {
-  return fetch(WEBAPP_URL+'?action=getAllUsers',{method:'POST',body:new URLSearchParams({})})
+  return fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'getAllUsers'})})
   .then(r=>r.json()).then(d=>{
     const students = d.filter(u=>u[2]&&String(u[2]).toLowerCase().trim()==='student');
     USERS = students;
@@ -1811,10 +1783,10 @@ function loadUsers() {
 
 /* =============== LOAD TOTAL QUESTIONS =============== */
 function loadTotalQuestions() {
-  fetch(WEBAPP_URL+'?action=getAllExams',{method:'POST',body:new URLSearchParams({})})
+  fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'getAllExams'})})
   .then(r=>r.json()).then(exams=>
     Promise.all(exams.map(ex=>
-      fetch(WEBAPP_URL+'?action=getQuestions',{method:'POST',body:new URLSearchParams({exam_id:ex[0]})}).then(r=>r.json())
+      fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'getQuestions',exam_id:ex[0]})}).then(r=>r.json())
     ))
   ).then(all=>{
     const total=all.reduce((s,q)=>s+q.length,0);
@@ -1825,7 +1797,7 @@ function loadTotalQuestions() {
 /* =============== GET EXAM MAPPINGS (for analytics) =============== */
 async function getExamMappings(exam_id) {
   try {
-    const res  = await fetch(WEBAPP_URL+'?action=getMappedStudents',{method:'POST',body:new URLSearchParams({exam_id})});
+    const res  = await fetch(WEBAPP_URL,{method:'POST',body:new URLSearchParams({action:'getMappedStudents',exam_id})});
     const rolls= await res.json();
     if (Array.isArray(rolls)&&rolls.length) {
       const set = new Set(rolls.map(r=>String(r[0]||r).trim()));
@@ -1842,38 +1814,6 @@ async function getExamMappings(exam_id) {
       USERS.filter(u=>u[5]===d&&u[6]===y&&u[7]===sc).forEach(s=>{ if(!seen.has(s[3])){ out.push(s); seen.add(s[3]); }}); });
     return out;
   } catch { return []; }
-}
-
-/* =============== DEBUG DELETE TESTER =============== */
-async function testDeleteDirect() {
-  const exam_id = document.getElementById('debug_exam_id').value.trim();
-  const roll_no = document.getElementById('debug_roll_no').value.trim();
-  const out = document.getElementById('debugOutput');
-
-  if (!exam_id || !roll_no) {
-    out.textContent = 'ERROR: Both exam_id and roll_no are required.';
-    out.style.color = '#ff5252';
-    return;
-  }
-
-  out.style.color = '#00bfa5';
-  out.textContent = 'Sending: action=deleteMapping, exam_id=' + exam_id + ', roll_no=' + roll_no + '\n\nWaiting...';
-
-  try {
-    // ✅ FIX: use gasPost — action in POST body, not in URL
-    const json = await gasPost('deleteMapping', { exam_id: exam_id, roll_no: roll_no });
-    const text = JSON.stringify(json, null, 2);
-
-    out.textContent =
-      'REQUEST:\nPOST ' + WEBAPP_URL +
-      '\nbody: action=deleteMapping&exam_id=' + exam_id + '&roll_no=' + roll_no +
-      '\n\nRESPONSE:\n' + text;
-    out.style.color = json.deleted === true ? '#00c853' : '#ff5252';
-  } catch (err) {
-    out.textContent = 'FETCH ERROR: ' + err.message;
-    out.style.color = '#ff5252';
-    console.error('[DEBUG TEST] Error:', err);
-  }
 }
 
 /* =============== LOGOUT =============== */
@@ -1900,6 +1840,4 @@ initializeDashboard();
 </script>
 </body>
 </html>
-
-
 
