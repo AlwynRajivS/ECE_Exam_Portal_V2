@@ -1784,25 +1784,28 @@ function autoSubmitFromViolation(){
       answers[i]?.ans || "";
   });
 
-  const body = new URLSearchParams({
-    action:           "submitExam",
-    exam_id:          exam_id,
-    roll_no:          user.roll,
-    answers_json:     JSON.stringify(finalAnswers),
-    violation_log:    JSON.stringify(violationLog),
-    total_violations: violations,
-    status:           "AUTO_SUBMITTED"
-  });
+    const formData = new URLSearchParams();
+  formData.append("action", "submitExam");
+  formData.append("exam_id", exam_id);
+  formData.append("roll_no", user.roll);
+  formData.append("answers_json", JSON.stringify(finalAnswers));
+  formData.append("violation_log", JSON.stringify(violationLog));
+  formData.append("total_violations", violations);
+  formData.append("status", "SUBMITTED");
 
-  try {
-    navigator.sendBeacon(WEBAPP_URL, body);
-  } catch (e) {
-    fetch(WEBAPP_URL, { method: "POST", body: body });
-  }
-
-  setTimeout(() => {
+  fetch(WEBAPP_URL, {
+    method: "POST",
+    body: formData
+  })
+  .then(() => {
+    // ✅ redirect ONLY after backend receives data
     location.href = "summary.html";
-  }, 800);
+  })
+  .catch(err => {
+    console.error("Submit failed", err);
+    alert("Submission failed. Please contact exam admin.");
+    isSubmitting = false; // allow retry
+  });
 }
 
 
