@@ -1484,19 +1484,18 @@ function applyDeleteFilters() {
 
   // Render checkboxes with MAPPED badge
   document.getElementById('delete_student_checkboxes').innerHTML =
-    filteredStudentsForDelete.map((s, i) => {
-      const name = s[4] && s[4] !== s[3] ? s[4] : s[3]; // fallback to roll if name missing
-      const dept = s[5] || '', year = s[6] || '', sec = s[7] || '';
-      const meta = [dept, year, sec].filter(Boolean).join(', ');
-      return \`<div class="delete-student-checkbox">
-        <input type="checkbox" id="dst_\${i}" value="\${s[3]}" onchange="updateDelSelectedCount()">
-        <label for="dst_\${i}">
-          <strong>\${name}</strong>
-          \${name !== s[3] ? '<span style="font-size:12px;color:var(--text-light);"> — ' + s[3] + '</span>' : ''}
-          \${meta ? '<span style="font-size:11px;color:var(--text-light);"> (' + meta + ')</span>' : ''}
-          <span style="font-size:10px;background:rgba(0,200,83,0.15);color:var(--success);padding:2px 7px;border-radius:8px;font-weight:700;margin-left:6px;vertical-align:middle;">MAPPED</span>
-        </label>
-      </div>\`;
+    filteredStudentsForDelete.map(function(s, i) {
+      var name = (s[4] && s[4] !== s[3]) ? s[4] : s[3];
+      var meta = [s[5]||'', s[6]||'', s[7]||''].filter(Boolean).join(', ');
+      return '<div class="delete-student-checkbox">' +
+        '<input type="checkbox" id="dst_' + i + '" value="' + s[3] + '" onchange="updateDelSelectedCount()">' +
+        '<label for="dst_' + i + '">' +
+          '<strong>' + name + '</strong>' +
+          (name !== s[3] ? ' <span style="font-size:12px;color:var(--text-light);">— ' + s[3] + '</span>' : '') +
+          (meta ? ' <span style="font-size:11px;color:var(--text-light);">(' + meta + ')</span>' : '') +
+          '<span style="font-size:10px;background:rgba(0,200,83,0.15);color:var(--success);padding:2px 7px;border-radius:8px;font-weight:700;margin-left:6px;vertical-align:middle;">MAPPED</span>' +
+        '</label>' +
+      '</div>';
     }).join('');
 
   document.getElementById('delete_student_area').style.display = 'block';
@@ -1885,4 +1884,3 @@ initializeDashboard();
 </script>
 </body>
 </html>
-
