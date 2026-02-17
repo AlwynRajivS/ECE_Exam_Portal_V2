@@ -2385,97 +2385,79 @@ function reenable(exam_id, roll_no){
 // ✅ FIX 4: Complete Analytics Function with Mapped and Not Attended
 async function loadExamAnalytics() {
   const exam_id = document.getElementById('analytics_exam_id').value;
-  
+
   if (!exam_id) {
     showToast("Please select an exam", 'warning');
     return;
   }
-  
+
   showLoading();
-  
+
   try {
     console.log('📊 Loading analytics for exam:', exam_id);
-    
+
     const exam = EXAMS.find(e => e[0] === exam_id);
     if (!exam) {
       hideLoading();
       showToast("Exam not found", 'error');
       return;
     }
-    
-    // STEP 1: Fetch questions
-    console.log('❓ Fetching questions...');
-    const questionsResponse = await fetch(WEBAPP_URL, {
-      method: "POST",
-      body: new URLSearchParams({
-        action: "getQuestions",
-        exam_id: exam_id
-      })
-    });
-    
-    const questions = await questionsResponse.json();
-    console.log('✅ Questions received:', questions.length);
-    
-    // STEP 2: Fetch results
-    console.log('📈 Fetching results...');
-    const resultsResponse = await fetch(
-      WEBAPP_URL + "?action=getResults&exam_id=" + encodeURIComponent(exam_id),
-      { method: "POST" }
-    );
-    
-    const results = await resultsResponse.json();
-    console.log('✅ Results received:', results.length);
-    
-    // STEP 3: Get mapped students (all students from same dept/year/section as attendees)
-    console.log('🔗 Getting mapped students...');
+
+    // Fetch questions, results, and mappings in parallel
+    const [questionsRes, resultsRes] = await Promise.all([
+      fetch(WEBAPP_URL, {
+        method: "POST",
+        body: new URLSearchParams({ action: "getQuestions", exam_id })
+      }),
+      fetch(WEBAPP_URL + "?action=getResults&exam_id=" + encodeURIComponent(exam_id), { method: "POST" })
+    ]);
+
+    const questions = await questionsRes.json();
+    const results   = await resultsRes.json();
+
+    console.log('✅ Questions:', questions.length, '| Results:', results.length);
+
     const mappedStudents = await getExamMappings(exam_id);
     console.log('✅ Mapped students:', mappedStudents.length);
-    
-    // STEP 4: Calculate attended vs not attended
-    const attendedRollNumbers = new Set(results.map(r => r[1]));
-    const attendedStudents = mappedStudents.filter(u => attendedRollNumbers.has(u[3]));
-    const notAttendedStudents = mappedStudents.filter(u => !attendedRollNumbers.has(u[3]));
-    
-    console.log('✅ Attended:', attendedStudents.length);
-    console.log('❌ Not attended:', notAttendedStudents.length);
-    
-    // Store globally
-    attendedStudentsList = attendedStudents;
+
+    const attendedRollNumbers = new Set(results.map(r => String(r[1]).trim()));
+    const attendedStudents    = mappedStudents.filter(u => attendedRollNumbers.has(String(u[3]).trim()));
+    const notAttendedStudents = mappedStudents.filter(u => !attendedRollNumbers.has(String(u[3]).trim()));
+
+    console.log('✅ Attended:', attendedStudents.length, '| Not attended:', notAttendedStudents.length);
+
+    attendedStudentsList    = attendedStudents;
     notAttendedStudentsList = notAttendedStudents;
-    
-    // Calculate stats
+
     const partAQuestions = questions.filter(q => q[1] === "PART A").length;
     const partBQuestions = questions.filter(q => q[1] === "PART B").length;
     const totalQuestions = questions.length;
-    
-    const attendanceRate = mappedStudents.length > 0 
+
+    const attendanceRate = mappedStudents.length > 0
       ? ((attendedStudents.length / mappedStudents.length) * 100).toFixed(1)
       : 0;
-    
-    // Update UI with animations
-    animateCounter('ana_partA_count', 0, partAQuestions, 800);
-    animateCounter('ana_partB_count', 0, partBQuestions, 1000);
-    animateCounter('ana_total_questions', 0, totalQuestions, 1200);
-    animateCounter('ana_mapped_students', 0, mappedStudents.length, 1000);
-    animateCounter('ana_attended_students', 0, attendedStudents.length, 1200);
-    animateCounter('ana_not_attended_students', 0, notAttendedStudents.length, 1400);
-    
-    setTimeout(() => {
-      document.getElementById('ana_attendance_rate').textContent = attendanceRate + '%';
-    }, 1600);
-    
-    document.getElementById('attended_count').textContent = attendedStudents.length;
+
+    // ✅ SET VALUES DIRECTLY — no animate-from-zero reset
+    document.getElementById('ana_partA_count').textContent        = partAQuestions;
+    document.getElementById('ana_partB_count').textContent        = partBQuestions;
+    document.getElementById('ana_total_questions').textContent    = totalQuestions;
+    document.getElementById('ana_mapped_students').textContent    = mappedStudents.length;
+    document.getElementById('ana_attended_students').textContent  = attendedStudents.length;
+    document.getElementById('ana_not_attended_students').textContent = notAttendedStudents.length;
+    document.getElementById('ana_attendance_rate').textContent    = attendanceRate + '%';
+
+    document.getElementById('attended_count').textContent     = attendedStudents.length;
     document.getElementById('not_attended_count').textContent = notAttendedStudents.length;
-    
+
     displayStudentList('attended', attendedStudents);
     displayStudentList('not-attended', notAttendedStudents);
-    
+
     document.getElementById('analyticsContent').style.display = 'block';
-    document.getElementById('analyticsEmpty').style.display = 'none';
-    
+    document.getElementById('analyticsEmpty').style.display   = 'none';
+
     hideLoading();
     showToast(`Analytics generated for ${exam_id}`, 'success');
-    
+
   } catch (err) {
     console.error('❌ Analytics error:', err);
     hideLoading();
@@ -2903,60 +2885,56 @@ async function initializeDashboard() {
 async function getExamMappings(exam_id) {
   try {
     console.log('🔗 Fetching mappings for:', exam_id);
-    
-    // First, get all results to know who took the exam
+
+    // Fetch mapped students directly from the backend
+    const mappingResponse = await fetch(WEBAPP_URL, {
+      method: "POST",
+      body: new URLSearchParams({
+        action: "getMappedStudents",
+        exam_id: exam_id
+      })
+    });
+    const mappedRolls = await mappingResponse.json();
+    console.log('📋 Mapped rolls from sheet:', mappedRolls);
+
+    // If backend returns mapped roll numbers, match against USERS
+    if (Array.isArray(mappedRolls) && mappedRolls.length > 0) {
+      const rollSet = new Set(mappedRolls.map(r => String(r[0] || r).trim()));
+      const mappedStudents = USERS.filter(u => rollSet.has(String(u[3]).trim()));
+      console.log('✅ Mapped students matched:', mappedStudents.length);
+      return mappedStudents;
+    }
+
+    // FALLBACK: use all students from same dept/year/section as attendees
+    console.warn('⚠️ getMappedStudents returned empty, using fallback...');
     const resultsResponse = await fetch(
       WEBAPP_URL + "?action=getResults&exam_id=" + encodeURIComponent(exam_id),
       { method: "POST" }
     );
     const results = await resultsResponse.json();
-    
-    // Get all users
-    const allUsersResponse = await fetch(WEBAPP_URL, {
-      method: "POST",
-      body: new URLSearchParams({action: "getAllUsers"})
-    });
-    const allUsers = await allUsersResponse.json();
-    
-    // Extract unique departments, years, sections from students who took the exam
-    const attendedRolls = new Set(results.map(r => r[1]));
-    const attendedStudents = allUsers.filter(u => attendedRolls.has(u[3]));
-    
-    // Get unique dept/year/section combinations
+    const attendedRolls = new Set(results.map(r => String(r[1]).trim()));
+
+    const attendedStudents = USERS.filter(u => attendedRolls.has(String(u[3]).trim()));
     const combinations = new Set();
     attendedStudents.forEach(s => {
-      if (s[5] && s[6] && s[7]) {
-        combinations.add(`${s[5]}|${s[6]}|${s[7]}`);
-      }
+      if (s[5] && s[6] && s[7]) combinations.add(`${s[5]}|${s[6]}|${s[7]}`);
     });
-    
-    console.log('Found combinations:', Array.from(combinations));
-    
-    // For each combination, get all students from that dept/year/section
+
     const mappedStudents = [];
     const processedRolls = new Set();
-    
     combinations.forEach(combo => {
       const [dept, year, section] = combo.split('|');
-      
-      const studentsInCombo = allUsers.filter(u => 
-        u[5] === dept && 
-        u[6] === year && 
-        u[7] === section &&
-        u[2] && String(u[2]).toLowerCase().trim() === "student"
-      );
-      
-      studentsInCombo.forEach(s => {
+      USERS.filter(u => u[5] === dept && u[6] === year && u[7] === section).forEach(s => {
         if (!processedRolls.has(s[3])) {
           mappedStudents.push(s);
           processedRolls.add(s[3]);
         }
       });
     });
-    
-    console.log('✅ Mapped students found:', mappedStudents.length);
+
+    console.log('✅ Fallback mapped students:', mappedStudents.length);
     return mappedStudents;
-    
+
   } catch (err) {
     console.error('❌ Error fetching mappings:', err);
     return [];
