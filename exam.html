@@ -1043,13 +1043,13 @@ header {
       <div class="palette-grid" id="paletteB"></div>
     </div>
   </div>
+
+</div>
+
 <!-- Footer -->
     <div class="footer">
       © 2026 KCET - Department of Electronics and Communication Engineering
     </div>
-</div>
-
-
 
 <!-- Submit Confirmation Modal -->
 <div class="modal" id="modal">
@@ -1147,7 +1147,7 @@ let timerStarted = false;
 let examLoaded = false;
 let isSubmitting = false;
 
-const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxmFdZlBq4m_7SvJtVF9NbyGC-c_of2aqokQtyg81aH97WPo6AT56VvwKYGG_tz4XEq/exec";
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxRq-KfTcej9Z02GT3RB62oVqzdXyuWCyYw-tEv95IhwsVfa2a8HiFHErAFnEyM2DIF/exec";
 
 const user = JSON.parse(sessionStorage.getItem("user"));
 const exam_id = sessionStorage.getItem("exam_id");
@@ -1375,7 +1375,7 @@ async function violate(type, auto = false) {
   // Check if max violations reached
   if (violations >= limit) {
     // Save all current answers before auto-submit
-    saveState();
+    //autoSubmitFromViolation();
     
     // Show warning
     proctorMsg.innerText = "Maximum violations reached. Auto-submitting exam...";
@@ -1472,21 +1472,47 @@ document.addEventListener("keydown", (e) => {
 });
 
 // Prevent page reload/refresh
+/* ✅ NEW: Refresh auto-submits WITHOUT calling violate() to avoid double-trigger */
 window.addEventListener("beforeunload", (e) => {
-  if (isSubmitting) return;
-  
-  if (questions.length > 0) {
-    // Save state before potential reload
-    saveState();
-    violate("Page Reload Attempt");
-    e.preventDefault();
-    e.returnValue = "";
-  }
-  
-  // Cleanup observers
+  // Cleanup observers always
   if (overlayObserver) overlayObserver.disconnect();
   if (iframeObserver) iframeObserver.disconnect();
   if (extensionCheckInterval) clearInterval(extensionCheckInterval);
+
+  if (isSubmitting) return;           // already handled
+  if (!examLoaded) return;            // exam never loaded, nothing to save
+  if (!questions.length) return;
+
+  // Save current state so session can be recovered if browser crashes
+  saveState();
+
+  // Use sendBeacon for a fire-and-forget auto-submit that survives page unload
+  const finalAnswers = {};
+  questions.forEach((q, i) => {
+    finalAnswers[String(q[2]).trim()] = answers[i]?.ans || "";
+  });
+
+  const body = new URLSearchParams({
+    action:           "submitExam",
+    exam_id:          exam_id,
+    roll_no:          user.roll,
+    answers_json:     JSON.stringify(finalAnswers),
+    violation_log:    JSON.stringify(violationLog),
+    total_violations: violations,
+    status:           "AUTO_SUBMITTED"
+  });
+
+  // sendBeacon works even during page unload (fetch does not)
+  try {
+  navigator.sendBeacon(WEBAPP_URL, body);
+} catch (e) {
+  fetch(WEBAPP_URL, { method: "POST", body: body });
+}
+
+
+  // Still show the browser's leave-page prompt as a deterrent
+  e.preventDefault();
+  e.returnValue = "";
 });
 
 /* ========== EXAM LOADING ========== */
@@ -1707,19 +1733,17 @@ function closeModal() {
   modal.style.display = "none";
 }
 
-function submitExam() {
+function submitExam(){
   if (isSubmitting) return;
   isSubmitting = true;
 
-  // Clear timer
   clearInterval(timerRef);
-  
-  // Final save
-  saveState();
+  saveState();   // 💾 ensure latest answers
 
   const finalAnswers = {};
   questions.forEach((q, i) => {
-    finalAnswers[String(q[2]).trim()] = answers[i]?.ans || "";
+    finalAnswers[String(q[2]).trim()] =
+      answers[i]?.ans || "";
   });
 
   const formData = new URLSearchParams();
@@ -1731,41 +1755,35 @@ function submitExam() {
   formData.append("total_violations", violations);
   formData.append("status", "SUBMITTED");
 
-  // Disable beforeunload
-  window.onbeforeunload = null;
-
   fetch(WEBAPP_URL, {
     method: "POST",
     body: formData
   })
   .then(() => {
+    // ✅ redirect ONLY after backend receives data
     location.href = "summary.html";
   })
   .catch(err => {
     console.error("Submit failed", err);
     alert("Submission failed. Please contact exam admin.");
-    isSubmitting = false;
+    isSubmitting = false; // allow retry
   });
 }
 
 /* ========== AUTO SUBMIT FROM VIOLATION ========== */
-function autoSubmitFromViolation() {
+async function autoSubmitFromViolation(){
   if (isSubmitting) return;
   isSubmitting = true;
 
-  // Stop timer
   clearInterval(timerRef);
-  
-  // Save final state
-  saveState();
+  saveState();   // 💾 ensure latest answers
 
-  // Gather all answers (including partial/unanswered)
   const finalAnswers = {};
   questions.forEach((q, i) => {
-    finalAnswers[String(q[2]).trim()] = answers[i]?.ans || "";
+    finalAnswers[String(q[2]).trim()] =
+      answers[i]?.ans || "";
   });
 
-  // Prepare submission data with AUTO_SUBMITTED status
   const formData = new URLSearchParams();
   formData.append("action", "submitExam");
   formData.append("exam_id", exam_id);
@@ -1773,28 +1791,20 @@ function autoSubmitFromViolation() {
   formData.append("answers_json", JSON.stringify(finalAnswers));
   formData.append("violation_log", JSON.stringify(violationLog));
   formData.append("total_violations", violations);
-  formData.append("status", "AUTO_SUBMITTED"); // Mark as auto-submitted due to violations
+  formData.append("status", "AUTO_SUBMITTED");
 
-  // Disable beforeunload handler
-  window.onbeforeunload = null;
-
-  // Submit to backend
   fetch(WEBAPP_URL, {
     method: "POST",
     body: formData
   })
   .then(() => {
-    // Small delay to ensure backend processes
-    setTimeout(() => {
-      location.href = "summary.html";
-    }, 300);
+    // ✅ redirect ONLY after backend receives data
+    location.href = "summary.html";
   })
   .catch(err => {
-    console.error("Auto-submit failed", err);
-    // Force redirect even on error to prevent cheating
-    setTimeout(() => {
-      location.href = "summary.html";
-    }, 500);
+    console.error("Submit failed", err);
+    alert("Submission failed. Please contact exam admin.");
+    isSubmitting = false; // allow retry
   });
 }
 
