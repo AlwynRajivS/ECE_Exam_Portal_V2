@@ -914,9 +914,9 @@ input[type="file"]:hover { border-color: var(--primary); background: rgba(26,35,
       </p>
       <div class="delete-mapping-grid">
         <select id="del_exam_select" onchange="updateDeleteMappingUI()"><option value="">Select Exam</option></select>
-        <select id="del_dept_select" onchange="updateDeleteMappingUI()"><option value="">All Departments</option></select>
-        <select id="del_year_select" onchange="updateDeleteMappingUI()"><option value="">All Years</option></select>
-        <select id="del_section_select" onchange="updateDeleteMappingUI()"><option value="">All Sections</option></select>
+        <select id="del_dept_select" onchange="applyDeleteFilters()"><option value="">All Departments</option></select>
+        <select id="del_year_select" onchange="applyDeleteFilters()"><option value="">All Years</option></select>
+        <select id="del_section_select" onchange="applyDeleteFilters()"><option value="">All Sections</option></select>
       </div>
       <div id="delete_student_area" class="delete-student-selection" style="display:none;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
@@ -1392,19 +1392,70 @@ async function mapSelectedStudents() {
 }
 
 /* =============== MAPPING — DELETE =============== */
-function updateDeleteMappingUI() {
-  const exam    = del_exam_select.value;
+
+// Holds ALL mapped students for the selected exam (fetched from backend)
+let allMappedForDelete = [];
+
+// Called when exam dropdown changes — fetches mapped students from backend
+async function updateDeleteMappingUI() {
+  const exam = del_exam_select.value;
+
+  // Hide everything when no exam selected
+  if (!exam) {
+    document.getElementById('delete_student_area').style.display = 'none';
+    document.getElementById('delete_map_button').style.display   = 'none';
+    document.getElementById('del_dept_select').value    = '';
+    document.getElementById('del_year_select').value    = '';
+    document.getElementById('del_section_select').value = '';
+    allMappedForDelete        = [];
+    filteredStudentsForDelete = [];
+    return;
+  }
+
+  // Show loading state inside the area
+  document.getElementById('delete_student_checkboxes').innerHTML =
+    '<div class="empty-list"><i class="fa-solid fa-spinner fa-spin"></i><p>Loading mapped students...</p></div>';
+  document.getElementById('delete_student_area').style.display = 'block';
+  document.getElementById('delete_map_button').style.display   = 'none';
+  document.getElementById('del_selected_count').textContent    = '0';
+
+  try {
+    // ✅ Fetch ONLY students actually mapped to this exam
+    const res      = await fetch(WEBAPP_URL, {
+      method: 'POST',
+      body: new URLSearchParams({ action: 'getMappedStudents', exam_id: exam })
+    });
+    const mappedRolls = await res.json();
+
+    if (!Array.isArray(mappedRolls) || !mappedRolls.length) {
+      document.getElementById('delete_student_checkboxes').innerHTML =
+        '<div class="empty-list"><i class="fa-solid fa-user-slash"></i><p>No students mapped to this exam</p></div>';
+      allMappedForDelete = [];
+      return;
+    }
+
+    // Match roll numbers against USERS to get full student details
+    const rollSet = new Set(mappedRolls.map(r => String(r[0] || r).trim()));
+    allMappedForDelete = USERS.filter(u => rollSet.has(String(u[3]).trim()));
+
+    // Apply current dept/year/section filters and render
+    applyDeleteFilters();
+
+  } catch (err) {
+    console.error('Failed to load mapped students:', err);
+    document.getElementById('delete_student_checkboxes').innerHTML =
+      '<div class="empty-list"><i class="fa-solid fa-circle-xmark"></i><p>Failed to load students. Try again.</p></div>';
+    allMappedForDelete = [];
+  }
+}
+
+// Called when dept/year/section filters change — re-filters already loaded mapped students
+function applyDeleteFilters() {
   const dept    = del_dept_select.value;
   const year    = del_year_select.value;
   const section = del_section_select.value;
 
-  if (!exam) {
-    document.getElementById('delete_student_area').style.display='none';
-    document.getElementById('delete_map_button').style.display='none'; return;
-  }
-
-  // Filter mapped students for this exam
-  filteredStudentsForDelete = USERS.filter(u =>
+  filteredStudentsForDelete = allMappedForDelete.filter(u =>
     (!dept    || u[5] === dept) &&
     (!year    || u[6] === year) &&
     (!section || u[7] === section)
@@ -1412,20 +1463,26 @@ function updateDeleteMappingUI() {
 
   if (!filteredStudentsForDelete.length) {
     document.getElementById('delete_student_checkboxes').innerHTML =
-      '<div class="empty-list"><i class="fa-solid fa-user-slash"></i><p>No students found</p></div>';
-    document.getElementById('delete_student_area').style.display='block';
-    document.getElementById('delete_map_button').style.display='none'; return;
+      '<div class="empty-list"><i class="fa-solid fa-filter-circle-xmark"></i><p>No mapped students match this filter</p></div>';
+    document.getElementById('delete_map_button').style.display = 'none';
+    document.getElementById('del_selected_count').textContent  = '0';
+    return;
   }
 
+  // Render checkboxes — show mapped badge
   document.getElementById('delete_student_checkboxes').innerHTML =
-    filteredStudentsForDelete.map((s,i) => `
+    filteredStudentsForDelete.map((s, i) => `
       <div class="delete-student-checkbox">
         <input type="checkbox" id="dst_${i}" value="${s[3]}" onchange="updateDelSelectedCount()">
-        <label for="dst_${i}"><strong>${s[4]}</strong> — ${s[3]} (${s[5]}, ${s[6]}, ${s[7]})</label>
+        <label for="dst_${i}">
+          <strong>${s[4]}</strong> — ${s[3]}
+          <span style="font-size:11px;color:var(--text-light);">(${[s[5],s[6],s[7]].filter(Boolean).join(', ')})</span>
+          <span style="font-size:10px;background:rgba(0,200,83,0.15);color:var(--success);padding:2px 7px;border-radius:8px;font-weight:700;margin-left:6px;">MAPPED</span>
+        </label>
       </div>`).join('');
 
-  document.getElementById('delete_student_area').style.display='block';
-  document.getElementById('delete_map_button').style.display='inline-flex';
+  document.getElementById('delete_student_area').style.display = 'block';
+  document.getElementById('delete_map_button').style.display   = 'inline-flex';
   updateDelSelectedCount();
 }
 
@@ -1464,8 +1521,13 @@ async function deleteSelectedMappings() {
         ));
         hideLoading();
         showToast(`${sel.length} mapping(s) deleted successfully`, 'success');
-        // Reset UI
+        // Reset and reload after deletion
+        allMappedForDelete = [];
+        filteredStudentsForDelete = [];
         document.getElementById('del_exam_select').value = '';
+        document.getElementById('del_dept_select').value = '';
+        document.getElementById('del_year_select').value = '';
+        document.getElementById('del_section_select').value = '';
         document.getElementById('delete_student_area').style.display = 'none';
         document.getElementById('delete_map_button').style.display = 'none';
         document.getElementById('delete_student_checkboxes').innerHTML = '';
