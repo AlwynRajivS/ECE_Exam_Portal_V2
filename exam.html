@@ -1512,7 +1512,7 @@ async function violate(type) {
   if (violations >= limit) {
     proctorMsg.innerText = "⚠️ Maximum violations reached. Auto-submitting exam...";
     overlay.classList.add("active");
-    setTimeout(() => { _doSubmit("AUTO_SUBMITTED_VIOLATION"); }, 2000);
+    setTimeout(() => { _doSubmit("AUTO_SUBMITTED"); }, 2000);
   }
 }
 
