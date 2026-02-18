@@ -1208,7 +1208,7 @@ header {
    FOR EXACTLY 3 TARGETED BUG FIXES — MARKED WITH ★ FIX
    ============================================================ */
 
-const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxRq-KfTcej9Z02GT3RB62oVqzdXyuWCyYw-tEv95IhwsVfa2a8HiFHErAFnEyM2DIF/exec";
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxkf5y-8Mevvb4ElWQ2IcDwMRux6X0GGq-KH8rGLrX1GWO27Wbkr0Hev_GOZtmXahzp/exec";
 
 const user    = JSON.parse(sessionStorage.getItem("user"));
 const exam_id = sessionStorage.getItem("exam_id");
@@ -1509,31 +1509,11 @@ async function violate(type) {
   }).catch(() => {});
 
   // Max violations → auto-submit ONCE
-  /*if (violations >= limit) {
+  if (violations >= limit) {
     proctorMsg.innerText = "⚠️ Maximum violations reached. Auto-submitting exam...";
     overlay.classList.add("active");
     setTimeout(() => { _doSubmit("AUTO_SUBMITTED_VIOLATION"); }, 2000);
   }
-}*/
-
-  if (violations >= limit) {
-
-  // LOCK everything immediately
-  isSubmitting = true;
-
-  proctorMsg.innerText = "⚠️ Maximum violations reached. Auto-submitting exam...";
-  overlay.classList.add("active");
-
-  // Stop timer immediately
-  clearInterval(timerRef);
-
-  // Force save state before submit
-  saveState();
-
-  // Small delay ONLY for UI message (not logic race)
-  setTimeout(() => {
-    _doSubmit("AUTO_SUBMITTED_VIOLATION");
-  }, 1000);
 }
 
 /* ============================================================
