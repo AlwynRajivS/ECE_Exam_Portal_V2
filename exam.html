@@ -1103,11 +1103,10 @@ header {
     <div id="question"></div>
 
     <div class="controls">
-<button class="btn next"      onclick="nextQ()">       <i class="fa-solid fa-arrow-right"></i> <span>Next</span></button>
       <button class="btn prev"      onclick="prevQ()">       <i class="fa-solid fa-arrow-left"></i>  <span>Previous</span></button>
       <button class="btn mark"      onclick="markReview()">  <i class="fa-solid fa-bookmark"></i>    <span>Mark for Review</span></button>
       <button class="btn clear-ans" onclick="clearAnswer()"> <i class="fa-solid fa-eraser"></i>      <span>Clear Answer</span></button>
-      
+      <button class="btn next"      onclick="nextQ()">       <i class="fa-solid fa-arrow-right"></i> <span>Next</span></button>
       <button id="submitBtn" class="btn submit" onclick="confirmSubmit()" disabled>
         <i class="fa-solid fa-paper-plane"></i><span>Submit Exam</span>
       </button>
@@ -1130,9 +1129,8 @@ header {
     </div>
   </div>
 
-<div class="palette">
-    <!--<div class="palette-title"><i class="fa-solid fa-grip"></i><span>Navigator</span></div>-->
-  
+  <div class="palette">
+    <div class="palette-title"><i class="fa-solid fa-grip"></i><span>Navigator</span></div>
     <div class="palette-filter">
       <button class="filter-btn active" onclick="filterPalette('all',this)">All</button>
       <button class="filter-btn" onclick="filterPalette('answered',this)">✓ Done</button>
@@ -1672,7 +1670,7 @@ function loadQ() {
 
   document.querySelectorAll('.palette span').forEach(s => s.classList.remove('current'));
   const cp = document.getElementById("p" + index);
-  if (cp) { cp.classList.add("current"); /*cp.scrollIntoView({ block: "nearest" }); */}
+  if (cp) { cp.classList.add("current"); cp.scrollIntoView({ block: "nearest" }); }
 }
 
 function selectAns(a) {
