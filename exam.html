@@ -16,936 +16,172 @@
   --success: #00c853;
   --warning: #ffa000;
   --danger: #d32f2f;
-  --info: #0288d1;
   --text-dark: #1a1a2e;
   --text-medium: #4a5568;
   --text-light: #718096;
   --bg-main: #f7fafc;
   --bg-card: #ffffff;
   --border: #e2e8f0;
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
-  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.16);
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
-}
-
-body {
-  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--bg-main);
-  color: var(--text-dark);
-  margin: 0;
-  overflow-x: hidden;
-}
-
-/* ========== HEADER ========== */
-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
-  color: #fff;
-  box-shadow: var(--shadow-lg);
-  animation: slideDown 0.6s ease;
-}
-
-@keyframes slideDown {
-  from { transform: translateY(-100%); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 24px;
-  gap: 16px;
-}
-
-.topbar .left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.topbar .left i {
-  font-size: 20px;
-  animation: iconBounce 2s ease-in-out infinite;
-}
-
-@keyframes iconBounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
-}
-
-.topbar .right {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-/* ========== STATUS CHIPS ========== */
-.chip {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 700;
-  box-shadow: var(--shadow-md);
-  animation: chipFadeIn 0.6s ease backwards;
-}
-
-.chip:nth-child(1) { animation-delay: 0.2s; }
-.chip:nth-child(2) { animation-delay: 0.3s; }
-
-@keyframes chipFadeIn {
-  from { opacity: 0; transform: scale(0.8); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-.chip.time {
-  background: linear-gradient(135deg, #0288d1, #03a9f4);
-  color: #fff;
-}
-
-.chip.time.warning {
-  background: linear-gradient(135deg, var(--warning), #ffb300);
-  animation: timePulse 1s ease-in-out infinite;
-}
-
-@keyframes timePulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-.chip.vio {
-  background: linear-gradient(135deg, var(--danger), #e53935);
-  color: #fff;
-}
-
-.chip span {
-  font-size: 18px;
-  font-weight: 800;
-  font-family: 'Playfair Display', serif;
-}
-
-.calc-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  border: none;
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 18px;
-}
-
-.calc-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: scale(1.1);
-}
-
-/* ========== PROGRESS BAR ========== */
-.progress {
-  height: 6px;
-  background: rgba(26, 35, 126, 0.1);
-  position: relative;
-  overflow: hidden;
-}
-
-.progress span {
-  display: block;
-  height: 100%;
-  background: linear-gradient(90deg, var(--success), #00897b);
-  width: 0%;
-  transition: width 0.3s ease;
-  position: relative;
-}
-
-.progress span::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  animation: shimmer 2s infinite;
-}
-
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-/* ========== MAIN LAYOUT ========== */
-.main {
-  display: flex;
-  min-height: calc(100vh - 80px);
-  animation: fadeIn 0.8s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* ========== QUESTION BOX ========== */
-.qbox {
-  flex: 1;
-  background: var(--bg-card);
-  padding: 40px;
-  overflow-y: auto;
-}
-
-#loading {
-  text-align: center;
-  padding: 80px 20px;
-}
-
-.loading-spinner {
-  width: 60px;
-  height: 60px;
-  border: 5px solid rgba(26, 35, 126, 0.1);
-  border-top: 5px solid var(--primary);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 0 auto 24px;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.loading-text {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--primary);
-}
-
-/* ========== QUESTION CONTENT ========== */
-#question {
-  animation: questionSlide 0.4s ease;
-}
-
-@keyframes questionSlide {
-  from { opacity: 0; transform: translateX(-20px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-.section {
-  display: inline-block;
-  background: linear-gradient(135deg, rgba(26, 35, 126, 0.1), rgba(26, 35, 126, 0.15));
-  color: var(--primary);
-  padding: 8px 20px;
-  border-radius: 12px;
-  font-weight: 700;
-  font-size: 14px;
-  margin-bottom: 20px;
-  border: 2px solid rgba(26, 35, 126, 0.2);
-}
-
-#question h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--primary);
-  margin: 20px 0 24px;
-  line-height: 1.6;
-}
-
-.qimg {
-  max-width: 100%;
-  height: auto;
-  margin: 24px 0;
-  border-radius: 16px;
-  box-shadow: var(--shadow-lg);
-  border: 3px solid var(--border);
-  transition: transform 0.3s ease;
-}
-
-.qimg:hover {
-  transform: scale(1.02);
-}
-
-/* ========== OPTIONS ========== */
-.option {
-  background: linear-gradient(135deg, #f8f9fa, #fff);
-  padding: 18px 20px;
-  border-radius: 14px;
-  margin: 16px 0;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border: 2px solid var(--border);
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  font-size: 15px;
-  font-weight: 500;
-  position: relative;
-  overflow: hidden;
-}
-
-.option::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 4px;
-  background: var(--primary);
-  transform: scaleY(0);
-  transition: transform 0.3s ease;
-}
-
-.option:hover {
-  transform: translateX(6px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--primary);
-}
-
-.option:hover::before {
-  transform: scaleY(1);
-}
-
-.option.selected {
-  background: linear-gradient(135deg, var(--success), #00897b);
-  color: #fff;
-  border-color: var(--success);
-  transform: scale(1.02);
-  box-shadow: 0 8px 24px rgba(0, 200, 83, 0.3);
-}
-
-.option.selected::before {
-  background: #fff;
-  transform: scaleY(1);
-}
-
-/* ========== CONTROLS ========== */
-.controls {
-  margin-top: 40px;
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.btn {
-  padding: 14px 24px;
-  border: none;
-  border-radius: 12px;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: var(--shadow-md);
-  position: relative;
-  overflow: hidden;
-}
-
-.btn::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  transform: translate(-50%, -50%);
-  transition: width 0.5s, height 0.5s;
-}
-
-.btn:hover::before {
-  width: 300px;
-  height: 300px;
-}
-
-.btn:hover {
-  transform: translateY(-3px);
-}
-
-.btn:active {
-  transform: translateY(-1px);
-}
-
-.btn i {
-  font-size: 16px;
-  position: relative;
-  z-index: 1;
-}
-
-.btn span {
-  position: relative;
-  z-index: 1;
-}
-
-.next {
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
-}
-
-.mark {
-  background: linear-gradient(135deg, var(--warning), #ffb300);
-}
-
-.submit {
-  background: linear-gradient(135deg, var(--danger), #e53935);
-}
-
-.submit:disabled {
-  background: #b0bec5;
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-/* ========== LEGEND ========== */
-.legend {
-  margin-top: 32px;
-  padding: 20px;
-  background: var(--bg-main);
-  border-radius: 14px;
-  display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
-  border: 2px solid var(--border);
-}
-
-.legend span {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-medium);
-}
-
-.legend i {
-  font-size: 12px;
-}
-
-/* ========== PALETTE ========== */
-.palette {
-  width: 300px;
-  background: linear-gradient(135deg, #ffffff, #f8fafb);
-  padding: 24px 20px;
-  border-left: 2px solid var(--border);
-  overflow-y: auto;
-  box-shadow: inset 2px 0 8px rgba(0, 0, 0, 0.03);
-}
-
-.palette-title {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--primary);
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding-bottom: 12px;
-  border-bottom: 2px solid var(--border);
-}
-
-.palette-title i {
-  font-size: 18px;
-}
-
-.part-section {
-  margin-bottom: 28px;
-  animation: partSlideIn 0.6s ease backwards;
-}
-
-.part-section:nth-child(2) { animation-delay: 0.1s; }
-.part-section:nth-child(3) { animation-delay: 0.2s; }
-
-@keyframes partSlideIn {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.part-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
-  color: #fff;
-  border-radius: 12px;
-  font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 16px;
-  box-shadow: var(--shadow-md);
-  position: relative;
-  overflow: hidden;
-}
-
-.part-header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  animation: shimmer 3s infinite;
-}
-
-.part-header-left {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  position: relative;
-  z-index: 1;
-}
-
-.part-header-left i {
-  width: 24px;
-  height: 24px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 6px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-}
-
-.part-header-right {
-  font-size: 11px;
-  opacity: 0.9;
-  position: relative;
-  z-index: 1;
-}
-
-.palette-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-}
-
-.palette span {
-  width: 100%;
-  aspect-ratio: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  color: #fff;
-  background: linear-gradient(135deg, #b0bec5, #90a4ae);
-  font-weight: 700;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: var(--shadow-sm);
-  border: 2px solid transparent;
-  position: relative;
-  overflow: hidden;
-}
-
-.palette span::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  transform: translate(-50%, -50%);
-  transition: width 0.4s, height 0.4s;
-}
-
-.palette span:hover::before {
-  width: 100%;
-  height: 100%;
-}
-
-.palette span:hover {
-  transform: translateY(-4px) scale(1.05);
-  box-shadow: var(--shadow-md);
-}
-
-.palette span:active {
-  transform: translateY(-2px) scale(1.02);
-}
-
-.palette span.answered {
-  background: linear-gradient(135deg, var(--success), #00897b);
-  border-color: var(--success);
-  animation: answerPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-@keyframes answerPop {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.15); }
-  100% { transform: scale(1); }
-}
-
-.palette span.review {
-  background: linear-gradient(135deg, var(--warning), #ffb300);
-  border-color: var(--warning);
-  animation: reviewPulse 0.4s ease;
-}
-
-@keyframes reviewPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-}
-
-.palette span.current {
-  border: 3px solid var(--primary);
-  box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.2);
-}
-
-/* ========== MODAL ========== */
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(8px);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 200;
-  animation: overlayFadeIn 0.3s ease;
-}
-
-@keyframes overlayFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.modal-box {
-  background: linear-gradient(135deg, #fff, #f8f9fa);
-  border-radius: 24px;
-  padding: 40px 36px;
-  max-width: 450px;
-  width: 90%;
-  text-align: center;
-  box-shadow: var(--shadow-xl);
-  border: 2px solid var(--border);
-  animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-@keyframes modalPop {
-  0% {
-    opacity: 0;
-    transform: scale(0.8) translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-.modal-icon {
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(135deg, var(--danger), #e53935);
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 40px;
-  color: #fff;
-  margin-bottom: 24px;
-  animation: iconPulse 2s ease-in-out infinite;
-}
-
-@keyframes iconPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.7); }
-  50% { box-shadow: 0 0 0 20px rgba(211, 47, 47, 0); }
-}
-
-.modal-box h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--primary);
-  margin: 0 0 16px 0;
-}
-
-.modal-box p {
-  font-size: 15px;
-  color: var(--text-medium);
-  margin-bottom: 32px;
-}
-
-.modal-actions {
-  display: flex;
-  gap: 12px;
-}
-
-/* ========== PROCTOR OVERLAY ========== */
-#proctorOverlay {
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(198, 40, 40, 0.97), rgba(211, 47, 47, 0.97));
-  color: #fff;
-  display: none;
-  z-index: 300;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  backdrop-filter: blur(10px);
-}
-
-#proctorOverlay.active {
-  display: flex;
-  animation: proctorPulse 0.3s ease;
-}
-
-@keyframes proctorPulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.95; }
-}
-
-#proctorOverlay .content {
-  max-width: 600px;
-  padding: 40px;
-}
-
-#proctorOverlay .warning-icon {
-  font-size: 100px;
-  margin-bottom: 24px;
-  animation: warningShake 0.5s ease-in-out;
-}
-
-@keyframes warningShake {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-10deg); }
-  75% { transform: rotate(10deg); }
-}
-
-#proctorOverlay h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 36px;
-  font-weight: 800;
-  margin: 0 0 16px 0;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-#proctorOverlay p {
-  font-size: 18px;
-  font-weight: 600;
-  margin: 0;
-  line-height: 1.6;
-}
-
-/* ========== CALCULATOR ========== */
-.calculator {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  width: 320px;
-  background: linear-gradient(135deg, #0f1113, #1c1f22);
-  color: #fff;
-  border-radius: 24px;
-  padding: 20px;
-  display: none;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
-  z-index: 250;
-  border: 2px solid #2b2f33;
-  animation: calcSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-@keyframes calcSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(40px) scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.casio-head {
-  display: flex;
-  justify-content: space-between;
-  font-weight: 700;
-  font-size: 13px;
-  color: #e0e0e0;
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #2b2f33;
-}
-
-.casio-screen {
-  background: #e6f3c6;
-  border: 3px solid #9eb37a;
-  border-radius: 8px;
-  padding: 12px;
-  margin-bottom: 16px;
-  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-.casio-screen input {
-  width: 100%;
-  background: transparent;
-  border: none;
-  color: #000;
-  font-family: 'Courier New', monospace;
-  font-size: 22px;
-  font-weight: 700;
-  text-align: right;
-  outline: none;
-}
-
-.casio-screen .mode {
-  font-size: 11px;
-  font-weight: 700;
-  color: #2e7d32;
-  margin-top: 4px;
-}
-
-.casio-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-}
-
-.casio-grid button {
-  background: #2b2f33;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 12px 8px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 3px 0 #111;
-  transition: all 0.2s ease;
-}
-
-.casio-grid button:active {
-  transform: translateY(2px);
-  box-shadow: 0 1px 0 #000;
-}
-
-.casio-grid button.shift {
-  background: #616161;
-  color: #ffeb3b;
-}
-
-.casio-grid button.eq {
-  background: linear-gradient(135deg, var(--success), #00897b);
-  color: #fff;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-/* ========== FOOTER ========== */
-.footer {
-  text-align: center;
-  padding: 20px;
-  font-size: 13px;
-  color: var(--text-light);
-  background: var(--bg-card);
-  border-top: 1px solid var(--border);
-}
-
-/* ========== RESPONSIVE ========== */
-@media (max-width: 900px) {
-  .main {
-    flex-direction: column;
-  }
-
-  .palette {
-    width: 100%;
-    border-left: none;
-    border-top: 2px solid var(--border);
-  }
-
-  .palette-grid {
-    grid-template-columns: repeat(6, 1fr);
-    gap: 8px;
-  }
-  
-  .part-section {
-    margin-bottom: 24px;
-  }
-  
-  .part-header {
-    font-size: 12px;
-    padding: 10px 14px;
-  }
-  
-  .palette span {
-    font-size: 13px;
-  }
-}
-
-@media (max-width: 600px) {
-  .topbar {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 12px 16px;
-  }
-
-  .topbar .right {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .qbox {
-    padding: 24px 20px;
-  }
-
-  .controls {
-    flex-direction: column;
-  }
-
-  .btn {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .calculator {
-    width: 280px;
-    right: 10px;
-    bottom: 10px;
-  }
-
-  .palette-grid {
-    grid-template-columns: repeat(5, 1fr);
-  }
-  
-  .part-header {
-    font-size: 13px;
-    padding: 10px 14px;
-  }
-}
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  --shadow-xl: 0 16px 48px rgba(0,0,0,0.16);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-user-select:none;-moz-user-select:none;user-select:none;}
+body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg-main);color:var(--text-dark);margin:0;overflow-x:hidden;}
+
+header{position:sticky;top:0;z-index:100;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;box-shadow:var(--shadow-lg);animation:slideDown .6s ease;}
+@keyframes slideDown{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 24px;gap:16px;}
+.topbar .left{display:flex;align-items:center;gap:12px;font-size:15px;font-weight:600;}
+.topbar .left i{font-size:20px;animation:iconBounce 2s ease-in-out infinite;}
+@keyframes iconBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.topbar .right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+
+.chip{display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:12px;font-size:13px;font-weight:700;box-shadow:var(--shadow-md);}
+.chip.time{background:linear-gradient(135deg,#0288d1,#03a9f4);color:#fff;}
+.chip.time.warning{background:linear-gradient(135deg,var(--warning),#ffb300);animation:timePulse 1s ease-in-out infinite;}
+@keyframes timePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+.chip.vio{background:linear-gradient(135deg,var(--danger),#e53935);color:#fff;}
+.chip.answered-chip{background:linear-gradient(135deg,#00897b,#00c853);color:#fff;}
+.chip span{font-size:17px;font-weight:800;font-family:'Playfair Display',serif;}
+
+.calc-btn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;border:none;background:rgba(255,255,255,.2);color:#fff;cursor:pointer;transition:all .3s ease;font-size:17px;}
+.calc-btn:hover{background:rgba(255,255,255,.3);transform:scale(1.1);}
+
+#saveBadge{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:10px;background:rgba(255,255,255,.15);font-size:11px;font-weight:600;color:rgba(255,255,255,.9);transition:all .3s ease;}
+#saveBadge.saving{background:rgba(255,193,7,.3);}
+#saveBadge.saved{background:rgba(0,200,83,.25);}
+
+.progress{height:6px;background:rgba(26,35,126,.1);overflow:hidden;}
+.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--success),#00897b);width:0%;transition:width .3s ease;position:relative;}
+.progress span::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);animation:shimmer 2s infinite;}
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
+.main{display:flex;min-height:calc(100vh - 80px);}
+.qbox{flex:1;background:var(--bg-card);padding:40px;overflow-y:auto;}
+
+#loading{text-align:center;padding:80px 20px;}
+.loading-spinner{width:60px;height:60px;border:5px solid rgba(26,35,126,.1);border-top:5px solid var(--primary);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 24px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:16px;font-weight:600;color:var(--primary);}
+
+#question{animation:qSlide .4s ease;}
+@keyframes qSlide{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+
+.section{display:inline-block;background:linear-gradient(135deg,rgba(26,35,126,.1),rgba(26,35,126,.15));color:var(--primary);padding:8px 20px;border-radius:12px;font-weight:700;font-size:14px;margin-bottom:20px;border:2px solid rgba(26,35,126,.2);}
+.q-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;}
+.q-nav-hint{font-size:12px;color:var(--text-light);display:flex;align-items:center;gap:6px;}
+.q-nav-hint kbd{background:#edf2f7;border:1px solid #cbd5e0;border-radius:4px;padding:2px 6px;font-size:11px;font-family:monospace;color:var(--text-dark);}
+#question h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--primary);margin:20px 0 24px;line-height:1.6;}
+
+.qimg{max-width:100%;height:auto;margin:24px 0;border-radius:16px;box-shadow:var(--shadow-lg);border:3px solid var(--border);transition:transform .3s ease;display:block;}
+.qimg:hover{transform:scale(1.02);}
+.img-error{background:#fff3cd;border:2px dashed #ffc107;border-radius:12px;padding:20px;text-align:center;color:#856404;font-size:14px;margin:16px 0;display:flex;align-items:center;gap:10px;justify-content:center;}
+
+.option{background:linear-gradient(135deg,#f8f9fa,#fff);padding:18px 20px;border-radius:14px;margin:16px 0;cursor:pointer;display:flex;align-items:center;gap:12px;border:2px solid var(--border);transition:all .3s cubic-bezier(.34,1.56,.64,1);font-size:15px;font-weight:500;position:relative;overflow:hidden;}
+.option::before{content:'';position:absolute;left:0;top:0;height:100%;width:4px;background:var(--primary);transform:scaleY(0);transition:transform .3s ease;}
+.option:hover{transform:translateX(6px);box-shadow:var(--shadow-md);border-color:var(--primary);}
+.option:hover::before{transform:scaleY(1);}
+.option.selected{background:linear-gradient(135deg,var(--success),#00897b);color:#fff;border-color:var(--success);transform:scale(1.02);box-shadow:0 8px 24px rgba(0,200,83,.3);}
+.option.selected::before{background:#fff;transform:scaleY(1);}
+.option-key{min-width:28px;height:28px;border-radius:6px;background:rgba(26,35,126,.08);border:1.5px solid rgba(26,35,126,.15);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--primary);margin-left:auto;flex-shrink:0;font-family:monospace;}
+.option.selected .option-key{background:rgba(255,255,255,.25);border-color:rgba(255,255,255,.4);color:#fff;}
+
+.controls{margin-top:40px;display:flex;gap:12px;flex-wrap:wrap;}
+.btn{padding:14px 24px;border:none;border-radius:12px;color:#fff;font-size:15px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:10px;transition:all .3s cubic-bezier(.34,1.56,.64,1);box-shadow:var(--shadow-md);position:relative;overflow:hidden;}
+.btn::before{content:'';position:absolute;top:50%;left:50%;width:0;height:0;border-radius:50%;background:rgba(255,255,255,.3);transform:translate(-50%,-50%);transition:width .5s,height .5s;}
+.btn:hover::before{width:300px;height:300px;}
+.btn:hover{transform:translateY(-3px);}
+.btn:active{transform:translateY(-1px);}
+.btn i,.btn span{position:relative;z-index:1;}
+.btn i{font-size:16px;}
+.prev{background:linear-gradient(135deg,#546e7a,#607d8b);}
+.next{background:linear-gradient(135deg,var(--primary),var(--primary-light));}
+.mark{background:linear-gradient(135deg,var(--warning),#ffb300);}
+.submit{background:linear-gradient(135deg,var(--danger),#e53935);}
+.submit:disabled{background:#b0bec5;cursor:not-allowed;opacity:.6;}
+.clear-ans{background:linear-gradient(135deg,#78909c,#90a4ae);}
+
+.legend{margin-top:32px;padding:20px;background:var(--bg-main);border-radius:14px;display:flex;gap:24px;flex-wrap:wrap;border:2px solid var(--border);}
+.legend span{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--text-medium);}
+
+.stats-bar{margin-top:20px;padding:16px 20px;background:linear-gradient(135deg,rgba(26,35,126,.04),rgba(26,35,126,.07));border-radius:14px;display:flex;gap:20px;flex-wrap:wrap;border:2px solid rgba(26,35,126,.1);align-items:center;}
+.stat-item{display:flex;flex-direction:column;align-items:center;gap:2px;}
+.stat-value{font-size:22px;font-weight:800;font-family:'Playfair Display',serif;color:var(--primary);}
+.stat-label{font-size:11px;font-weight:600;color:var(--text-light);text-transform:uppercase;letter-spacing:.5px;}
+.stat-divider{width:1px;height:36px;background:var(--border);}
+
+.palette{width:300px;background:linear-gradient(135deg,#fff,#f8fafb);padding:24px 20px;border-left:2px solid var(--border);overflow-y:auto;}
+.palette-title{font-size:15px;font-weight:700;color:var(--primary);margin-bottom:24px;display:flex;align-items:center;gap:8px;padding-bottom:12px;border-bottom:2px solid var(--border);}
+.part-section{margin-bottom:28px;}
+.part-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:12px;font-size:13px;font-weight:700;margin-bottom:16px;box-shadow:var(--shadow-md);position:relative;overflow:hidden;}
+.part-header::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);animation:shimmer 3s infinite;}
+.part-header-left{display:flex;align-items:center;gap:8px;position:relative;z-index:1;}
+.part-header-left i{width:24px;height:24px;background:rgba(255,255,255,.2);border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;}
+.part-header-right{font-size:11px;opacity:.9;position:relative;z-index:1;}
+.palette-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.palette span{width:100%;aspect-ratio:1;display:inline-flex;align-items:center;justify-content:center;border-radius:10px;color:#fff;background:linear-gradient(135deg,#b0bec5,#90a4ae);font-weight:700;font-size:14px;cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);box-shadow:var(--shadow-sm);border:2px solid transparent;position:relative;overflow:hidden;}
+.palette span:hover{transform:translateY(-4px) scale(1.05);box-shadow:var(--shadow-md);}
+.palette span.answered{background:linear-gradient(135deg,var(--success),#00897b);border-color:var(--success);}
+.palette span.review{background:linear-gradient(135deg,var(--warning),#ffb300);border-color:var(--warning);}
+.palette span.current{border:3px solid var(--primary);box-shadow:0 0 0 3px rgba(26,35,126,.2);}
+
+.palette-filter{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
+.filter-btn{padding:5px 12px;border-radius:20px;border:1.5px solid var(--border);background:#fff;font-size:12px;font-weight:600;cursor:pointer;color:var(--text-medium);transition:all .2s ease;}
+.filter-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:200;}
+.modal-box{background:linear-gradient(135deg,#fff,#f8f9fa);border-radius:24px;padding:40px 36px;max-width:460px;width:90%;text-align:center;box-shadow:var(--shadow-xl);border:2px solid var(--border);animation:modalPop .4s cubic-bezier(.34,1.56,.64,1);}
+@keyframes modalPop{0%{opacity:0;transform:scale(.8) translateY(20px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+.modal-icon{width:80px;height:80px;background:linear-gradient(135deg,var(--danger),#e53935);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:40px;color:#fff;margin-bottom:24px;animation:iconPulse 2s ease-in-out infinite;}
+@keyframes iconPulse{0%,100%{box-shadow:0 0 0 0 rgba(211,47,47,.7)}50%{box-shadow:0 0 0 20px rgba(211,47,47,0)}}
+.modal-box h3{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--primary);margin:0 0 16px;}
+.modal-box p{font-size:15px;color:var(--text-medium);margin-bottom:8px;}
+.submit-summary{background:var(--bg-main);border-radius:12px;padding:16px;margin:16px 0 24px;display:flex;justify-content:space-around;border:1px solid var(--border);}
+.submit-summary-item{text-align:center;}
+.submit-summary-item .val{font-size:24px;font-weight:800;font-family:'Playfair Display',serif;}
+.submit-summary-item .lbl{font-size:11px;color:var(--text-light);font-weight:600;text-transform:uppercase;}
+.modal-actions{display:flex;gap:12px;}
+
+#proctorOverlay{position:fixed;inset:0;background:linear-gradient(135deg,rgba(198,40,40,.97),rgba(211,47,47,.97));color:#fff;display:none;z-index:300;align-items:center;justify-content:center;text-align:center;backdrop-filter:blur(10px);}
+#proctorOverlay.active{display:flex;}
+#proctorOverlay .content{max-width:600px;padding:40px;}
+#proctorOverlay .warning-icon{font-size:100px;margin-bottom:24px;animation:wShake .5s ease-in-out;}
+@keyframes wShake{0%,100%{transform:rotate(0)}25%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}}
+#proctorOverlay h2{font-family:'Playfair Display',serif;font-size:36px;font-weight:800;margin:0 0 16px;text-shadow:0 2px 4px rgba(0,0,0,.2);}
+#proctorOverlay p{font-size:18px;font-weight:600;margin:0;line-height:1.6;}
+
+/* ── NEW: Auto-Submit full-screen overlay ── */
+#submitOverlay{position:fixed;inset:0;background:linear-gradient(135deg,#1a237e 0%,#283593 50%,#1a237e 100%);color:#fff;z-index:500;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:24px;padding:40px;}
+#submitOverlay.active{display:flex;}
+#submitOverlay .so-icon{width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:50px;animation:soPulse 1.5s ease-in-out infinite;}
+@keyframes soPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(255,255,255,.3)}50%{transform:scale(1.08);box-shadow:0 0 0 20px rgba(255,255,255,0)}}
+#submitOverlay h2{font-family:'Playfair Display',serif;font-size:32px;font-weight:800;margin:0;}
+#submitOverlay p{font-size:18px;opacity:.85;max-width:480px;line-height:1.7;margin:0;}
+.so-bar-wrap{width:340px;height:10px;background:rgba(255,255,255,.2);border-radius:5px;overflow:hidden;}
+.so-bar{height:100%;background:#fff;border-radius:5px;width:0%;transition:width 3s linear;}
+#submitOverlay .so-note{font-size:13px;opacity:.6;margin-top:4px;}
+
+.calculator{position:fixed;right:20px;bottom:20px;width:320px;background:linear-gradient(135deg,#0f1113,#1c1f22);color:#fff;border-radius:24px;padding:20px;display:none;box-shadow:0 24px 60px rgba(0,0,0,.7);z-index:250;border:2px solid #2b2f33;}
+.casio-head{display:flex;justify-content:space-between;font-weight:700;font-size:13px;color:#e0e0e0;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #2b2f33;}
+.casio-screen{background:#e6f3c6;border:3px solid #9eb37a;border-radius:8px;padding:12px;margin-bottom:16px;box-shadow:inset 0 2px 6px rgba(0,0,0,.2);}
+.casio-screen input{width:100%;background:transparent;border:none;color:#000;font-family:'Courier New',monospace;font-size:22px;font-weight:700;text-align:right;outline:none;}
+.casio-screen .mode{font-size:11px;font-weight:700;color:#2e7d32;margin-top:4px;}
+.casio-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.casio-grid button{background:#2b2f33;color:#fff;border:none;border-radius:8px;padding:12px 8px;font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 3px 0 #111;transition:all .2s ease;}
+.casio-grid button:active{transform:translateY(2px);box-shadow:0 1px 0 #000;}
+.casio-grid button.shift{background:#616161;color:#ffeb3b;}
+.casio-grid button.eq{background:linear-gradient(135deg,var(--success),#00897b);color:#fff;font-size:16px;font-weight:700;}
+
+.footer{text-align:center;padding:20px;font-size:13px;color:var(--text-light);background:var(--bg-card);border-top:1px solid var(--border);}
+
+@media(max-width:900px){.main{flex-direction:column;}.palette{width:100%;border-left:none;border-top:2px solid var(--border);}.palette-grid{grid-template-columns:repeat(6,1fr);}}
+@media(max-width:600px){.topbar{flex-direction:column;align-items:flex-start;padding:12px 16px;}.topbar .right{width:100%;justify-content:space-between;}.qbox{padding:24px 20px;}.controls{flex-direction:column;}.btn{width:100%;justify-content:center;}.calculator{width:280px;right:10px;bottom:10px;}.palette-grid{grid-template-columns:repeat(5,1fr);}}
 </style>
 </head>
-
 <body>
 
-<!-- Header -->
 <header>
   <div class="topbar">
     <div class="left">
@@ -953,126 +189,106 @@ header {
       <span id="studentInfo">Student Name</span>
     </div>
     <div class="right">
+      <div id="saveBadge"><i class="fa-solid fa-cloud"></i><span id="saveText">Saved</span></div>
+      <div class="chip answered-chip" id="answeredChip" style="display:none">
+        <i class="fa-solid fa-check-circle"></i><span id="answeredCount">0/0</span>
+      </div>
       <div class="chip time" id="timerChip">
-        <i class="fa-solid fa-clock"></i>
-        <span id="timer">00:00</span>
+        <i class="fa-solid fa-clock"></i><span id="timer">00:00</span>
       </div>
       <div class="chip vio">
-        <i class="fa-solid fa-triangle-exclamation"></i>
-        <span id="vio">0 / 0</span>
+        <i class="fa-solid fa-triangle-exclamation"></i><span id="vio">0 / 0</span>
       </div>
-      <button id="calcBtn" class="calc-btn" onclick="toggleCalc()" style="display:none">
+      <button id="calcBtn" class="calc-btn" onclick="toggleCalc()" style="display:none" title="Calculator">
         <i class="fa-solid fa-calculator"></i>
       </button>
     </div>
   </div>
 </header>
 
-<!-- Progress Bar -->
-<div class="progress">
-  <span id="bar"></span>
-</div>
+<div class="progress"><span id="bar"></span></div>
 
-<!-- Main Content -->
 <div class="main">
-  <!-- Question Box -->
   <div class="qbox">
-    <!-- Loading State -->
     <div id="loading">
       <div class="loading-spinner"></div>
-      <div class="loading-text">⏳ Loading questions... Please wait</div>
+      <div class="loading-text">⏳ Loading questions… Please wait</div>
     </div>
-
-    <!-- Question Content -->
     <div id="question"></div>
 
-    <!-- Controls -->
     <div class="controls">
-      <button class="btn mark" onclick="markReview()">
-        <i class="fa-solid fa-bookmark"></i>
-        <span>Mark for Review</span>
-      </button>
-      <button class="btn next" onclick="nextQ()">
-        <i class="fa-solid fa-arrow-right"></i>
-        <span>Next Question</span>
-      </button>
+      <button class="btn prev"      onclick="prevQ()">       <i class="fa-solid fa-arrow-left"></i>  <span>Previous</span></button>
+      <button class="btn mark"      onclick="markReview()">  <i class="fa-solid fa-bookmark"></i>    <span>Mark for Review</span></button>
+      <button class="btn clear-ans" onclick="clearAnswer()"> <i class="fa-solid fa-eraser"></i>      <span>Clear Answer</span></button>
+      <button class="btn next"      onclick="nextQ()">       <i class="fa-solid fa-arrow-right"></i> <span>Next</span></button>
       <button id="submitBtn" class="btn submit" onclick="confirmSubmit()" disabled>
-        <i class="fa-solid fa-paper-plane"></i>
-        <span>Submit Exam</span>
+        <i class="fa-solid fa-paper-plane"></i><span>Submit Exam</span>
       </button>
     </div>
 
-    <!-- Legend -->
     <div class="legend">
       <span><i class="fa-solid fa-circle" style="color:#b0bec5"></i> Unanswered</span>
       <span><i class="fa-solid fa-circle" style="color:var(--success)"></i> Answered</span>
       <span><i class="fa-solid fa-circle" style="color:var(--warning)"></i> Review</span>
     </div>
 
-    
+    <div class="stats-bar" id="statsBar" style="display:none">
+      <div class="stat-item"><div class="stat-value" id="statAnswered">0</div><div class="stat-label">Answered</div></div>
+      <div class="stat-divider"></div>
+      <div class="stat-item"><div class="stat-value" id="statUnanswered">0</div><div class="stat-label">Unanswered</div></div>
+      <div class="stat-divider"></div>
+      <div class="stat-item"><div class="stat-value" id="statReview">0</div><div class="stat-label">For Review</div></div>
+      <div class="stat-divider"></div>
+      <div class="stat-item"><div class="stat-value" id="statTotal">0</div><div class="stat-label">Total</div></div>
+    </div>
   </div>
 
-  <!-- Question Palette -->
   <div class="palette">
-    <div class="palette-title">
-      <i class="fa-solid fa-grip"></i>
-      <!--<span>Question Navigator</span>-->
+    <div class="palette-title"><i class="fa-solid fa-grip"></i><span>Navigator</span></div>
+    <div class="palette-filter">
+      <button class="filter-btn active" onclick="filterPalette('all',this)">All</button>
+      <button class="filter-btn" onclick="filterPalette('answered',this)">✓ Done</button>
+      <button class="filter-btn" onclick="filterPalette('unanswered',this)">○ Pending</button>
+      <button class="filter-btn" onclick="filterPalette('review',this)">⚑ Review</button>
     </div>
-    
-    <!-- Part A Section -->
     <div class="part-section">
       <div class="part-header">
-        <div class="part-header-left">
-          <i class="fa-solid fa-a"></i>
-          <span>Part A</span>
-        </div>
+        <div class="part-header-left"><i class="fa-solid fa-a"></i><span>Part A</span></div>
         <div class="part-header-right">1 Mark</div>
       </div>
       <div class="palette-grid" id="paletteA"></div>
     </div>
-    
-    <!-- Part B Section -->
     <div class="part-section">
       <div class="part-header">
-        <div class="part-header-left">
-          <i class="fa-solid fa-b"></i>
-          <span>Part B</span>
-        </div>
+        <div class="part-header-left"><i class="fa-solid fa-b"></i><span>Part B</span></div>
         <div class="part-header-right">2 Marks</div>
       </div>
       <div class="palette-grid" id="paletteB"></div>
     </div>
   </div>
-
 </div>
 
-<!-- Footer -->
-    <div class="footer">
-      © 2026 KCET - Department of Electronics and Communication Engineering
-    </div>
+<div class="footer">© 2026 KCET – Department of Electronics and Communication Engineering</div>
 
-<!-- Submit Confirmation Modal -->
+<!-- Submit modal -->
 <div class="modal" id="modal">
   <div class="modal-box">
-    <div class="modal-icon">
-      <i class="fa-solid fa-paper-plane"></i>
-    </div>
+    <div class="modal-icon"><i class="fa-solid fa-paper-plane"></i></div>
     <h3>Submit Examination?</h3>
-    <p>Are you sure you want to submit your exam? This action cannot be undone.</p>
+    <p>Are you sure? This action cannot be undone.</p>
+    <div class="submit-summary">
+      <div class="submit-summary-item"><div class="val" id="modalAnswered"   style="color:var(--success)">0</div><div class="lbl">Answered</div></div>
+      <div class="submit-summary-item"><div class="val" id="modalUnanswered" style="color:var(--danger)">0</div><div class="lbl">Unanswered</div></div>
+      <div class="submit-summary-item"><div class="val" id="modalReview"     style="color:var(--warning)">0</div><div class="lbl">For Review</div></div>
+    </div>
     <div class="modal-actions">
-      <button class="btn next" onclick="closeModal()" style="flex:1">
-        <i class="fa-solid fa-xmark"></i>
-        <span>Cancel</span>
-      </button>
-      <button class="btn submit" onclick="submitExam()" style="flex:1">
-        <i class="fa-solid fa-check"></i>
-        <span>Submit</span>
-      </button>
+      <button class="btn next"   onclick="closeModal()" style="flex:1"><i class="fa-solid fa-xmark"></i><span>Cancel</span></button>
+      <button class="btn submit" onclick="submitExam()" style="flex:1"><i class="fa-solid fa-check"></i><span>Submit</span></button>
     </div>
   </div>
 </div>
 
-<!-- Proctor Overlay -->
+<!-- Proctor overlay (per-violation warning) -->
 <div id="proctorOverlay">
   <div class="content">
     <div class="warning-icon">⚠️</div>
@@ -1081,899 +297,611 @@ header {
   </div>
 </div>
 
+<!-- Auto-submit overlay (shown during final submission) -->
+<div id="submitOverlay">
+  <div class="so-icon" id="soIcon"><i class="fa-solid fa-paper-plane"></i></div>
+  <h2 id="soTitle">Submitting Exam…</h2>
+  <p  id="soMsg">Please wait while your answers are being securely submitted.</p>
+  <div class="so-bar-wrap"><div class="so-bar" id="soBar"></div></div>
+  <div class="so-note">Do not close this window</div>
+</div>
+
 <!-- Calculator -->
 <div class="calculator" id="calculator">
-  <div class="casio-head">
-    <span>KCET ECE</span>
-    <span>CALCULATOR</span>
-  </div>
-
-  <div class="casio-screen">
-    <input id="calcScreen" readonly>
-    <div class="mode" id="mode">DEG</div>
-  </div>
-
+  <div class="casio-head"><span>KCET ECE</span><span>CALCULATOR</span></div>
+  <div class="casio-screen"><input id="calcScreen" readonly><div class="mode" id="mode">DEG</div></div>
   <div class="casio-grid">
-    <button class="shift" onclick="toggleShift()">SHIFT</button>
-    <button onclick="toggleAngle()">DRG</button>
-    <button onclick="clearCalc()">AC</button>
-    <button onclick="del()">DEL</button>
-
-    <button onclick="fn('sin')">sin</button>
-    <button onclick="fn('cos')">cos</button>
-    <button onclick="fn('tan')">tan</button>
-    <button onclick="fn('log')">log</button>
-
-    <button onclick="fn('ln')">ln</button>
-    <button onclick="calc('(')">(</button>
-    <button onclick="calc(')')">)</button>
-    <button onclick="calc('^')">xʸ</button>
-
-    <button onclick="calc('7')">7</button>
-    <button onclick="calc('8')">8</button>
-    <button onclick="calc('9')">9</button>
-    <button onclick="calc('/')">÷</button>
-
-    <button onclick="calc('4')">4</button>
-    <button onclick="calc('5')">5</button>
-    <button onclick="calc('6')">6</button>
-    <button onclick="calc('*')">×</button>
-
-    <button onclick="calc('1')">1</button>
-    <button onclick="calc('2')">2</button>
-    <button onclick="calc('3')">3</button>
-    <button onclick="calc('-')">−</button>
-
-    <button onclick="calc('0')">0</button>
-    <button onclick="calc('.')">.</button>
-    <button onclick="ans()">Ans</button>
-    <button onclick="calc('+')">+</button>
-
-    <button onclick="calc('pi')">π</button>
-    <button onclick="calc('e')">e</button>
-    <button onclick="sqrt()">√</button>
-    <button class="eq" onclick="calculate()">=</button>
-
-    <button onclick="memAdd()">M+</button>
-    <button onclick="memSub()">M-</button>
-    <button onclick="memRecall()">MR</button>
-    <button onclick="memClear()">MC</button>
+    <button class="shift" onclick="toggleShift()">SHIFT</button><button onclick="toggleAngle()">DRG</button><button onclick="clearCalc()">AC</button><button onclick="del()">DEL</button>
+    <button onclick="fn('sin')">sin</button><button onclick="fn('cos')">cos</button><button onclick="fn('tan')">tan</button><button onclick="fn('log')">log</button>
+    <button onclick="fn('ln')">ln</button><button onclick="calc('(')">(</button><button onclick="calc(')')">)</button><button onclick="calc('^')">xʸ</button>
+    <button onclick="calc('7')">7</button><button onclick="calc('8')">8</button><button onclick="calc('9')">9</button><button onclick="calc('/')">÷</button>
+    <button onclick="calc('4')">4</button><button onclick="calc('5')">5</button><button onclick="calc('6')">6</button><button onclick="calc('*')">×</button>
+    <button onclick="calc('1')">1</button><button onclick="calc('2')">2</button><button onclick="calc('3')">3</button><button onclick="calc('-')">−</button>
+    <button onclick="calc('0')">0</button><button onclick="calc('.')">.</button><button onclick="ans()">Ans</button><button onclick="calc('+')">+</button>
+    <button onclick="calc('pi')">π</button><button onclick="calc('e')">e</button><button onclick="sqrt()">√</button><button class="eq" onclick="calculate()">=</button>
+    <button onclick="memAdd()">M+</button><button onclick="memSub()">M-</button><button onclick="memRecall()">MR</button><button onclick="memClear()">MC</button>
   </div>
 </div>
 
 <script>
-/* ========== INITIALIZATION ========== */
-let timerStarted = false;
-let examLoaded = false;
-let isSubmitting = false;
-
+/* ============================================================
+   CONFIGURATION & CONSTANTS
+   ============================================================ */
 const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxRq-KfTcej9Z02GT3RB62oVqzdXyuWCyYw-tEv95IhwsVfa2a8HiFHErAFnEyM2DIF/exec";
 
-const user = JSON.parse(sessionStorage.getItem("user"));
-const exam_id = sessionStorage.getItem("exam_id");
-studentInfo.innerText = `${user.name} (${user.roll})`;
+const ALLOWED_DOMAINS = [
+  "script.google.com","googleapis.com","drive.google.com",
+  "onedrive.live.com","1drv.ms","sharepoint.com","api.onedrive.com",
+  "cdnjs.cloudflare.com","fonts.googleapis.com","fonts.gstatic.com"
+];
 
-let questions = [], index = 0, answers = {}, violations = 0;
-let violationLog = [], duration = 0, limit = 0, partA = 0, partB = 0;
-
-const overlay = document.getElementById("proctorOverlay");
-const proctorMsg = document.getElementById("proctorMsg");
-
-/* ========== AUDIO & AI ASSISTANT DETECTION ========== */
-
-// Detect and block audio playback
-let audioViolationCount = 0;
-const originalAudioPlay = HTMLAudioElement.prototype.play;
-HTMLAudioElement.prototype.play = function() {
-  audioViolationCount++;
-  violate("Audio Playback Attempt");
-  return Promise.reject(new DOMException("Audio blocked during exam", "NotAllowedError"));
-};
-
-// Detect Web Speech API (Voice assistants)
-if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  const originalStart = SpeechRecognition.prototype.start;
-  SpeechRecognition.prototype.start = function() {
-    violate("Voice Assistant Attempt");
-    throw new DOMException("Speech recognition blocked during exam", "NotAllowedError");
-  };
-}
-
-// Detect Media Devices (Camera/Microphone for AI assistants)
-if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-  const originalGetUserMedia = navigator.mediaDevices.getUserMedia;
-  navigator.mediaDevices.getUserMedia = function() {
-    violate("Camera/Microphone Access Attempt");
-    return Promise.reject(new DOMException("Media devices blocked during exam", "NotAllowedError"));
-  };
-}
-
-// Block Web Audio API
+/* ============================================================
+   SESSION GUARD
+   ─────────────────────────────────────────────────────────────
+   The ONLY safe place to read user/exam_id is HERE, once.
+   We NEVER call sessionStorage.clear() during submit.
+   summary.html reads the same keys that were already there.
+   ============================================================ */
+let _user, _examId;
 try {
-  const AudioContext = window.AudioContext || window.webkitAudioContext;
-  if (AudioContext) {
-    window.AudioContext = function() {
-      violate("Audio Context Creation Attempt");
-      throw new Error("AudioContext blocked during exam");
-    };
-    window.webkitAudioContext = window.AudioContext;
-  }
-} catch (e) {
-  console.log("Audio context already restricted");
+  _user   = JSON.parse(sessionStorage.getItem("user"));
+  _examId = sessionStorage.getItem("exam_id");
+  if (!_user || !_examId) throw new Error("missing");
+} catch(_) {
+  alert("Session not found. Please log in again.");
+  location.href = "index.html";   // ← adjust to your login page
 }
+const user    = _user;
+const exam_id = _examId;
+document.getElementById("studentInfo").innerText = `${user.name} (${user.roll})`;
 
-// Detect Picture-in-Picture (used by some AI overlays)
-document.addEventListener('enterpictureinpicture', (e) => {
-  e.preventDefault();
-  violate("Picture-in-Picture Attempt");
-  if (document.pictureInPictureElement) {
-    document.exitPictureInPicture();
-  }
-});
+/* ============================================================
+   STATE VARIABLES
+   ============================================================ */
+let questions    = [];
+let index        = 0;
+let answers      = {};        // { idx: { qid, ans } }
+let violations   = 0;
+let violationLog = [];
+let duration     = 0;
+let limit        = 0;
+let partA        = 0;
+let partB        = 0;
+let reviewSet    = new Set();
 
-// Block Screen Sharing API (used by AI screen readers)
-if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
-  const originalGetDisplayMedia = navigator.mediaDevices.getDisplayMedia;
-  navigator.mediaDevices.getDisplayMedia = function() {
-    violate("Screen Sharing Attempt");
-    return Promise.reject(new DOMException("Screen sharing blocked during exam", "NotAllowedError"));
-  };
-}
+let timerStarted = false;
+let examLoaded   = false;
+let isSubmitting = false;     // ONE-WAY lock; once true, never resets
+let timerRef     = null;
 
-// Detect Chrome Extensions (many AI assistants run as extensions)
-let extensionCheckInterval = setInterval(() => {
-  // Check for common AI assistant extension patterns
-  const suspiciousElements = document.querySelectorAll('[class*="extension"], [id*="extension"], [class*="assistant"], [id*="assistant"]');
-  if (suspiciousElements.length > 0) {
-    violate("Suspicious Extension Detected");
-  }
-}, 5000);
+/* ============================================================
+   STEP 1: Save originalFetch BEFORE any monkey-patching
+   ============================================================ */
+const originalFetch = window.fetch.bind(window);
 
-// Detect overlay elements that might be AI assistants
-const overlayObserver = new MutationObserver((mutations) => {
-  mutations.forEach((mutation) => {
-    mutation.addedNodes.forEach((node) => {
-      if (node.nodeType === 1) { // Element node
-        const style = window.getComputedStyle(node);
-        const zIndex = parseInt(style.zIndex);
-        const position = style.position;
-        
-        // Detect high z-index overlays (common for AI assistants)
-        if ((position === 'fixed' || position === 'absolute') && zIndex > 500 && zIndex !== 1000 && node.id !== 'proctorOverlay' && node.id !== 'calculator' && node.id !== 'modal') {
-          violate("Unauthorized Overlay Detected");
-          node.remove();
-        }
-      }
-    });
-  });
-});
-
-overlayObserver.observe(document.body, {
-  childList: true,
-  subtree: true
-});
-
-// Detect iframe injections (used by some AI tools)
-const iframeObserver = new MutationObserver((mutations) => {
-  mutations.forEach((mutation) => {
-    mutation.addedNodes.forEach((node) => {
-      if (node.nodeName === 'IFRAME' && !node.hasAttribute('data-allowed')) {
-        violate("Unauthorized iFrame Detected");
-        node.remove();
-      }
-    });
-  });
-});
-
-iframeObserver.observe(document.body, {
-  childList: true,
-  subtree: true
-});
-
-// Monitor for suspicious console commands (AI tools might inject scripts)
-const originalConsoleLog = console.log;
-console.log = function(...args) {
-  // Still allow logging but monitor for injection patterns
-  originalConsoleLog.apply(console, args);
-};
-
-// Detect Clipboard API abuse (AI tools reading questions)
-let clipboardReadAttempts = 0;
-if (navigator.clipboard && navigator.clipboard.readText) {
-  const originalReadText = navigator.clipboard.readText;
-  navigator.clipboard.readText = function() {
-    clipboardReadAttempts++;
-    if (clipboardReadAttempts > 2) {
-      violate("Excessive Clipboard Read Attempts");
-    }
-    return Promise.reject(new DOMException("Clipboard read blocked during exam", "NotAllowedError"));
-  };
-}
-
-// Detect Web Workers (some AI tools use background workers)
-const originalWorker = window.Worker;
-window.Worker = function() {
-  violate("Web Worker Creation Attempt");
-  throw new Error("Web Workers blocked during exam");
-};
-
-// Monitor for suspicious network requests (AI API calls)
-const originalFetch = window.fetch;
-window.fetch = function(url, options) {
-  const urlStr = url.toString().toLowerCase();
-  
-  // Allow only the exam backend URL
-  if (!urlStr.includes('script.google.com') && !urlStr.includes('googleapis.com')) {
+/* ============================================================
+   NETWORK GUARD  (patched AFTER we saved the original)
+   ============================================================ */
+window.fetch = function(url, opts) {
+  const s = String(url).toLowerCase();
+  if (!ALLOWED_DOMAINS.some(d => s.includes(d))) {
     violate("Unauthorized Network Request");
-    return Promise.reject(new Error("External requests blocked during exam"));
+    return Promise.reject(new Error("Blocked by exam security"));
   }
-  
-  return originalFetch.apply(this, arguments);
+  return originalFetch(url, opts);
 };
 
-// Similarly monitor XMLHttpRequest
-const originalXHROpen = XMLHttpRequest.prototype.open;
+const _xhrOpen = XMLHttpRequest.prototype.open;
 XMLHttpRequest.prototype.open = function(method, url) {
-  const urlStr = url.toString().toLowerCase();
-  
-  if (!urlStr.includes('script.google.com') && !urlStr.includes('googleapis.com')) {
+  const s = String(url).toLowerCase();
+  if (!ALLOWED_DOMAINS.some(d => s.includes(d))) {
     violate("Unauthorized AJAX Request");
-    throw new Error("External AJAX blocked during exam");
+    throw new Error("Blocked by exam security");
   }
-  
-  return originalXHROpen.apply(this, arguments);
+  return _xhrOpen.apply(this, arguments);
 };
 
-/* ========== FULLSCREEN ENFORCEMENT ========== */
-function forceFullscreen() {
-  if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen().catch(() => {});
-  }
+/* ============================================================
+   AI / ASSISTANT DETECTION
+   ============================================================ */
+HTMLAudioElement.prototype.play = function() {
+  violate("Audio Playback Attempt");
+  return Promise.reject(new DOMException("Blocked","NotAllowedError"));
+};
+
+const _SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+if (_SR) _SR.prototype.start = function(){ violate("Voice Assistant Attempt"); throw new DOMException("Blocked","NotAllowedError"); };
+
+if (navigator.mediaDevices) {
+  navigator.mediaDevices.getUserMedia    = ()=>{ violate("Camera/Mic Access Attempt");  return Promise.reject(new DOMException("Blocked","NotAllowedError")); };
+  navigator.mediaDevices.getDisplayMedia = ()=>{ violate("Screen Share Attempt");        return Promise.reject(new DOMException("Blocked","NotAllowedError")); };
 }
 
-document.addEventListener("DOMContentLoaded", forceFullscreen);
+try {
+  const _AC = window.AudioContext || window.webkitAudioContext;
+  if (_AC) window.AudioContext = window.webkitAudioContext = function(){ violate("AudioContext Attempt"); throw new Error("Blocked"); };
+} catch(_){}
 
-// Force fullscreen on any click if not already in fullscreen
-document.addEventListener("click", () => {
-  if (!document.fullscreenElement && examLoaded) {
-    forceFullscreen();
-  }
+document.addEventListener("enterpictureinpicture", e => {
+  e.preventDefault(); violate("Picture-in-Picture Attempt");
+  if (document.pictureInPictureElement) document.exitPictureInPicture();
 });
 
-/* ========== ENHANCED VIOLATIONS ========== */
-async function violate(type, auto = false) {
-  violations++;
-  vio.innerText = `${violations} / ${limit}`;
+window.Worker = function(){ violate("Web Worker Attempt"); throw new Error("Blocked"); };
 
-  violationLog.push({
-    type,
-    time: new Date().toLocaleString()
+if (navigator.clipboard?.readText)
+  navigator.clipboard.readText = ()=>{ violate("Clipboard Read Attempt"); return Promise.reject(); };
+
+/* MutationObserver: block rogue overlays & iframes */
+new MutationObserver(muts => muts.forEach(m => m.addedNodes.forEach(n => {
+  if (n.nodeType!==1) return;
+  const cs = window.getComputedStyle(n);
+  if ((cs.position==="fixed"||cs.position==="absolute") && parseInt(cs.zIndex)>500
+      && !["proctorOverlay","calculator","modal","submitOverlay"].includes(n.id))
+    { violate("Unauthorized Overlay Detected"); n.remove(); }
+}))).observe(document.body,{childList:true,subtree:true});
+
+new MutationObserver(muts => muts.forEach(m => m.addedNodes.forEach(n => {
+  if (n.nodeName==="IFRAME" && !n.hasAttribute("data-allowed"))
+    { violate("Unauthorized iFrame Detected"); n.remove(); }
+}))).observe(document.body,{childList:true,subtree:true});
+
+setInterval(()=>{
+  if (document.querySelectorAll('[class*="extension"],[id*="extension"],[class*="assistant"],[id*="assistant"]').length)
+    violate("Suspicious Extension Detected");
+},5000);
+
+/* ============================================================
+   FULLSCREEN
+   ============================================================ */
+const forceFS = () => { if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{}); };
+document.addEventListener("DOMContentLoaded", forceFS);
+document.addEventListener("click", ()=>{ if (!document.fullscreenElement && examLoaded) forceFS(); });
+document.addEventListener("fullscreenchange", ()=>{ if (!document.fullscreenElement) violate("Exit Fullscreen"); });
+
+/* ============================================================
+   PROCTOR EVENTS
+   ============================================================ */
+document.addEventListener("visibilitychange", ()=>{
+  if (document.hidden){ saveState(); violate("Tab Switch / Window Hidden"); }
+  else { setTimeout(()=>{ if(!document.fullscreenElement) forceFS(); },100); setTimeout(()=>{ if(!document.fullscreenElement) forceFS(); },500); }
+});
+window.addEventListener("blur",  ()=>{ saveState(); violate("Window Lost Focus"); });
+window.addEventListener("focus", ()=>{ if (!document.fullscreenElement) setTimeout(forceFS,100); });
+
+["copy","cut","paste","contextmenu"].forEach(ev =>
+  document.addEventListener(ev, e=>{ e.preventDefault(); violate(ev.toUpperCase()+" Attempt"); })
+);
+
+document.addEventListener("keydown", e=>{
+  if (e.key==="F12"
+    ||(e.ctrlKey&&e.shiftKey&&["I","C","J"].includes(e.key))
+    ||(e.metaKey&&e.altKey&&["I","C","J"].includes(e.key)))
+    { e.preventDefault(); violate("DevTools Attempt"); return; }
+  if ((e.ctrlKey||e.metaKey)&&["u","s"].includes(e.key))
+    { e.preventDefault(); violate("View Source / Save"); return; }
+  if (e.key==="PrintScreen"){ e.preventDefault(); violate("Screenshot Attempt"); return; }
+  if (!examLoaded || isSubmitting) return;
+  if (e.key==="ArrowRight"||e.key==="ArrowDown"){ e.preventDefault(); nextQ(); }
+  if (e.key==="ArrowLeft" ||e.key==="ArrowUp")  { e.preventDefault(); prevQ(); }
+  if (["1","2","3","4"].includes(e.key)) selectAns(["A","B","C","D"][+e.key-1]);
+  if ("abcd".includes(e.key.toLowerCase())) selectAns(e.key.toUpperCase());
+  if (e.key.toLowerCase()==="m") markReview();
+  if (e.key==="Delete") clearAnswer();
+});
+
+/* ============================================================
+   BEFORE-UNLOAD  (named so violation handler can remove it)
+   ============================================================ */
+function _beaconSubmit(status){
+  const fa={};
+  questions.forEach((q,i)=>{ fa[String(q[2]).trim()]=answers[i]?.ans||""; });
+  const body=new URLSearchParams({
+    action:"submitExam", exam_id, roll_no:user.roll,
+    answers_json:JSON.stringify(fa),
+    violation_log:JSON.stringify(violationLog),
+    total_violations:violations, status
   });
-
-  proctorMsg.innerText = `Violation: ${type} | Remaining: ${limit - violations}`;
-  overlay.classList.add("active");
-  setTimeout(() => overlay.classList.remove("active"), 2000);
-
-  // Save current state immediately
-  saveState();
-
-  try {
-    await fetch(WEBAPP_URL, {
-      method: "POST",
-      body: new URLSearchParams({
-        action: "violation",
-        exam_id: exam_id,
-        roll_no: user.roll,
-        type: type
-      })
-    });
-  } catch (e) {
-    console.error("Violation log failed", e);
-  }
-
-  // Check if max violations reached
-  if (violations >= limit) {
-    // Save all current answers before auto-submit
-    submitExam();
-    
-    // Show warning
-    proctorMsg.innerText = "Maximum violations reached. Auto-submitting exam...";
-    overlay.classList.add("active");
-    
-    // Wait 2 seconds then submit
-    setTimeout(() => {
-      submitExam();
-    }, 2000);
-  }
+  navigator.sendBeacon(WEBAPP_URL, new Blob([body.toString()],{type:"application/x-www-form-urlencoded"}));
 }
 
-/* ========== PROCTOR EVENTS ========== */
-
-// Exit fullscreen
-document.addEventListener("fullscreenchange", () => {
-  if (!document.fullscreenElement) {
-    violate("Exit Fullscreen");
-  }
-});
-
-// Visibility change (tab switch, minimize, notifications)
-document.addEventListener("visibilitychange", () => {
-  if (document.hidden) {
-    // User left the page/tab - log violation and save state
-    saveState();
-    violate("Tab Switch / Window Hidden");
-  } else {
-    // User returned to the page/tab - force fullscreen again immediately
-    setTimeout(() => {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(() => {
-          console.log("Fullscreen request denied on return");
-        });
-      }
-    }, 100);
-    
-    // Try again after 500ms if first attempt failed
-    setTimeout(() => {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(() => {});
-      }
-    }, 500);
-  }
-});
-
-// Window blur (Alt+Tab, CMD+Tab)
-window.addEventListener("blur", () => {
+function _handleBeforeUnload(e){
+  if (isSubmitting||!examLoaded||!questions.length) return;
   saveState();
-  violate("Window Switched / Lost Focus");
-});
+  _beaconSubmit("AUTO_SUBMITTED_REFRESH");
+  e.preventDefault(); e.returnValue="";
+}
+window.addEventListener("beforeunload", _handleBeforeUnload);
 
-// Window focus - force fullscreen when returning
-window.addEventListener("focus", () => {
-  if (!document.fullscreenElement) {
-    // Aggressive fullscreen re-entry
-    setTimeout(() => {
-      document.documentElement.requestFullscreen().catch(() => {
-        console.log("Fullscreen request denied on focus");
-      });
-    }, 100);
-  }
-});
-
-// Copy, cut, paste prevention
-["copy", "cut", "paste", "contextmenu"].forEach(e => {
-  document.addEventListener(e, ev => {
-    ev.preventDefault();
-    violate(e.toUpperCase() + " Attempt");
-  });
-});
-
-// Keyboard shortcuts prevention
-document.addEventListener("keydown", (e) => {
-  // Prevent F12, Ctrl+Shift+I, Ctrl+Shift+C (DevTools)
-  if (e.key === "F12" || 
-      (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "C" || e.key === "J")) ||
-      (e.metaKey && e.altKey && (e.key === "I" || e.key === "C" || e.key === "J"))) {
-    e.preventDefault();
-    violate("Developer Tools Attempt");
-  }
-  
-  // Prevent Ctrl+U, Ctrl+S (View Source, Save)
-  if ((e.ctrlKey || e.metaKey) && (e.key === "u" || e.key === "s")) {
-    e.preventDefault();
-    violate("View Source / Save Attempt");
-  }
-  
-  // Prevent Print Screen
-  if (e.key === "PrintScreen") {
-    e.preventDefault();
-    violate("Screenshot Attempt");
-  }
-});
-
-// Prevent page reload/refresh
-/* ✅ NEW: Refresh auto-submits WITHOUT calling violate() to avoid double-trigger */
-window.addEventListener("beforeunload", (e) => {
-  // Cleanup observers always
-  if (overlayObserver) overlayObserver.disconnect();
-  if (iframeObserver) iframeObserver.disconnect();
-  if (extensionCheckInterval) clearInterval(extensionCheckInterval);
-
-  if (isSubmitting) return;           // already handled
-  if (!examLoaded) return;            // exam never loaded, nothing to save
+/* ============================================================
+   SAVE / RESTORE STATE
+   ─────────────────────────────────────────────────────────────
+   We do NOT clear sessionStorage — summary.html needs
+   user + exam_id + submitted flag that we set here.
+   ============================================================ */
+function saveState(){
   if (!questions.length) return;
+  try{
+    sessionStorage.setItem("qSignature",   questions.map(q=>String(q[2]).trim()).join(","));
+    sessionStorage.setItem("answers",      JSON.stringify(answers));
+    sessionStorage.setItem("index",        String(index));
+    sessionStorage.setItem("timeLeft",     String(duration));
+    sessionStorage.setItem("violations",   String(violations));
+    sessionStorage.setItem("violationLog", JSON.stringify(violationLog));
+    sessionStorage.setItem("lastSaved",    new Date().toISOString());
+    sessionStorage.setItem("exam_partA",   String(partA));
+    sessionStorage.setItem("exam_partB",   String(partB));
+    sessionStorage.setItem("exam_limit",   String(limit));
+    triggerSaveUI();
+  }catch(e){ console.error("saveState:",e); }
+}
 
-  // Save current state so session can be recovered if browser crashes
-  saveState();
+function restoreState(){
+  const saved   = sessionStorage.getItem("qSignature");
+  const current = questions.map(q=>q[2]).join(",");
+  if (saved!==current){
+    ["answers","index","timeLeft","violations","violationLog"]
+      .forEach(k=>sessionStorage.removeItem(k));
+    answers={}; index=0; violations=0; violationLog=[]; return;
+  }
+  try{
+    const raw=sessionStorage.getItem("answers");
+    if(raw){
+      answers      = JSON.parse(raw);
+      index        = Number(sessionStorage.getItem("index")||0);
+      duration     = Number(sessionStorage.getItem("timeLeft")||duration);
+      violations   = Number(sessionStorage.getItem("violations")||0);
+      violationLog = JSON.parse(sessionStorage.getItem("violationLog")||"[]");
+      document.getElementById("vio").innerText=`${violations} / ${limit}`;
+      setTimeout(()=>{
+        Object.keys(answers).forEach(i=>{ const p=document.getElementById("p"+i); if(p&&answers[i]?.ans) p.classList.add("answered"); });
+        updateStats();
+      },100);
+    }
+  }catch(e){ console.error("restoreState:",e); answers={}; index=0; violations=0; violationLog=[]; }
+}
 
-  // Use sendBeacon for a fire-and-forget auto-submit that survives page unload
-  const finalAnswers = {};
-  questions.forEach((q, i) => {
-    finalAnswers[String(q[2]).trim()] = answers[i]?.ans || "";
-  });
+/* ============================================================
+   AUTO-SAVE BADGE
+   ============================================================ */
+let _saveBounce=null;
+function triggerSaveUI(){
+  const b=document.getElementById("saveBadge"), t=document.getElementById("saveText");
+  b.className="saving"; t.textContent="Saving…";
+  clearTimeout(_saveBounce);
+  _saveBounce=setTimeout(()=>{ b.className="saved"; t.textContent="Saved ✓"; },600);
+}
 
-  const body = new URLSearchParams({
+/* ============================================================
+   DRIVE / ONEDRIVE URL CONVERTER
+   ============================================================ */
+function convertDriveUrl(url){
+  if(!url) return "";
+  url=url.trim();
+  const gf=url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if(gf) return `https://drive.google.com/uc?export=view&id=${gf[1]}`;
+  const go=url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if(url.includes("drive.google.com")&&go) return `https://drive.google.com/uc?export=view&id=${go[1]}`;
+  if(url.includes("drive.google.com/uc?")) return url;
+  if(url.includes("1drv.ms")||url.includes("onedrive.live.com")){
+    const b64=btoa(url).replace(/=/g,"").replace(/\+/g,"-").replace(/\//g,"_");
+    return `https://api.onedrive.com/v1.0/shares/u!${b64}/root/content`;
+  }
+  if(url.includes("sharepoint.com")&&!url.includes("download=1"))
+    return url+(url.includes("?")?"&download=1":"?download=1");
+  return url;
+}
+
+/* ============================================================
+   UNIFIED SUBMIT  ← single entry point for ALL submit paths
+   ─────────────────────────────────────────────────────────────
+   CRITICAL FIXES vs old code:
+   1. We NEVER call sessionStorage.clear() — summary.html needs
+      user / exam_id from session.
+   2. We set sessionStorage.setItem("submitted","true") so
+      summary.html knows the exam ended cleanly.
+   3. We remove the beforeunload listener so it can't double-fire.
+   4. We show a full-screen overlay so student can't navigate away.
+   ============================================================ */
+function _doSubmit(status){
+  if (isSubmitting) return;          // hard guard — fires once only
+  isSubmitting = true;
+
+  // Remove beforeunload to prevent double-beacon on redirect
+  window.removeEventListener("beforeunload", _handleBeforeUnload);
+
+  clearInterval(timerRef);
+  saveState();                        // persist answers one last time
+
+  // Show full-screen animated overlay
+  const icon = { "SUBMITTED":"fa-check-circle","TIME_UP":"fa-hourglass-end",
+                 "AUTO_SUBMITTED_VIOLATION":"fa-triangle-exclamation" }[status] || "fa-paper-plane";
+  const title= { "SUBMITTED":"Submitting Your Exam",
+                 "TIME_UP":"Time's Up! Submitting…",
+                 "AUTO_SUBMITTED_VIOLATION":"⚠️ Auto-Submitting Due to Violations",
+                 "AUTO_SUBMITTED_REFRESH":"Auto-Submitting…" }[status] || "Submitting…";
+  const msg  = { "AUTO_SUBMITTED_VIOLATION":"Maximum violations reached. Your answers have been saved.",
+                 "TIME_UP":"Your exam time has expired. Answers are being submitted.",
+                 "SUBMITTED":"Please wait — do not close this window." }[status]
+             || "Please wait while your answers are being submitted.";
+
+  document.getElementById("soIcon").innerHTML  = `<i class="fa-solid ${icon}"></i>`;
+  document.getElementById("soTitle").textContent = title;
+  document.getElementById("soMsg").textContent   = msg;
+  document.getElementById("submitOverlay").classList.add("active");
+
+  // Animate progress bar
+  setTimeout(()=>{ document.getElementById("soBar").style.width="100%"; }, 50);
+
+  // Build payload
+  const finalAnswers={};
+  questions.forEach((q,i)=>{ finalAnswers[String(q[2]).trim()]=answers[i]?.ans||""; });
+
+  const payload = new URLSearchParams({
     action:           "submitExam",
     exam_id:          exam_id,
     roll_no:          user.roll,
     answers_json:     JSON.stringify(finalAnswers),
     violation_log:    JSON.stringify(violationLog),
     total_violations: violations,
-    status:           "AUTO_SUBMITTED"
+    status:           status
   });
 
-  // sendBeacon works even during page unload (fetch does not)
-  try {
-  navigator.sendBeacon(WEBAPP_URL, body);
-} catch (e) {
-  fetch(WEBAPP_URL, { method: "POST", body: body });
+  /* ── Write submit marker into session (summary.html reads this) ── */
+  sessionStorage.setItem("submitted",     "true");
+  sessionStorage.setItem("submit_status", status);
+  sessionStorage.setItem("submit_time",   new Date().toISOString());
+  /* user / exam_id remain untouched — summary.html needs them       */
+
+  // Send to backend
+  originalFetch(WEBAPP_URL, { method:"POST", body:payload, keepalive:true })
+    .then(r=>r.text())
+    .then(()=>{
+      // Wait for bar animation to complete (3 s), then redirect
+      setTimeout(()=>{ location.href="summary.html"; }, 3200);
+    })
+    .catch(()=>{
+      // Beacon fallback, then redirect
+      _beaconSubmit(status);
+      setTimeout(()=>{ location.href="summary.html"; }, 3200);
+    });
 }
 
+/* ============================================================
+   VIOLATION HANDLER
+   ============================================================ */
+async function violate(type){
+  if (isSubmitting) return;         // ignore violations during submit
 
-  // Still show the browser's leave-page prompt as a deterrent
-  e.preventDefault();
-  e.returnValue = "";
-});
+  violations++;
+  document.getElementById("vio").innerText=`${violations} / ${limit}`;
+  violationLog.push({ type, time:new Date().toLocaleString() });
 
-/* ========== EXAM LOADING ========== */
-fetch(WEBAPP_URL, {
-  method: "POST",
-  body: new URLSearchParams({
-    action: "getExamMeta",
-    exam_id
-  })
+  const remaining = limit - violations;
+  document.getElementById("proctorMsg").innerText =
+    `Violation: ${type} | Warnings remaining: ${remaining}`;
+
+  const overlay = document.getElementById("proctorOverlay");
+  overlay.classList.add("active");
+  if (violations < limit) setTimeout(()=>overlay.classList.remove("active"), 2000);
+
+  saveState();
+
+  // Non-blocking log to backend (uses originalFetch — not the patched one)
+  originalFetch(WEBAPP_URL,{
+    method:"POST",
+    body:new URLSearchParams({ action:"violation", exam_id, roll_no:user.roll, type })
+  }).catch(()=>{});
+
+  // Max violations reached → auto-submit ONCE after brief delay
+  if (violations >= limit){
+    overlay.classList.remove("active");
+    setTimeout(()=>{ _doSubmit("AUTO_SUBMITTED_VIOLATION"); }, 1500);
+  }
+}
+
+/* ============================================================
+   EXAM LOADING
+   ============================================================ */
+originalFetch(WEBAPP_URL,{ method:"POST", body:new URLSearchParams({ action:"getExamMeta", exam_id }) })
+.then(r=>r.json())
+.then(meta=>{
+  if(meta.error){ alert(meta.error); return; }
+  duration = Number(meta.duration)*60;
+  limit    = Number(meta.violation_limit);
+  partA    = Number(meta.partA);
+  partB    = Number(meta.partB);
+  document.getElementById("vio").innerText=`0 / ${limit}`;
+  const calcOK = String(meta.calc||meta.calculator||"NO").trim().toUpperCase()==="YES";
+  document.getElementById("calcBtn").style.display    = calcOK?"inline-flex":"none";
+  if(!calcOK) document.getElementById("calculator").style.display="none";
+  return originalFetch(WEBAPP_URL,{ method:"POST", body:new URLSearchParams({ action:"getQuestions", exam_id }) });
 })
-.then(r => r.json())
-.then(meta => {
-  if (meta.error) {
-    alert(meta.error);
-    return;
-  }
-
-  duration = Number(meta.duration) * 60;
-  limit = Number(meta.violation_limit);
-  partA = Number(meta.partA);
-  partB = Number(meta.partB);
-  
-  vio.innerText = `0 / ${limit}`;
-
-  // Calculator control
-  const calcPermission = String(meta.calc || meta.calculator || "NO").trim().toUpperCase();
-  if (calcPermission === "YES") {
-    calcBtn.style.display = "inline-flex";
-  } else {
-    calcBtn.style.display = "none";
-    calculator.style.display = "none";
-  }
-
-  return fetch(WEBAPP_URL, {
-    method: "POST",
-    body: new URLSearchParams({
-      action: "getQuestions",
-      exam_id
-    })
-  });
-})
-.then(r => r.json())
-.then(allQ => {
-  if (!Array.isArray(allQ) || allQ.length === 0) {
-    alert("No questions found");
-    return;
-  }
-
-  const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
-  const partAQuestions = allQ.filter(q => q[1] === "PART A");
-  const partBQuestions = allQ.filter(q => q[1] === "PART B");
-
-  const A = shuffle(partAQuestions).slice(0, partA);
-  const B = shuffle(partBQuestions).slice(0, partB);
-  questions = A.concat(B);
-
-  if (!questions.length) {
-    alert("Question set empty");
-    return;
-  }
-
-  document.getElementById("loading").style.display = "none";
-  examLoaded = true;
+.then(r=>r.json())
+.then(allQ=>{
+  if(!Array.isArray(allQ)||!allQ.length){ alert("No questions found"); return; }
+  const shuffle=a=>[...a].sort(()=>Math.random()-.5);
+  const A=shuffle(allQ.filter(q=>q[1]==="PART A")).slice(0,partA);
+  const B=shuffle(allQ.filter(q=>q[1]==="PART B")).slice(0,partB);
+  questions=[...A,...B];
+  if(!questions.length){ alert("Question set empty"); return; }
+  document.getElementById("loading").style.display="none";
+  document.getElementById("answeredChip").style.display="flex";
+  document.getElementById("statsBar").style.display="flex";
+  examLoaded=true;
   drawPalette();
   restoreState();
   loadQ();
   startTimer();
+  updateStats();
 })
-.catch(err => {
-  console.error(err);
-  if (!examLoaded) {
-    alert("Failed to load exam. Please try again.");
-  }
-});
+.catch(err=>{ console.error(err); if(!examLoaded) alert("Failed to load exam. Please try again."); });
 
-/* ========== QUESTION LOADING ========== */
-function loadQ() {
-  if (index < 0 || index >= questions.length) {
-    index = 0;
-  }
-
-  const q = questions[index];
-
-  question.innerHTML = `
-    <span class="section">${q[1]}</span>
-    <h3>Q${index + 1}. ${escapeHTML(q[3])}</h3>
-    ${q[9] ? `<img class="qimg" src="${q[9]}" alt="Question Image">` : ""}
-    ${["A", "B", "C", "D"].map((o, i) => `
-      <div class="option ${answers[index]?.ans === o ? 'selected' : ''}" onclick="selectAns('${o}')">
-        <strong>${o}.</strong> ${escapeHTML(q[4 + i])}
-      </div>
-    `).join("")}
-  `;
-
-  submitBtn.disabled = index !== questions.length - 1;
-  bar.style.width = ((index + 1) / questions.length * 100) + "%";
-  
-  // Update palette current highlight
-  document.querySelectorAll('.palette span').forEach(s => s.classList.remove('current'));
-  const currentPalette = document.getElementById("p" + index);
-  if (currentPalette) {
-    currentPalette.classList.add("current");
-  }
+/* ============================================================
+   QUESTION RENDERING
+   ============================================================ */
+function loadQ(){
+  if(index<0||index>=questions.length) index=0;
+  const q=questions[index];
+  const imgUrl=convertDriveUrl(q[9]);
+  document.getElementById("question").innerHTML=`
+    <div class="q-meta">
+      <span class="section">${q[1]}</span>
+      <span class="q-nav-hint">
+        <kbd>←</kbd><kbd>→</kbd> Navigate &nbsp;|&nbsp;
+        <kbd>1</kbd>–<kbd>4</kbd> Answer &nbsp;|&nbsp;
+        <kbd>M</kbd> Review &nbsp;|&nbsp; <kbd>Del</kbd> Clear
+      </span>
+    </div>
+    <h3>Q${index+1}. ${esc(q[3])}</h3>
+    ${imgUrl?`<img class="qimg" src="${imgUrl}" alt="Question Image"
+      onerror="this.outerHTML='<div class=img-error><i class=\\'fa-solid fa-image-slash\\'></i>&nbsp;Image unavailable – inform invigilator</div>'">`:""}
+    ${["A","B","C","D"].map((o,i)=>`
+      <div class="option ${answers[index]?.ans===o?"selected":""}" onclick="selectAns('${o}')">
+        <strong>${o}.</strong>&nbsp;${esc(q[4+i])}
+        <span class="option-key">${i+1}</span>
+      </div>`).join("")}`;
+  document.getElementById("submitBtn").disabled = index!==questions.length-1;
+  document.getElementById("bar").style.width    = ((index+1)/questions.length*100)+"%";
+  document.querySelectorAll(".palette span").forEach(s=>s.classList.remove("current"));
+  const cp=document.getElementById("p"+index);
+  if(cp){ cp.classList.add("current"); cp.scrollIntoView({block:"nearest"}); }
 }
 
-function selectAns(a) {
-  answers[index] = {
-    qid: questions[index][2],
-    ans: a
-  };
-
-  const p = document.getElementById("p" + index);
-  if (p) {
-    p.classList.add("answered");
-    p.classList.remove("review");
-  }
-
-  // Save immediately when answer is selected
-  saveState();
-  
-  // Reload question to show selected state
-  loadQ();
-}
-
-function escapeHTML(str) {
+function esc(str){
   return String(str)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;").replace(/'/g,"&#039;");
 }
 
-/* ========== PALETTE ========== */
-function drawPalette() {
-  const paletteA = document.getElementById("paletteA");
-  const paletteB = document.getElementById("paletteB");
-  
-  paletteA.innerHTML = "";
-  paletteB.innerHTML = "";
-  
-  questions.forEach((q, i) => {
-    const span = document.createElement("span");
-    span.id = "p" + i;
-    span.textContent = i + 1;
-    
-    // Highlight current question
-    if (i === index) {
-      span.classList.add("current");
-    }
-    
-    span.onclick = () => {
-      // Remove current highlight from all
-      document.querySelectorAll('.palette span').forEach(s => s.classList.remove('current'));
-      
-      index = i;
-      // Save state when navigating via palette
-      saveState();
-      loadQ();
-      
-      // Add current highlight
-      span.classList.add("current");
+function selectAns(a){
+  if(isSubmitting) return;
+  answers[index]={ qid:questions[index][2], ans:a };
+  const p=document.getElementById("p"+index);
+  if(p){ p.classList.add("answered"); p.classList.remove("review"); }
+  saveState(); loadQ(); updateStats();
+}
+
+function clearAnswer(){
+  if(isSubmitting||!answers[index]) return;
+  delete answers[index];
+  const p=document.getElementById("p"+index);
+  if(p) p.classList.remove("answered");
+  saveState(); loadQ(); updateStats();
+}
+
+function prevQ(){ if(index>0){ index--; saveState(); loadQ(); } }
+function nextQ(){ if(index<questions.length-1){ index++; saveState(); loadQ(); } }
+
+/* ============================================================
+   PALETTE
+   ============================================================ */
+function drawPalette(){
+  ["paletteA","paletteB"].forEach(id=>document.getElementById(id).innerHTML="");
+  questions.forEach((q,i)=>{
+    const span=document.createElement("span");
+    span.id=`p${i}`; span.textContent=i+1;
+    if(i===index) span.classList.add("current");
+    span.onclick=()=>{
+      document.querySelectorAll(".palette span").forEach(s=>s.classList.remove("current"));
+      index=i; saveState(); loadQ();
     };
-    
-    // Add to Part A or Part B based on question type
-    if (q[1] === "PART A") {
-      paletteA.appendChild(span);
-    } else {
-      paletteB.appendChild(span);
-    }
+    document.getElementById(q[1]==="PART A"?"paletteA":"paletteB").appendChild(span);
   });
 }
 
-function markReview() {
-  document.getElementById("p" + index).classList.add("review");
-  // Save when marking for review
-  saveState();
+function markReview(){
+  if(isSubmitting) return;
+  const p=document.getElementById("p"+index);
+  if(p) p.classList.add("review");
+  reviewSet.add(index); saveState(); updateStats();
 }
 
-function nextQ() {
-  if (index < questions.length - 1) {
-    index++;
-    // Save state when moving to next question
-    saveState();
-    loadQ();
-  }
-}
-
-/* ========== TIMER ========== */
-let timerRef = null;
-
-function startTimer() {
-  if (timerStarted) return;
-  timerStarted = true;
-
-  timerRef = setInterval(() => {
-    const m = Math.floor(duration / 60);
-    const s = duration % 60;
-    timer.innerText = `${m}:${String(s).padStart(2, "0")}`;
-    
-    // Warning effect when time is low
-    if (duration <= 300) { // 5 minutes
-      document.getElementById("timerChip").classList.add("warning");
-    }
-    
-    duration--;
-    saveState();
-    if (duration < 0) submitExam();
-  }, 1000);
-}
-
-/* ========== SUBMIT ========== */
-function confirmSubmit() {
-  modal.style.display = "flex";
-}
-
-function closeModal() {
-  modal.style.display = "none";
-}
-
-function submitExam(){
-  if (isSubmitting) return;
-  isSubmitting = true;
-
-  clearInterval(timerRef);
-  saveState();   // 💾 ensure latest answers
-
-  const finalAnswers = {};
-  questions.forEach((q, i) => {
-    finalAnswers[String(q[2]).trim()] =
-      answers[i]?.ans || "";
-  });
-
-  const formData = new URLSearchParams();
-  formData.append("action", "submitExam");
-  formData.append("exam_id", exam_id);
-  formData.append("roll_no", user.roll);
-  formData.append("answers_json", JSON.stringify(finalAnswers));
-  formData.append("violation_log", JSON.stringify(violationLog));
-  formData.append("total_violations", violations);
-  formData.append("status", "SUBMITTED");
-
-  fetch(WEBAPP_URL, {
-    method: "POST",
-    body: formData
-  })
-  .then(() => {
-    // ✅ redirect ONLY after backend receives data
-    location.href = "summary.html";
-  })
-  .catch(err => {
-    console.error("Submit failed", err);
-    alert("Submission failed. Please contact exam admin.");
-    isSubmitting = false; // allow retry
+function filterPalette(type,btn){
+  document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  document.querySelectorAll(".palette span").forEach(span=>{
+    const i=parseInt(span.textContent)-1;
+    span.style.display=
+      type==="all"        ? "" :
+      type==="answered"   ? (answers[i]?.ans?"":"none") :
+      type==="unanswered" ? (!answers[i]?.ans?"":"none") :
+      (span.classList.contains("review")?"":"none");
   });
 }
 
-/* ========== AUTO SUBMIT FROM VIOLATION ========== */
-function autoSubmitFromViolation(){
-  if (isSubmitting) return;
-  isSubmitting = true;
-
-  clearInterval(timerRef);
-  saveState();
-
-  const finalAnswers = {};
-  questions.forEach((q, i) => {
-    finalAnswers[String(q[2]).trim()] =
-      answers[i]?.ans || "";
-  });
-
-    const formData = new URLSearchParams();
-  formData.append("action", "submitExam");
-  formData.append("exam_id", exam_id);
-  formData.append("roll_no", user.roll);
-  formData.append("answers_json", JSON.stringify(finalAnswers));
-  formData.append("violation_log", JSON.stringify(violationLog));
-  formData.append("total_violations", violations);
-  formData.append("status", "SUBMITTED");
-
-  fetch(WEBAPP_URL, {
-    method: "POST",
-    body: formData
-  })
-  .then(() => {
-    // ✅ redirect ONLY after backend receives data
-    location.href = "summary.html";
-  })
-  .catch(err => {
-    console.error("Submit failed", err);
-    alert("Submission failed. Please contact exam admin.");
-    isSubmitting = false; // allow retry
-  });
+/* ============================================================
+   STATS
+   ============================================================ */
+function updateStats(){
+  if(!questions.length) return;
+  const ans=Object.values(answers).filter(a=>a?.ans).length;
+  const rev=document.querySelectorAll(".palette span.review").length;
+  document.getElementById("statAnswered").textContent   = ans;
+  document.getElementById("statUnanswered").textContent = questions.length-ans;
+  document.getElementById("statReview").textContent     = rev;
+  document.getElementById("statTotal").textContent      = questions.length;
+  document.getElementById("answeredCount").textContent  = `${ans}/${questions.length}`;
 }
 
-
-/* ========== STATE MANAGEMENT ========== */
-function saveState() {
-  try {
-    const qSignature = questions.map(q => String(q[2]).trim()).join(",");
-    
-    // Save comprehensive state
-    sessionStorage.setItem("qSignature", qSignature);
-    sessionStorage.setItem("answers", JSON.stringify(answers || {}));
-    sessionStorage.setItem("index", String(index));
-    sessionStorage.setItem("timeLeft", String(duration));
-    sessionStorage.setItem("violations", String(violations));
-    sessionStorage.setItem("violationLog", JSON.stringify(violationLog || []));
-    sessionStorage.setItem("lastSaved", new Date().toISOString());
-    
-    // Store answered count for recovery
-    const answeredCount = Object.keys(answers).filter(k => answers[k]?.ans).length;
-    sessionStorage.setItem("answeredCount", String(answeredCount));
-    
-    // Store exam metadata for recovery
-    sessionStorage.setItem("exam_partA", String(partA));
-    sessionStorage.setItem("exam_partB", String(partB));
-    sessionStorage.setItem("exam_limit", String(limit));
-    
-  } catch (e) {
-    console.error("saveState failed", e);
-  }
+/* ============================================================
+   TIMER
+   ============================================================ */
+function startTimer(){
+  if(timerStarted) return; timerStarted=true;
+  timerRef=setInterval(()=>{
+    if(isSubmitting){ clearInterval(timerRef); return; }
+    const m=Math.floor(duration/60), s=duration%60;
+    document.getElementById("timer").innerText=`${m}:${String(s).padStart(2,"0")}`;
+    if(duration<=300) document.getElementById("timerChip").classList.add("warning");
+    duration--; saveState();
+    if(duration<0) _doSubmit("TIME_UP");
+  },1000);
 }
 
-function restoreState() {
-  const savedSig = sessionStorage.getItem("qSignature");
-  const currentSig = questions.map(q => q[2]).join(",");
-
-  // If signatures don't match, it's a different exam - clear state
-  if (savedSig !== currentSig) {
-    sessionStorage.removeItem("answers");
-    sessionStorage.removeItem("index");
-    sessionStorage.removeItem("timeLeft");
-    sessionStorage.removeItem("violations");
-    sessionStorage.removeItem("violationLog");
-    sessionStorage.removeItem("answeredCount");
-    answers = {};
-    index = 0;
-    violations = 0;
-    violationLog = [];
-    return;
-  }
-
-  // Restore all state
-  if (sessionStorage.getItem("answers")) {
-    answers = JSON.parse(sessionStorage.getItem("answers"));
-    index = Number(sessionStorage.getItem("index") || 0);
-    duration = Number(sessionStorage.getItem("timeLeft") || duration);
-    violations = Number(sessionStorage.getItem("violations") || 0);
-    
-    // Restore violation log
-    try {
-      const savedLog = sessionStorage.getItem("violationLog");
-      if (savedLog) {
-        violationLog = JSON.parse(savedLog);
-      }
-    } catch (e) {
-      console.error("Failed to restore violation log", e);
-      violationLog = [];
-    }
-    
-    vio.innerText = `${violations} / ${limit}`;
-    
-    // Update palette to show answered questions
-    setTimeout(() => {
-      Object.keys(answers).forEach(i => {
-        const p = document.getElementById("p" + i);
-        if (p && answers[i]?.ans) {
-          p.classList.add("answered");
-        }
-      });
-    }, 100);
-    
-    console.log(`Restored state: ${Object.keys(answers).length} answers, ${violations} violations`);
-  }
+/* ============================================================
+   SUBMIT FLOW (user-initiated)
+   ============================================================ */
+function confirmSubmit(){
+  const ans=Object.values(answers).filter(a=>a?.ans).length;
+  const rev=document.querySelectorAll(".palette span.review").length;
+  document.getElementById("modalAnswered").textContent   = ans;
+  document.getElementById("modalUnanswered").textContent = questions.length-ans;
+  document.getElementById("modalReview").textContent     = rev;
+  document.getElementById("modal").style.display="flex";
 }
+function closeModal(){ document.getElementById("modal").style.display="none"; }
+function submitExam(){ closeModal(); _doSubmit("SUBMITTED"); }
 
-/* ========== CALCULATOR ========== */
-let SHIFT = false;
-let ANGLE = "DEG";
-let MEMORY = 0;
-let ANSWER = 0;
-
-function toggleCalc() {
-  calculator.style.display = calculator.style.display === "block" ? "none" : "block";
-}
-
-function toggleShift() {
-  SHIFT = !SHIFT;
-}
-
-function toggleAngle() {
-  ANGLE = ANGLE === "DEG" ? "RAD" : ANGLE === "RAD" ? "GRAD" : "DEG";
-  document.getElementById("mode").innerText = ANGLE;
-}
-
-function calc(v) {
-  calcScreen.value += v;
-}
-
-function fn(f) {
-  if (SHIFT) {
-    if (f === "sin") calcScreen.value += "asin(";
-    if (f === "cos") calcScreen.value += "acos(";
-    if (f === "tan") calcScreen.value += "atan(";
-    SHIFT = false;
-  } else {
-    calcScreen.value += f + "(";
-  }
-}
-
-function sqrt() {
-  calcScreen.value += "sqrt(";
-}
-
-function del() {
-  calcScreen.value = calcScreen.value.slice(0, -1);
-}
-
-function clearCalc() {
-  calcScreen.value = "";
-}
-
-function ans() {
-  calcScreen.value += ANSWER;
-}
-
-function memAdd() { MEMORY += Number(calcScreen.value || 0); }
-function memSub() { MEMORY -= Number(calcScreen.value || 0); }
-function memRecall() { calcScreen.value += MEMORY; }
-function memClear() { MEMORY = 0; }
-
-function calculate() {
-  try {
-    let scope = {
-      sin: x => math.sin(conv(x)),
-      cos: x => math.cos(conv(x)),
-      tan: x => math.tan(conv(x)),
-      asin: x => math.asin(x),
-      acos: x => math.acos(x),
-      atan: x => math.atan(x),
-      log: x => math.log10(x),
-      ln: x => math.log(x),
-      pi: math.pi,
-      e: math.e,
-      sqrt: x => math.sqrt(x)
+/* ============================================================
+   CALCULATOR
+   ============================================================ */
+let SHIFT=false,ANGLE="DEG",MEMORY=0,ANSWER=0;
+function toggleCalc(){ const c=document.getElementById("calculator"); c.style.display=c.style.display==="block"?"none":"block"; }
+function toggleShift(){ SHIFT=!SHIFT; }
+function toggleAngle(){ ANGLE=ANGLE==="DEG"?"RAD":ANGLE==="RAD"?"GRAD":"DEG"; document.getElementById("mode").innerText=ANGLE; }
+const cs=()=>document.getElementById("calcScreen");
+function calc(v){ cs().value+=v; }
+function del(){ cs().value=cs().value.slice(0,-1); }
+function clearCalc(){ cs().value=""; }
+function ans(){ cs().value+=ANSWER; }
+function sqrt(){ cs().value+="sqrt("; }
+function fn(f){ if(SHIFT){ cs().value+=`a${f}(`; SHIFT=false; }else cs().value+=`${f}(`; }
+function memAdd()   { MEMORY+=Number(cs().value||0); }
+function memSub()   { MEMORY-=Number(cs().value||0); }
+function memRecall(){ cs().value+=MEMORY; }
+function memClear() { MEMORY=0; }
+function calculate(){
+  try{
+    const scope={
+      sin:x=>math.sin(conv(x)),cos:x=>math.cos(conv(x)),tan:x=>math.tan(conv(x)),
+      asin:x=>math.asin(x),acos:x=>math.acos(x),atan:x=>math.atan(x),
+      log:x=>math.log10(x),ln:x=>math.log(x),pi:math.pi,e:math.e,sqrt:x=>math.sqrt(x)
     };
-    let res = math.evaluate(calcScreen.value, scope);
-    ANSWER = res;
-    calcScreen.value = res;
-  } catch {
-    calcScreen.value = "Error";
-  }
+    ANSWER=math.evaluate(cs().value,scope); cs().value=ANSWER;
+  }catch{ cs().value="Error"; }
 }
-
-function conv(x) {
-  if (ANGLE === "DEG") return math.unit(x, "deg");
-  if (ANGLE === "GRAD") return math.unit(x * 0.9, "deg");
-  return x;
-}
+function conv(x){ if(ANGLE==="DEG") return math.unit(x,"deg"); if(ANGLE==="GRAD") return math.unit(x*.9,"deg"); return x; }
 </script>
-
 </body>
 </html>
