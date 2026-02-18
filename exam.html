@@ -1672,7 +1672,7 @@ function loadQ() {
 
   document.querySelectorAll('.palette span').forEach(s => s.classList.remove('current'));
   const cp = document.getElementById("p" + index);
-  if (cp) { cp.classList.add("current"); cp.scrollIntoView({ block: "nearest" }); }
+  if (cp) { cp.classList.add("current"); /*cp.scrollIntoView({ block: "nearest" }); */}
 }
 
 function selectAns(a) {
